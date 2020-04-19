@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DoitDoit
+namespace BABZOOM
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Post : ContentPage

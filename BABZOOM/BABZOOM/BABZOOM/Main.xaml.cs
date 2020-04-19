@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace DoitDoit
+namespace BABZOOM
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Main : ContentPage
 	{
 		public Main ()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 		}
 
         private void Reco_Clicked(Object sender, EventArgs e)
