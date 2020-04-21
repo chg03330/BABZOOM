@@ -6,6 +6,8 @@ import * as functions from 'firebase-functions';
 //import { firebaseConfig } from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
+import * as BasicObject from "BasicObject";
+
 admin.initializeApp();
 
 //let serviceAccount = require("C:/Users/qweas/Downloads/babzoom-7cae1-firebase-adminsdk-z5h82-3eb4300e68.json");
@@ -127,7 +129,7 @@ export const SignUp = functions.https.onRequest(async (req, res) => {
     }
 
     res.send(resresult);
-})
+});
 
 export const GetUserData = functions.https.onRequest(async (req, res) => {
     let user:User = new User(req.body.ID, req.body.Password);
@@ -155,4 +157,8 @@ export const SetUserData = functions.https.onRequest(async (req, res) => {
     }).catch(err => console.error(err));
 
     res.send();
+});
+
+export const GetMenuData = functions.https.onRequest(async (req, res) => { 
+    
 });
