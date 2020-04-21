@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BABZOOM.SignUp"
+             BackgroundColor="#C4DEFF">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <Image Source="C:\Users\1210k\Desktop\자마린연습\BABZOOM\BABZOOM\BABZOOM.Android\Resources\drawable\LOGO.png" 
+                   WidthRequest="150" HeightRequest="150" />
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                <Label Text="      아이디             " TextColor="Black" FontSize="20" />
+                <Entry WidthRequest="150" x:Name="ID" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="비밀번호          " TextColor="Black" FontSize="20" />
+                <Entry WidthRequest="200" x:Name="PASSWORD" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="비밀번호 확인 " TextColor="Black" FontSize="20" />
+                <Entry WidthRequest="200" x:Name="PWCHECK" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
+                <Button Text="회원가입" Clicked="SignedUp_Clicked" BackgroundColor="#A0BAED" />
+                <Button Text="취소" Clicked="Cancel2_Clicked" BackgroundColor="#A0BAED"  WidthRequest="60"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
