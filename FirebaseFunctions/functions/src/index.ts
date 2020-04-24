@@ -6,7 +6,9 @@ import * as functions from 'firebase-functions';
 //import { firebaseConfig } from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import * as BasicObject from "BasicObject";
+//import * as BasicObject from "BasicObject";
+
+//import * as express from "express";
 
 admin.initializeApp();
 
@@ -16,6 +18,18 @@ admin.initializeApp();
  // credential: admin.credential.cert(serviceAccount),
  // databaseURL: "https://babzoom-7cae1.firebaseio.com"
 //});
+
+class Menu {
+    public Code:String = "";
+    public UserID:String = "";
+    public Foods:Food[] = [];
+}
+
+class Food {
+    public Code:String = "";
+    public Quantity:Number = 0;
+    public Unit:String = "";
+}
 
  export const helloWorld = functions.https.onRequest((request, response) => {
     let text:string = request.body.ID ?? "";
@@ -74,6 +88,20 @@ class User {
     }
 }
 
+// 주석 스타일 - JSDoc
+
+/**
+* 로그인 기능을 구현하는 함수입니다.
+* @class
+* @param ID - 로그인 했을 때의 아이디
+* @param Password - 로그인 했을 때의 패스워드
+* @returns
+    Packet - 패킷 종류,
+    ID - 로그인 아이디,
+    Password - 로그인 패스워드,
+    Result - 로그인 성공/실패,
+    Context - 안내 텍스트
+*/
 export const SignIn = functions.https.onRequest(async (request, response) => {
     let a:User = new User(request.body.ID, request.body.Password);
     let loginresult:boolean = await a.sign(true);
@@ -99,6 +127,12 @@ export const SignIn = functions.https.onRequest(async (request, response) => {
     response.send(responseresult);
 });
 
+
+/**
+ * 회원가입 기능을 구현하는 함수입니다.
+ * @param ID
+ * @param Password
+ */
 export const SignUp = functions.https.onRequest(async (req, res) => {
     let ID:string = req.body.ID;
     let PW:string = req.body.Password;
@@ -118,7 +152,7 @@ export const SignUp = functions.https.onRequest(async (req, res) => {
         resresult.Result = true;
         resresult.Context = "성공";
 
-        await admin.firestore().collection('data_user').add({
+        await admin.firestore().collection('data_user').doc(ID).set({
             "u_id" : ID,
             "u_pw" : PW
         }).catch((err) => console.error(err));
@@ -131,6 +165,9 @@ export const SignUp = functions.https.onRequest(async (req, res) => {
     res.send(resresult);
 });
 
+/**
+ * 
+ */
 export const GetUserData = functions.https.onRequest(async (req, res) => {
     let user:User = new User(req.body.ID, req.body.Password);
     await user.sign(true);
@@ -138,6 +175,9 @@ export const GetUserData = functions.https.onRequest(async (req, res) => {
     res.send(user);
 });
 
+/**
+ * 
+ */
 export const SetUserData = functions.https.onRequest(async (req, res) => {
     let user:User = new User(req.body.ID, req.body.Password);
     await user.sign(true);
@@ -147,18 +187,93 @@ export const SetUserData = functions.https.onRequest(async (req, res) => {
     let age:Number = req.body.Age;
     let gender:Boolean = req.body.Gender;
     let name:String = req.body.Name;
-    
-    await admin.firestore().collection('data_user').add({
+
+    let info:any = {
         "u_height" : height,
         "u_weight" : weight,
         "u_age" : age,
         "u_sex" : gender,
         "u_name" : name 
-    }).catch(err => console.error(err));
+    };
 
-    res.send();
+    let resresult:any = {};
+    resresult.Packet = "SetUserData";
+    resresult.Result = true;
+    resresult.Context = "";
+    
+    await admin.firestore().collection('data_user')
+    .doc(user.userId.toString()).update(info)
+    .catch(err => {
+        console.error(err);
+        resresult.Result = false;
+    });
+
+    res.send(resresult);
 });
 
-export const GetMenuData = functions.https.onRequest(async (req, res) => { 
+/**
+ * 
+ */
+export const SetMenuData = functions.https.onRequest(async (req, res) => { 
+    //let autoID = admin.firestore().collection("data_menu").doc().id;
+    let menu:Menu = new Menu();
+    menu.Code = req.body.Code;
+    menu.UserID = req.body.UserID;
+    menu.Foods = req.body.Foods;
     
+    let foods:any[] = [];
+
+    for (let i:number = 0; i < menu.Foods.length; i++) {
+        foods.push({
+            "Code" : menu.Foods[i].Code,
+            "Quantity" : menu.Foods[i].Quantity,
+            "Unit" : menu.Foods[i].Unit
+        });
+    }
+
+    let menuj:any = {
+        "Code" : menu.Code,
+        "UserID" : menu.UserID,
+        "Foods" : foods
+    };
+
+    let resresult:any = {};
+    resresult.Packet = "SetUserData";
+    resresult.Result = true;
+    resresult.Context = "";
+
+    await admin.firestore().collection('data_menu').doc(menu.Code.toString())
+    .set(menuj)
+    .catch(err => {
+        console.error(err);
+        resresult.Result = false;
+        resresult.Context = "식단 등록에 실패 하였습니다.";
+    });
+
+    res.send(resresult);
+});
+
+/**
+ * 
+ */
+export const GetMenuData = functions.https.onRequest(async (req, res) => {
+    let ID:String = req.body.ID;
+    //let Password:String = req.body.Password;
+
+    let query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
+
+    let menus:Menu[] = [];
+
+    await query.get().then(snapshot => {
+        snapshot.forEach(doc => {
+            let menu:Menu = new Menu();
+            menu.Code = doc.data().Code;
+            menu.UserID = doc.data().UserID;
+            menu.Foods = doc.data().Foods;
+
+            menus.push(menu);
+        });
+    }).catch(err => console.error(err));
+
+    res.send(menus);
 });
