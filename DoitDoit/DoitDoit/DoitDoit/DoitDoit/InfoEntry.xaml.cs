@@ -15,6 +15,7 @@ namespace DoitDoit
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class InfoEntry : ContentPage
 	{
+		//정보입력화면 -로그인 이후
 		User a;
 		public InfoEntry(User user)
 		{

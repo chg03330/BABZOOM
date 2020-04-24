@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 namespace DoitDoit
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
+    
+    // 메인화면
 	public partial class Main : ContentPage
 	{
 		public Main ()

@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 namespace DoitDoit
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
+
+	//게시글 화면
 	public partial class Post : ContentPage
 	{
 		public Post ()

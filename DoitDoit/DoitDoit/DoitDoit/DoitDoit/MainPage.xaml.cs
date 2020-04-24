@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 
 namespace DoitDoit
 {
+    //첫번째 로그인 화면
     public partial class MainPage : ContentPage
     {
         public MainPage()
