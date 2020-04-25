@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths" : {
+          "lib/*" : ["./lib/*"]
+      },
+      "target": "es5",
+      "module": "commonjs",
+      "declaration": true,
+      "strict": true,
+      "removeComments": true
+    }
+  }
