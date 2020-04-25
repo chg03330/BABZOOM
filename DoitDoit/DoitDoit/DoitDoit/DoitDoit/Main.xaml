@@ -1,13 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DoitDoit.Models"
              x:Class="DoitDoit.Main"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             >
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-            <Label Text="25000kcal" TextColor="Black" FontSize="17" HorizontalOptions="Center"/>
+            <Label Text="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Password}" TextColor="Black" FontSize="17" HorizontalOptions="Center" />
         <StackLayout>
             <Label Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" />
             <Label Text="   #당뇨병  #고등어  #양파" TextColor="Black" />

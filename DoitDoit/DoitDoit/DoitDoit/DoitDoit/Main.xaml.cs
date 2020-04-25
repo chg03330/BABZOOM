@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DoitDoit.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,9 +15,11 @@ namespace DoitDoit
     // 메인화면
 	public partial class Main : ContentPage
 	{
-		public Main ()
+        UserModel a = UserModel.GetInstance;
+
+        public Main ()
 		{
-			InitializeComponent ();
+            InitializeComponent ();
 		}
 
         private void Reco_Clicked(Object sender, EventArgs e)

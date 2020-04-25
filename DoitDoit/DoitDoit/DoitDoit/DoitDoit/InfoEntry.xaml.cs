@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using DoitDoit.Models;
 using Newtonsoft.Json;
 using DoitDoit.Network;
 
@@ -15,19 +16,18 @@ namespace DoitDoit
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class InfoEntry : ContentPage
 	{
-		//정보입력화면 -로그인 이후
-		User a;
-		public InfoEntry(User user)
+		UserModel a;
+		public InfoEntry()
 		{
 			InitializeComponent ();
-			a = user;
+			a = UserModel.GetInstance;
 		}
 
         private async void OK_Clicked(object sender, EventArgs e)
         {
 			Dictionary<string, string> post = new Dictionary<string, string>();
-			post["ID"] = a.id;
-			post["Password"] = a.pw;
+			post["ID"] = a.Id;
+			post["Password"] = a.Password;
 			post["Height"] = HEIGHT.Text;
 			post["Weight"] = WEIGHT.Text;
 			post["Name"] = "김덕배";

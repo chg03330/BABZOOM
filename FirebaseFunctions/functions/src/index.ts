@@ -85,6 +85,7 @@ export const SignIn = functions.https.onRequest(async (request, response) => {
     responseresult.Packet = "Login";
     responseresult.ID = request.body.ID;
     responseresult.Password = request.body.Password;
+    responseresult.User = a;
     responseresult.Result = false;
     responseresult.Context = "";
 

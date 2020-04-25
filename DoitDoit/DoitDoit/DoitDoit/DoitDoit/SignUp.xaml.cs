@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 
 using Newtonsoft.Json;
 using DoitDoit.Network;
+using DoitDoit.Models;
 
 namespace DoitDoit
 {
@@ -44,7 +45,7 @@ namespace DoitDoit
                 if ("true".Equals(resultdic["Result"]))
                 {
                     await DisplayAlert("성공", "회원가입에 성공하셨습니다", "확인");
-                    Navigation.PushModalAsync(new InfoEntry(new User(ID.Text, PASSWORD.Text)));
+                    Navigation.PushModalAsync(new InfoEntry());
                 }
                 else {
                     await DisplayAlert("실패", "회원가입에 실패했습니다.\n다시시도해주세요", "돌아가기");

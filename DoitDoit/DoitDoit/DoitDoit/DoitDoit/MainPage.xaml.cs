@@ -8,6 +8,7 @@ using Xamarin.Forms;
 
 using DoitDoit.Network;
 using Newtonsoft.Json;
+using DoitDoit.Models;
 
 namespace DoitDoit
 {
@@ -36,6 +37,9 @@ namespace DoitDoit
 
             if ("true".Equals(resultdic["Result"]))
             {
+                UserModel a = UserModel.GetInstance;
+                a.Id=id;
+                a.Password=pw;
                 await Navigation.PushModalAsync(new Main());
             }
             else {
