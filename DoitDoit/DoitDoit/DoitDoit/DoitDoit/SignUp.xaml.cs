@@ -60,7 +60,7 @@ namespace DoitDoit
 
         private void Cancel2_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new MainPage());
+            OnBackButtonPressed();
         }
 	}
 }

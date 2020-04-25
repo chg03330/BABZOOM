@@ -41,5 +41,10 @@ namespace DoitDoit
         {
 
         }
-	}
+
+        private void SideMenu_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new SideMenu());
+        }
+    }
 }

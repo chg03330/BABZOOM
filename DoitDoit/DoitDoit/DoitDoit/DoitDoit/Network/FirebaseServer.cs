@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace DoitDoit.Network {
     class FirebaseServer {
-        const string src = "https://us-central1-babzoom-7cae1.cloudfunctions.net/";
+        private const string src = "https://us-central1-babzoom-7cae1.cloudfunctions.net/";
         HttpClient client = new HttpClient();
+
 
         public async Task<string> FirebaseRequest(string function, Dictionary<string, string> values) {
             FormUrlEncodedContent requestcontent = new FormUrlEncodedContent(values);

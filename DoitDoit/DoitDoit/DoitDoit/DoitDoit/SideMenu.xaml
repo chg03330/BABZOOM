@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="DoitDoit.SideMenu"
+             BackgroundColor="White">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="메인" Clicked="Main_Clicked" BackgroundColor="#afc5db"/>
+            <Button Text="정보수정" Clicked="Info_Clicked" BackgroundColor="#afc5db"/>
+            <Button Text="달력" Clicked="Calendar_Clicked" BackgroundColor="#afc5db"/>
+            <Button Text="식단작성" Clicked="MenuMake_Clicked" BackgroundColor="#afc5db"/>
+            <Button Text="식단공유" Clicked="MenuShare_Clicked" BackgroundColor="#afc5db"/>
+            <Button Text="로그아웃" Clicked="Logout_Clicked" BackgroundColor="#afc5db"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
