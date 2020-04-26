@@ -4,11 +4,12 @@
              xmlns:local="clr-namespace:DoitDoit.Models"
              x:Class="DoitDoit.Main"
              BackgroundColor="White"
-             >
+             Appearing="ContentPage_Appearing">
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <StackLayout Orientation="Horizontal" >
+                <Label x:Name="Test"/>
                 <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" />
                 <Button Text="메뉴" FontSize="10" Clicked="SideMenu_Clicked"/>
             </StackLayout>          

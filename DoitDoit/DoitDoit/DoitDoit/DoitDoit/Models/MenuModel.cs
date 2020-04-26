@@ -4,10 +4,10 @@ using System.Text;
 
 namespace DoitDoit.Models
 {
-    class MenuModel
+    public class MenuModel
     {
-        DateTime date;
-        ICollection<Food> Foodlist;
-
+        public String Code { get; set; } = "";
+        public String UserID { get; set; } = "";
+        public Food[] Foods { get; set; } = null; 
     }
 }

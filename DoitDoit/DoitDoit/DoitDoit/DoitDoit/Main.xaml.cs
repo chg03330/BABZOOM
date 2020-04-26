@@ -46,5 +46,14 @@ namespace DoitDoit
         {
             Navigation.PushModalAsync(new SideMenu());
         }
-    }
+        /// <summary>
+        /// 메인 페이지 전부 로드 되었을 때
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+            
+        }
+    } // END Of Main CLASS
 }

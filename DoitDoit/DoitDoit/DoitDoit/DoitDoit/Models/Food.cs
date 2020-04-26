@@ -4,19 +4,20 @@ using System.Text;
 
 namespace DoitDoit.Models
 {
-    class Food
+    public class Food
     {
-        private string code, unit;
-        private string quantity;
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string Quantity { get; set; }
+        public string Unit { get; set; }
 
-        public string Code { get => this.code; set { this.code = value; } }
-        public string Unit { get => this.unit; set { this.unit = value; } }
-        public string Quantity { get => this.quantity; set { this.quantity = value; } }
+        public FoodData Data { get; set; } = null;
+    }
 
-        public Food(String code, String quantity, String unit) {
-            this.code = code;
-            this.quantity = quantity;
-            this.unit = unit;
-        }
+    public class FoodData
+    {
+        public string 식품명 { get; set; }
+        public String DB군 { get; set; }
+        public String 식품코드 { get; set; }
     }
 }
