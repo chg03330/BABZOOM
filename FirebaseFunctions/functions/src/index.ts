@@ -31,6 +31,11 @@ class Food {
     public Unit:String = "";
 }
 
+//class FoodData {
+ //   public Code:String = "";
+ //   public Name:String = "";
+//}
+
  export const helloWorld = functions.https.onRequest((request, response) => {
     let text:string = request.body.ID ?? "";
     response.send({ "a" : text });
@@ -225,7 +230,7 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
 
     for (let i:number = 0; i < menu.Foods.length; i++) {
         foods.push({
-            "Code" : menu.Foods[i].Code,
+            "Code" : admin.firestore().doc("data_foods/" + menu.Foods[i].Code.toString()),
             "Quantity" : menu.Foods[i].Quantity,
             "Unit" : menu.Foods[i].Unit
         });
@@ -242,7 +247,7 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
     resresult.Result = true;
     resresult.Context = "";
 
-    await admin.firestore().collection('data_menu').doc(menu.Code.toString())
+    await admin.firestore().collection("data_menu").doc(menu.Code.toString())
     .set(menuj)
     .catch(err => {
         console.error(err);
@@ -254,7 +259,8 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
 });
 
 /**
- * 
+ * ID 로 작성한 식단 데이터를 취득합니다.
+ * @param ID - 식단을 취득하고 싶은 사용자 아이디
  */
 export const GetMenuData = functions.https.onRequest(async (req, res) => {
     let ID:String = req.body.ID;
@@ -262,18 +268,54 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
 
     let query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
 
-    let menus:Menu[] = [];
+    let menus:any[] = [];
 
-    await query.get().then(snapshot => {
-        snapshot.forEach(doc => {
-            let menu:Menu = new Menu();
-            menu.Code = doc.data().Code;
-            menu.UserID = doc.data().UserID;
-            menu.Foods = doc.data().Foods;
+    await query.get().then(async (snapshot) => {
+        for (let index:number = 0; index < snapshot.size; index++) {
+            let doc = snapshot.docs[index];
 
+            let menu:any = {};
+                menu.Code = doc.data().Code;
+                menu.UserID = doc.data().UserID;
+    
+            let foods:any[] = [];
+    
+            for (let i:number = 0; i < doc.data().Foods.length; i++) {
+                let foodref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+                = doc.data().Foods[i].Code;
+
+                let fooddata = await foodref.get();
+    
+                foods.push({
+                    "Quantity" : doc.data().Foods[i].Quantity,
+                    "Unit" : doc.data().Foods[i].Unit,
+                    "Data" : fooddata.data()
+                });
+            }
+            menu.Foods = foods;
+    
             menus.push(menu);
-        });
+        }
     }).catch(err => console.error(err));
 
     res.send(menus);
+});
+
+export const SearchFood = functions.https.onRequest(async (req, res) => {
+    let Search:String = req.body.Search;
+
+    let foods:any[] = [];
+
+    let query = admin.firestore().collection("data_foods").orderBy("식품명").startAt(Search).endAt(Search + "\uF8FF"); 
+    await query.get().then((snapshot) => {
+        for (let i:number = 0; i < snapshot.size; i++) {
+            let doc = snapshot.docs[i];
+
+            foods.push(doc.data());         
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+    
+    res.send(foods);
 });
