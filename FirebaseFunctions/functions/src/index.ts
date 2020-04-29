@@ -19,22 +19,83 @@ admin.initializeApp();
  // databaseURL: "https://babzoom-7cae1.firebaseio.com"
 //});
 
-class Menu {
+abstract class BObject {
+    public abstract Create(doc:FirebaseFirestore.DocumentData):void;
+}
+
+class Menu extends BObject {
     public Code:String = "";
     public UserID:String = "";
     public Foods:Food[] = [];
+
+    public async Create(doc: FirebaseFirestore.DocumentData): Promise<void> {
+        this.Code = doc.Code;
+        this.UserID = doc.UserID;
+
+        for (let i:number = 0; i < doc.Foods.length; i++) {
+            let food:Food = new Food();
+            food.Unit = doc.Foods[i].Unit;
+            food.Quantity = doc.Foods[i].Quantity;
+            
+            let code:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+            = doc.Foods[i].Code;
+
+            let data = await code.get();
+            
+            food.Data = new FoodData();
+            food.Data.Create(data.data()!);
+
+            food.Code = data.data()!.식품코드;
+
+            this.Foods.push(food);
+        }
+    }
 }
 
 class Food {
     public Code:String = "";
     public Quantity:Number = 0;
     public Unit:String = "";
+
+    public Data:FoodData | null = null;
 }
 
-//class FoodData {
- //   public Code:String = "";
- //   public Name:String = "";
-//}
+class FoodData extends BObject {
+    public 식품코드:String = "";
+    public DB군:String = "";
+    public 식품이름:String = "";
+
+    public Create(doc:FirebaseFirestore.DocumentData): void {
+        this.식품코드 = doc.식품코드;
+        this.DB군 = doc.DB군;
+        this.식품이름 = doc.식품이름;
+    }
+}
+
+class Post extends BObject {
+    public UserID:String = "";
+    public Context:String = "";
+    public Date:Date | null = null;
+    public Menus:Menu[] = [];
+
+    public async Create(doc: FirebaseFirestore.DocumentData): Promise<void> {
+        this.UserID = doc.p_id;
+        this.Date = doc.p_date;
+        this.Context = doc.p_text;
+
+        for (let i:number = 0; i < doc.p_menu.length; i++) {
+            let menudocref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+            = doc.p_menu[i];
+
+            let docdata = await menudocref.get();
+            
+            let menu:Menu = new Menu();
+            await menu.Create(docdata.data()!);
+
+            this.Menus.push(menu);
+        }
+    }
+}
 
  export const helloWorld = functions.https.onRequest((request, response) => {
     let text:string = request.body.ID ?? "";
@@ -375,15 +436,22 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
 });
 
 export const GetPostData = functions.https.onRequest(async (req, res) => {
-    let query = admin.firestore().collection("data_post").orderBy("P_date", "desc");
+    let query = admin.firestore().collection("data_post");
 
-    await query.get().then((snapshot) => {
+    let resresult:any[] = [];
+
+    await query.get().then(async (snapshot) => {
         for (let i:number = 0; i < snapshot.size; i++) {
             let doc = snapshot.docs[i];
 
-            doc;
+            let post:Post = new Post();
+            await post.Create(doc.data());
+
+            resresult.push(post);
         }
     }).catch(err => {
         console.error(err);
     });
+
+    res.send(resresult);
 });
