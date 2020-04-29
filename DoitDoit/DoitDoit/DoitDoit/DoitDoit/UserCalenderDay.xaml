@@ -11,6 +11,7 @@
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
+            <Label x:Name="Test"/>
             <!-- Place new controls here -->
             <Label Text="2020년 4월 25일" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,10,0,0" 
                    FontSize="30"
@@ -22,27 +23,6 @@
                         Margin="0,20,30,0" CornerRadius="50" WidthRequest="30" HeightRequest="50"  HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-            
-            <!-- 식단 ListView -->
-            <Label Text="오전 10시" TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand" />
-            <StackLayout BackgroundColor="#dbelfo" Margin="20,0,20,0">
-                <Label Text="요리1" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리2" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리3" TextColor="Black" Margin="10,10,0,20" />
-            </StackLayout>
-            <Label Text="오후 2시 30분" TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand" />
-            <StackLayout BackgroundColor="#dbelfo" Margin="20,0,20,0">
-                <Label Text="요리1" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리2" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리3" TextColor="Black" Margin="10,10,0,20" />
-            </StackLayout>
-            <Label Text="오후 7시" TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand" />
-            <StackLayout BackgroundColor="#dbelfo" Margin="20,0,20,0">
-                <Label Text="요리1" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리2" TextColor="Black" Margin="10,10,0,0" />
-                <Label Text="요리3" TextColor="Black" Margin="10,10,0,20" />
-            </StackLayout>
-            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
             <StackLayout BackgroundColor="#e4eodd" Margin="20,10,120,10">
                 <Label Text="영양소A" TextColor="Black" Margin="10,10,0,0" />
                 <Label Text="영양소B" TextColor="Black" Margin="10,10,0,0" />
@@ -52,8 +32,73 @@
                         WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand" />
                 </StackLayout>
             </StackLayout>
+
+            <!-- 신 : 식단 Stack Layout -->
+            <StackLayout x:Name="liststack">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="{Binding Path=Code}" BackgroundColor="White"  TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand"/>
+                            <StackLayout BindableLayout.ItemsSource="{Binding Foods}" BackgroundColor="#dbelfo">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Data.식품명}" />
+                                            <Label Text="{Binding Data.DB군}" />
+                                            <Label Text="{Binding Data.식품코드}" />
+                                            <Label Text="{Binding Quantity}" />
+                                            <Label Text="{Binding Unit}" />
+                                            <Button Text="+" ScaleX="0.5"  HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+            
+            <!-- 구 : 식단 ListView -->
+            <ListView x:Name="listview"
+                      HasUnevenRows="False"
+                      RowHeight="100">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <StackLayout>
+                                    <StackLayout>
+                                        <Label Text="{Binding Path=Code}" FontSize="14" LineBreakMode="WordWrap"/>
+                                        <!-- 음식 ListView -->
+                                        <ListView ItemsSource="{Binding Foods}">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ViewCell >
+                                                        <ViewCell.View>
+                                                            <StackLayout Orientation="Horizontal">
+                                                                <Label Text="{Binding Data.식품명}" />
+                                                                <Label Text="{Binding Data.DB군}" />
+                                                                <Label Text="{Binding Data.식품코드}" />
+                                                                <Label Text="{Binding Quantity}" />
+                                                                <Label Text="{Binding Unit}" />
+                                                                <Button Text="+" ScaleX="0.5"/>
+                                                            </StackLayout>
+                                                        </ViewCell.View>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
+
         </StackLayout>
-        
     </ScrollView>
 
 </ContentPage>

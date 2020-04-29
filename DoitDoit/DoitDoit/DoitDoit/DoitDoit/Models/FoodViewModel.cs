@@ -5,23 +5,25 @@ using System.Collections.ObjectModel;
 
 namespace DoitDoit.Models
 {
-    class FoodViewModel
+    public class FoodViewModel
     {
-        private ObservableCollection<Food> foods = new ObservableCollection<Food>();
-        string Title;
-        public ObservableCollection<Food> Foods
-        {
-            get {
-                return foods;
-            }
-            set {
-                foods = value;
-            }
+        //private ObservableCollection<Food> foods = new ObservableCollection<Food>();
+        //public ObservableCollection<Food> Foods
+        //{
+        //    get {
+        //        return foods;
+        //    }
+        //    set {
+        //        foods = value;
+        //    }
+        //}
+        public String Code { get; set; } = "";
+        public String UserID { get; set; } = "";
+        public Food[] Foods { get; set; } = null;
+        public String Goo { get; set; } = "";
+        public FoodViewModel() {
+            Goo = "티티";
         }
-        public FoodViewModel(String a)
-        {
-            Foods = new ObservableCollection<Food>();
-            Title = a;
-        }
+        
     }
 }

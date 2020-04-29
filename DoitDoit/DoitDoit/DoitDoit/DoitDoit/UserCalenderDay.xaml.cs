@@ -15,16 +15,13 @@ namespace DoitDoit
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserCalenderDay : ContentPage
     {
-        FoodViewModel viewModel = new FoodViewModel("a");
-        ObservableCollection<MenuModel> list;
+        ObservableCollection<FoodViewModel> list;
 
 
         public UserCalenderDay()
         {
             InitializeComponent();
-
-            viewModel.Foods.Add(new Food() { Name = "1", Code = "1", Quantity = "1", Unit = "g" });
-
+         
             
         }
 
@@ -33,15 +30,6 @@ namespace DoitDoit
             Navigation.PushModalAsync(new AddUserMenu());
         }
 
-        private void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            Food selectedItem = e.SelectedItem as Food;
-        }
-
-        private void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Food tappedItem = e.Item as Food;
-        }
 
         private async void ContentPage_Appearing(object sender, EventArgs e)
         {
@@ -51,11 +39,13 @@ namespace DoitDoit
 
             string result = await firebase.FirebaseRequest("GetMenuData", req);
 
-            list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<MenuModel>>(result);
+            list = new ObservableCollection<FoodViewModel>();
 
-            //list = new ObservableCollection<MenuModel>();
+            list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result);
 
-            //listview.ItemsSource = list;//viewModel.Foods;
+
+            listview.ItemsSource = list;//viewModel.Foods;
+            BindableLayout.SetItemsSource(this.liststack, list);
         }
     }
 }
