@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using DoitDoit.Network;
 using Newtonsoft.Json;
 using DoitDoit.Models;
+using System.Collections.ObjectModel;
 
 namespace DoitDoit
 {
@@ -40,6 +41,19 @@ namespace DoitDoit
                 UserModel a = UserModel.GetInstance;
                 a.Id=id;
                 a.Password=pw;
+
+                
+                Dictionary<string, string> req = new Dictionary<string, string>();
+                req["ID"] = a.Id;
+
+                string result1 = await server.FirebaseRequest("GetMenuData", req);
+
+                ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
+
+                list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
+
+                a.FoodViewModels = list;
+
                 await Navigation.PushModalAsync(new Main());
             }
             else {

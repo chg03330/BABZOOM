@@ -12,40 +12,87 @@ using System.Collections.ObjectModel;
 
 namespace DoitDoit
 {
+    public class ButtonWithTag : Button
+    {
+        public object Tag
+        {
+            get { return (object)GetValue(TagProperty); }
+            set { SetValue(TagProperty, value); }
+        }
+
+        public static readonly BindableProperty TagProperty =
+            BindableProperty.Create(nameof(Tag), typeof(object), typeof(ButtonWithTag), null);
+    }
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class UserCalenderDay : ContentPage
     {
         ObservableCollection<FoodViewModel> list;
-
+        UserModel a;
+        public DateTime dateTime { get; set; }
+        String nowTime;
 
         public UserCalenderDay()
         {
             InitializeComponent();
-         
-            
+            a = UserModel.GetInstance;
+            dateTime = DateTime.Now;
+            nowTime = dateTime.ToString("yyyyMMdd");
+            this.CalenderDayTime.BindingContext = this;
+
         }
 
         private void addUserMenu_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new AddUserMenu());
+            AddUserMenu ad = new AddUserMenu();
+            ad.dateTime = this.dateTime;
+            Navigation.PushModalAsync(ad);
         }
 
 
-        private async void ContentPage_Appearing(object sender, EventArgs e)
+        private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            DoitDoit.Network.FirebaseServer firebase = new Network.FirebaseServer();
-            Dictionary<string, string> req = new Dictionary<string, string>();
-            req["ID"] = UserModel.GetInstance.Id;
+            var fvm = a.FoodViewModels.Where(model => { return model.Code is "20200503205700"; });
 
-            string result = await firebase.FirebaseRequest("GetMenuData", req);
 
             list = new ObservableCollection<FoodViewModel>();
+            foreach (FoodViewModel f in fvm) {
+                f.Code = f.Code.Substring(0, 8);
+                list.Add(f);
+            }
 
-            list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result);
-
-
-            listview.ItemsSource = list;//viewModel.Foods;
             BindableLayout.SetItemsSource(this.liststack, list);
         }
+
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            ButtonWithTag button = sender as ButtonWithTag;
+            Food a = button.BindingContext as Food;
+            FoodData foodData = a.Data;
+            FoodViewModel menu = button.Tag as FoodViewModel;
+
+            DisplayAlert("확인용", "값:" + menu.Code, foodData.식품코드) ;
+        }
+
+        private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            this.dateTime = e.NewDate;
+            var fvm = a.FoodViewModels.Where(model => { return model.Code.Contains(e.NewDate.ToString("yyyyMMdd")); });
+            list.Clear();
+            if (fvm.Count() == 0)
+            {
+                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인");
+            }
+            else 
+            { 
+                foreach(FoodViewModel f in fvm)
+                {
+                    f.Code = f.Code.Substring(0, 8);
+                    list.Add(f);
+                }
+            }
+        }
     }
+
 }

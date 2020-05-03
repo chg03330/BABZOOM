@@ -17,13 +17,12 @@ namespace DoitDoit.Models
         //        foods = value;
         //    }
         //}
-        public String Code { get; set; } = "";
+        public String Code { get; set; } = ""; // 이게 날짜값 2020042004500이런거
         public String UserID { get; set; } = "";
         public Food[] Foods { get; set; } = null;
-        public String Goo { get; set; } = "";
+
         public FoodViewModel() {
-            Goo = "티티";
         }
-        
+
     }
 }

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:DoitDoit.Models"
+             xmlns:local="clr-namespace:DoitDoit.Models" xmlns:doitdoit="clr-namespace:DoitDoit"
              mc:Ignorable="d"
              x:Class="DoitDoit.UserCalenderDay"
              BackgroundColor="White"
@@ -11,11 +11,12 @@
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <Label x:Name="Test"/>
             <!-- Place new controls here -->
-            <Label Text="2020년 4월 25일" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,10,0,0" 
-                   FontSize="30"
-                   FontAttributes="Bold" />
+            <DatePicker x:Name="CalenderDayTime" Date="{Binding dateTime}"
+                            Format="yyyy년 MM월 dd일" 
+                            MinimumDate="1 Jan 2018" MaximumDate="31 Dec 2100" 
+                            DateSelected="CalenderDayTime_DateSelected"
+                            FontSize="30" HorizontalOptions="Center"/>
             <StackLayout Orientation="Horizontal">
                 <Button Text="공유" TextColor="Black" BackgroundColor="#afc5db" 
                         Margin="30,20,0,0" CornerRadius="20" WidthRequest="60" HeightRequest="50" />
@@ -23,6 +24,40 @@
                         Margin="0,20,30,0" CornerRadius="50" WidthRequest="30" HeightRequest="50"  HorizontalOptions="EndAndExpand" />
             </StackLayout>
             <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
+
+            <!-- 신 : 식단 Stack Layout -->
+            <StackLayout x:Name="liststack">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout BackgroundColor="#FFFFFF">
+                                <Label Text="{Binding Path=Code}" BackgroundColor="White"  TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
+                            
+                            <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
+                            <StackLayout BindableLayout.ItemsSource="{Binding Foods}" BackgroundColor="#dbelfo">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Data.식품명}" />
+                                            <Label Text="{Binding Data.DB군}" />
+                                            <Label Text="{Binding Data.식품코드}" />
+                                            <Label Text="{Binding Quantity}" />
+                                            <Label Text="{Binding Unit}" />
+                                            <Label Text="{Binding Code}" />
+                                            <doitdoit:ButtonWithTag Tag="{Binding BindingContext, Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout}, Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" Clicked="Button_Clicked"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+
+            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
+
             <StackLayout BackgroundColor="#e4eodd" Margin="20,10,120,10">
                 <Label Text="영양소A" TextColor="Black" Margin="10,10,0,0" />
                 <Label Text="영양소B" TextColor="Black" Margin="10,10,0,0" />
@@ -33,69 +68,6 @@
                 </StackLayout>
             </StackLayout>
 
-            <!-- 신 : 식단 Stack Layout -->
-            <StackLayout x:Name="liststack">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout Orientation="Vertical">
-                            <Label Text="{Binding Path=Code}" BackgroundColor="White"  TextColor="Black" FontSize="18" Margin="0,10,20,0" HorizontalOptions="EndAndExpand"/>
-                            <StackLayout BindableLayout.ItemsSource="{Binding Foods}" BackgroundColor="#dbelfo">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackLayout Orientation="Horizontal">
-                                            <Label Text="{Binding Data.식품명}" />
-                                            <Label Text="{Binding Data.DB군}" />
-                                            <Label Text="{Binding Data.식품코드}" />
-                                            <Label Text="{Binding Quantity}" />
-                                            <Label Text="{Binding Unit}" />
-                                            <Button Text="+" ScaleX="0.5"  HorizontalOptions="EndAndExpand"/>
-                                        </StackLayout>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </StackLayout>
-                        </StackLayout>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
-            
-            <!-- 구 : 식단 ListView -->
-            <ListView x:Name="listview"
-                      HasUnevenRows="False"
-                      RowHeight="100">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <StackLayout>
-                                    <StackLayout>
-                                        <Label Text="{Binding Path=Code}" FontSize="14" LineBreakMode="WordWrap"/>
-                                        <!-- 음식 ListView -->
-                                        <ListView ItemsSource="{Binding Foods}">
-                                            <ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <ViewCell >
-                                                        <ViewCell.View>
-                                                            <StackLayout Orientation="Horizontal">
-                                                                <Label Text="{Binding Data.식품명}" />
-                                                                <Label Text="{Binding Data.DB군}" />
-                                                                <Label Text="{Binding Data.식품코드}" />
-                                                                <Label Text="{Binding Quantity}" />
-                                                                <Label Text="{Binding Unit}" />
-                                                                <Button Text="+" ScaleX="0.5"/>
-                                                            </StackLayout>
-                                                        </ViewCell.View>
-                                                    </ViewCell>
-                                                </DataTemplate>
-                                            </ListView.ItemTemplate>
-                                        </ListView>
-                                    </StackLayout>
-
-                                </StackLayout>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
             <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
 
         </StackLayout>

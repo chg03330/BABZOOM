@@ -31,6 +31,11 @@ class Food {
     public Unit:String = "";
 }
 
+//class FoodData {
+ //   public Code:String = "";
+ //   public Name:String = "";
+//}
+
  export const helloWorld = functions.https.onRequest((request, response) => {
     let text:string = request.body.ID ?? "";
     response.send({ "a" : text });
@@ -212,37 +217,45 @@ export const SetUserData = functions.https.onRequest(async (req, res) => {
 });
 
 /**
- * 
+ * 클라이언트에서 보내온 식단 데이터를 서버에 저장합니다.
+ * @param Code - 식단을 작성한 일시
+ * @param UserID - 식단을 작성한 유저
+ * @param Foods - 음식 정보
+ * @param Foods.Code - 음식 코드
+ * @param Foods.Quantity - 음식 양
+ * @param Foods.Unit - 음식 양 단위
  */
 export const SetMenuData = functions.https.onRequest(async (req, res) => { 
     //let autoID = admin.firestore().collection("data_menu").doc().id;
     let menu:Menu = new Menu();
-    menu.Code = req.body.Code;
-    menu.UserID = req.body.UserID;
-    menu.Foods = req.body.Foods;
+    menu.Code = req.body.Code; menu.UserID = req.body.UserID; menu.Foods = req.body.Foods;
     
     let foods:any[] = [];
 
+    // 음식 정보 초기화
     for (let i:number = 0; i < menu.Foods.length; i++) {
         foods.push({
-            "Code" : menu.Foods[i].Code,
+            "Code" : admin.firestore().doc("data_foods/" + menu.Foods[i].Code.toString()),
             "Quantity" : menu.Foods[i].Quantity,
             "Unit" : menu.Foods[i].Unit
         });
     }
 
+    // 식단 정보 초기화
     let menuj:any = {
         "Code" : menu.Code,
         "UserID" : menu.UserID,
         "Foods" : foods
     };
 
+    // 패킷 데이터 초기화
     let resresult:any = {};
-    resresult.Packet = "SetUserData";
+    resresult.Packet = "SetMenuData";
     resresult.Result = true;
     resresult.Context = "";
 
-    await admin.firestore().collection('data_menu').doc(menu.Code.toString())
+    // 데이터베이스 저장
+    await admin.firestore().collection("data_menu").doc(menu.Code.toString())
     .set(menuj)
     .catch(err => {
         console.error(err);
@@ -254,7 +267,8 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
 });
 
 /**
- * 
+ * ID 로 작성한 식단 데이터를 취득합니다.
+ * @param ID - 식단을 취득하고 싶은 사용자 아이디
  */
 export const GetMenuData = functions.https.onRequest(async (req, res) => {
     let ID:String = req.body.ID;
@@ -262,18 +276,114 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
 
     let query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
 
-    let menus:Menu[] = [];
+    // 클라이언트에 보낼 메뉴 정보
+    let menus:any[] = [];
 
-    await query.get().then(snapshot => {
-        snapshot.forEach(doc => {
-            let menu:Menu = new Menu();
-            menu.Code = doc.data().Code;
-            menu.UserID = doc.data().UserID;
-            menu.Foods = doc.data().Foods;
+    await query.get().then(async (snapshot) => {
+        for (let index:number = 0; index < snapshot.size; index++) {
+            let doc = snapshot.docs[index];
 
+            // 식단 정보 초기화
+            let menu:any = {};
+                menu.Code = doc.data().Code;
+                menu.UserID = doc.data().UserID;
+    
+            let foods:any[] = [];
+    
+            for (let i:number = 0; i < doc.data().Foods.length; i++) {
+                // 음식 정보 firestore document
+                let foodref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+                = doc.data().Foods[i].Code;
+                
+                let fooddata = await foodref.get();
+    
+                // 음식 정보 초기화
+                foods.push({
+                    "Quantity" : doc.data().Foods[i].Quantity,
+                    "Unit" : doc.data().Foods[i].Unit,
+                    "Data" : fooddata.data()
+                });
+            }
+            menu.Foods = foods;
+    
             menus.push(menu);
-        });
+        }
     }).catch(err => console.error(err));
 
     res.send(menus);
+});
+
+export const SearchFood = functions.https.onRequest(async (req, res) => {
+    let Search:String = req.body.Search;
+
+    let foods:any[] = [];
+
+    let query = admin.firestore().collection("data_foods").orderBy("식품명").startAt(Search).endAt(Search + "\uF8FF"); 
+    await query.get().then((snapshot) => {
+        for (let i:number = 0; i < snapshot.size; i++) {
+            let doc = snapshot.docs[i];
+
+            foods.push(doc.data());         
+        }
+    }).catch(err => {
+        console.error(err);
+    });
+    
+    res.send(foods);
+});
+
+/**
+ * 
+ */
+export const SetPostData = functions.https.onRequest(async (req, res) => {
+    let ID:String = req.body.UserID ?? "";
+    let DateTime:number = req.body.DateTime ?? 0;
+    let Context:String = req.body.Context ?? "";
+    let MenuCode:String[] = req.body.Menus ?? [];
+
+    let timestamp:admin.firestore.Timestamp = admin.firestore.Timestamp.fromMillis(DateTime);
+    console.log(DateTime);
+    console.log(timestamp);
+
+    let post:any = {
+        "p_id" : ID,
+        "p_date" : admin.firestore.Timestamp.fromMillis(DateTime),
+        "p_text" : Context
+    };
+    
+    let menus:any[] = [];
+    for (let i:number = 0; i < MenuCode.length; i++) {
+        menus.push(admin.firestore().doc("data_menu/" + MenuCode[i]));
+    }
+    post.p_menu = menus;
+
+    // 패킷 데이터 초기화
+    let resresult:any = {};
+    resresult.Packet = "SetPostData";
+    resresult.Result = true;
+    resresult.Context = "";
+    
+    await admin.firestore().collection("data_post")
+    .add(post)
+    .catch(err => {
+        console.error(err);
+        resresult.Result = false;
+        resresult.Context = "식단 등록에 실패하였습니다.";
+    });
+
+    res.send(resresult);
+});
+
+export const GetPostData = functions.https.onRequest(async (req, res) => {
+    let query = admin.firestore().collection("data_post").orderBy("P_date", "desc");
+
+    await query.get().then((snapshot) => {
+        for (let i:number = 0; i < snapshot.size; i++) {
+            let doc = snapshot.docs[i];
+
+            doc;
+        }
+    }).catch(err => {
+        console.error(err);
+    });
 });
