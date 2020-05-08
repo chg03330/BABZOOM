@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -29,6 +29,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="SearchFood.xaml.cs">
+      <DependentUpon>SearchFood.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UserCalenderDay.xaml.cs">
       <DependentUpon>UserCalenderDay.xaml</DependentUpon>
     </Compile>
@@ -36,6 +39,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="AddUserMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="SearchFood.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="SideMenu.xaml">
