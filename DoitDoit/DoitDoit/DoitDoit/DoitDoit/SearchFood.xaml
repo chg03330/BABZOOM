@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DoitDoit"
+             xmlns:model="clr-namespace:DoitDoit.Models"
+             x:Class="DoitDoit.SearchFood"
+             BackgroundColor="AliceBlue">
+
+    <ContentPage.BindingContext>
+        <model:FoodList/>
+    </ContentPage.BindingContext>
+
+    <StackLayout>
+        <SearchBar Placeholder="Food Name" Text="{Binding FoodName}"/>
+
+        <ListView x:Name="IvFood" ItemsSource="{Binding Foods}" SelectedItem="{Binding SelectedFood}">
+
+
+        </ListView>
+
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+            <Button Text="추가" Command ="{Binding AddFoodCommand}" BackgroundColor="#A0BAED"
+                    WidthRequest="150" CornerRadius="30" TextColor="White"/>
+            <Button Text="삭제" Command ="{Binding RemoveFoodCommand}" BackgroundColor="#A0BAED"
+                    WidthRequest="150" CornerRadius="30" TextColor="white"/>
+        </StackLayout>
+
+        <StackLayout  HorizontalOptions="Center">
+            <Button Text="등록" Clicked="Register_Clicked" BackgroundColor="#A0BAED"
+                    WidthRequest="300" CornerRadius="30" TextColor="white" />
+        </StackLayout>
+
+    </StackLayout>
+
+</ContentPage>
