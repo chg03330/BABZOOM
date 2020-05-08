@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoitDoit.UserCalenderDay_Nut"
+             BackgroundColor="White">
+
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical">
+            <!-- Place new controls here -->
+            <Label Text="영양소 상세" TextColor="Black" HorizontalTextAlignment="Start" 
+                   Margin="15,15,0,0" FontSize="30" FontAttributes="Bold" />
+            <StackLayout BackgroundColor="#e4eodd" Margin="15,10,100,0">
+                <Label Text="영양소A 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                <Label Text="영양소B 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                <Label Text="영양소C 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                <Label Text="영양소D 상세" TextColor="Black" FontSize="15" Margin="10,10,0,300" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

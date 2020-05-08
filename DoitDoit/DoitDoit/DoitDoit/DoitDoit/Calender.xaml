@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoitDoit.Calender"
+             BackgroundColor="White">
+    <Grid ColumnSpacing="6" RowSpacing="6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Label Text="BOOBZOOM" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" 
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Label Text="Calendar" TextColor="Black" Grid.Column="0" Grid.Row="1" 
+               Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="AliceBlue"/>
+        <Label Text="일간 통계" TextColor="Black" Grid.Column="0" Grid.Row="3" 
+               FontSize="20" BackgroundColor="#dbelfo"/>
+        <Label Text="월간 통계" TextColor="Black" Grid.Column="1" Grid.Row="3" 
+               FontSize="20" BackgroundColor="#e4eodd"/>
+
+    </Grid>
+</ContentPage>
