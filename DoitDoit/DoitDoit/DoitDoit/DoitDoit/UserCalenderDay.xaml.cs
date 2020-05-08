@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DoitDoit.Models;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-
 namespace DoitDoit
 {
     public class ButtonWithTag : Button
@@ -32,6 +28,7 @@ namespace DoitDoit
         public DateTime dateTime { get; set; }
         String nowTime;
 
+
         public UserCalenderDay()
         {
             InitializeComponent();
@@ -40,8 +37,11 @@ namespace DoitDoit
             nowTime = dateTime.ToString("yyyyMMdd");
             this.CalenderDayTime.BindingContext = this;
 
+           
+
         }
 
+        
         private void addUserMenu_Clicked(object sender, EventArgs e)
         {
             AddUserMenu ad = new AddUserMenu();

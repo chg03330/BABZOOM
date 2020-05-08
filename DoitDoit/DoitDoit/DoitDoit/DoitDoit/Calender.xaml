@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
              x:Class="DoitDoit.Calender"
              BackgroundColor="White">
     <Grid ColumnSpacing="6" RowSpacing="6">
@@ -17,7 +18,11 @@
 
         <Label Text="BOOBZOOM" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" 
                Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
-        <Label Text="Calendar" TextColor="Black" Grid.Column="0" Grid.Row="1" 
+        <controls:Calendar
+        Month="5"
+        Year="2019"
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand" Grid.Column="0" Grid.Row="1" 
                Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="AliceBlue"/>
         <Label Text="일간 통계" TextColor="Black" Grid.Column="0" Grid.Row="3" 
                FontSize="20" BackgroundColor="#dbelfo"/>

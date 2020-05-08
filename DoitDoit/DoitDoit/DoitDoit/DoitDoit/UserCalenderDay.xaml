@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:DoitDoit.Models" xmlns:doitdoit="clr-namespace:DoitDoit"
+             xmlns:local="clr-namespace:DoitDoit.Models" xmlns:doitdoit="clr-namespace:DoitDoit" xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
              x:Class="DoitDoit.UserCalenderDay"
              BackgroundColor="White"
@@ -62,6 +62,9 @@
                 <Label Text="영양소A" TextColor="Black" Margin="10,10,0,0" />
                 <Label Text="영양소B" TextColor="Black" Margin="10,10,0,0" />
                 <Label Text="영양소C" TextColor="Black" Margin="10,10,0,20" />
+               
+             
+                
                 <StackLayout Orientation="Horizontal">
                     <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="10"
                         WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand" />

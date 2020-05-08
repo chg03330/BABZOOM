@@ -68,7 +68,7 @@ namespace DoitDoit
         
         private void Cancel_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new UserCalenderDay());
+            Navigation.PushModalAsync(new Calender());
         }
     }
 }

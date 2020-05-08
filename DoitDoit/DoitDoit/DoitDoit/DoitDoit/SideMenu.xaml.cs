@@ -29,7 +29,7 @@ namespace DoitDoit
 
         private void Calendar_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new Main());
+            Navigation.PushModalAsync(new Calender());
         }
 
         private void MenuMake_Clicked(object sender, EventArgs e)
