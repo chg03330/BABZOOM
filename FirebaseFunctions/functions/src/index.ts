@@ -19,25 +19,123 @@ admin.initializeApp();
  // databaseURL: "https://babzoom-7cae1.firebaseio.com"
 //});
 
-class Menu {
+abstract class BObject {
+    public abstract Create(docid:string):Promise<void>;
+}
+
+class Menu extends BObject {
     public Code:String = "";
     public UserID:String = "";
     public Foods:Food[] = [];
+
+    public async Create(docid:string): Promise<void> {
+        const query = admin.firestore().collection("data_menu").doc(docid);
+        const doc = (await query.get()).data()!;
+
+        this.Code = doc.Code;
+        this.UserID = doc.UserID;
+
+        for (const ifood of doc.Foods) {
+            const food:Food = new Food();
+            food.Unit = ifood.Unit;
+            food.Quantity = ifood.Quantity;
+            
+            const code:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+            = ifood.Code;
+
+            const data = await code.get();
+            
+            food.Data = new FoodData();
+            await food.Data.Create(data.id);
+
+            food.Code = data.data()!.식품코드;
+
+            this.Foods.push(food);
+        }
+    }
 }
 
 class Food {
     public Code:String = "";
     public Quantity:Number = 0;
     public Unit:String = "";
+
+    public Data:FoodData | null = null;
 }
 
-//class FoodData {
- //   public Code:String = "";
- //   public Name:String = "";
-//}
+class FoodData extends BObject {
+    public 식품코드:String = "";
+    public DB군:String = "";
+    public 식품명:String = "";
+
+    public async Create(docid:string): Promise<void> {
+        const query = admin.firestore().collection("data_foods").doc(docid);
+        const doc = (await query.get()).data()!;
+
+        this.식품코드 = doc.식품코드;
+        this.DB군 = doc.DB군;
+        this.식품명 = doc.식품명;
+    }
+}
+
+class Post extends BObject {
+    public UserID:String = "";
+    public Context:String = "";
+    public Date:Date | null = null;
+    public Menus:Menu[] = [];
+    public Comments:Comment[] = [];
+
+    public async Create(docid:string): Promise<void> {
+        const query = admin.firestore().collection("data_post").doc(docid);
+
+        const doc = (await query.get()).data()!;
+
+        this.UserID = doc.p_id;
+        const timestamp:admin.firestore.Timestamp = doc.p_date;
+        this.Date = timestamp.toDate();
+        this.Context = doc.p_text;
+
+        for (let i:number = 0; i < doc.p_menu.length; i++) {
+            const menudocref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+            = doc.p_menu[i];
+
+            const docdata = await menudocref.get();
+            
+            const menu:Menu = new Menu();
+            await menu.Create(docdata.id);
+
+            this.Menus.push(menu);
+        }
+
+        const commentcollection = query.collection("data_post_comment");
+
+        await commentcollection.get().then(snapshot => {
+            for (let i:number = 0; i < snapshot.size; i++) {
+                const cdoc = snapshot.docs[i];
+
+                const comm:Comment = new Comment();
+                comm.ID = cdoc.data().c_id;
+                comm.Context = cdoc.data().c_text;
+                const ctimestamp:admin.firestore.Timestamp = cdoc.data().c_time;
+                comm.Date = ctimestamp.toDate();
+
+                this.Comments.push(comm);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+}
+
+class Comment  {
+    public ID:string = "";
+    public Context:string = "";
+    public Date:Date | null = null;
+}
 
  export const helloWorld = functions.https.onRequest((request, response) => {
-    let text:string = request.body.ID ?? "";
+    const text:string = request.body.ID ?? "";
     response.send({ "a" : text });
  });
 
@@ -108,10 +206,10 @@ class User {
     Context - 안내 텍스트
 */
 export const SignIn = functions.https.onRequest(async (request, response) => {
-    let a:User = new User(request.body.ID, request.body.Password);
-    let loginresult:boolean = await a.sign(true);
+    const a:User = new User(request.body.ID, request.body.Password);
+    const loginresult:boolean = await a.sign(true);
 
-    let responseresult:any = {};
+    const responseresult:any = {};
     responseresult.Packet = "Login";
     responseresult.ID = request.body.ID;
     responseresult.Password = request.body.Password;
@@ -139,14 +237,14 @@ export const SignIn = functions.https.onRequest(async (request, response) => {
  * @param Password
  */
 export const SignUp = functions.https.onRequest(async (req, res) => {
-    let ID:string = req.body.ID;
-    let PW:string = req.body.Password;
+    const ID:string = req.body.ID;
+    const PW:string = req.body.Password;
 
-    let user:User = new User(ID, PW);
+    const user:User = new User(ID, PW);
 
-    let signupresult = await user.sign(false);
+    const signupresult = await user.sign(false);
 
-    let resresult:any = {};
+    const resresult:any = {};
     resresult.Packet = "SignUp";
     resresult.ID = ID;
     resresult.Password = PW;
@@ -174,7 +272,7 @@ export const SignUp = functions.https.onRequest(async (req, res) => {
  * 
  */
 export const GetUserData = functions.https.onRequest(async (req, res) => {
-    let user:User = new User(req.body.ID, req.body.Password);
+    const user:User = new User(req.body.ID, req.body.Password);
     await user.sign(true);
     
     res.send(user);
@@ -184,16 +282,16 @@ export const GetUserData = functions.https.onRequest(async (req, res) => {
  * 
  */
 export const SetUserData = functions.https.onRequest(async (req, res) => {
-    let user:User = new User(req.body.ID, req.body.Password);
+    const user:User = new User(req.body.ID, req.body.Password);
     await user.sign(true);
 
-    let height:Number = req.body.Height;
-    let weight:Number = req.body.Weight;
-    let age:Number = req.body.Age;
-    let gender:Boolean = req.body.Gender;
-    let name:String = req.body.Name;
+    const height:Number = req.body.Height;
+    const weight:Number = req.body.Weight;
+    const age:Number = req.body.Age;
+    const gender:Boolean = req.body.Gender;
+    const name:String = req.body.Name;
 
-    let info:any = {
+    const info:any = {
         "u_height" : height,
         "u_weight" : weight,
         "u_age" : age,
@@ -201,7 +299,7 @@ export const SetUserData = functions.https.onRequest(async (req, res) => {
         "u_name" : name 
     };
 
-    let resresult:any = {};
+    const resresult:any = {};
     resresult.Packet = "SetUserData";
     resresult.Result = true;
     resresult.Context = "";
@@ -227,10 +325,10 @@ export const SetUserData = functions.https.onRequest(async (req, res) => {
  */
 export const SetMenuData = functions.https.onRequest(async (req, res) => { 
     //let autoID = admin.firestore().collection("data_menu").doc().id;
-    let menu:Menu = new Menu();
+    const menu:Menu = new Menu();
     menu.Code = req.body.Code; menu.UserID = req.body.UserID; menu.Foods = req.body.Foods;
     
-    let foods:any[] = [];
+    const foods:any[] = [];
 
     // 음식 정보 초기화
     for (let i:number = 0; i < menu.Foods.length; i++) {
@@ -242,14 +340,14 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
     }
 
     // 식단 정보 초기화
-    let menuj:any = {
+    const menuj:any = {
         "Code" : menu.Code,
         "UserID" : menu.UserID,
         "Foods" : foods
     };
 
     // 패킷 데이터 초기화
-    let resresult:any = {};
+    const resresult:any = {};
     resresult.Packet = "SetMenuData";
     resresult.Result = true;
     resresult.Context = "";
@@ -271,40 +369,22 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
  * @param ID - 식단을 취득하고 싶은 사용자 아이디
  */
 export const GetMenuData = functions.https.onRequest(async (req, res) => {
-    let ID:String = req.body.ID;
+    const ID:String = req.body.ID ?? "";
     //let Password:String = req.body.Password;
 
-    let query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
+    const query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
 
     // 클라이언트에 보낼 메뉴 정보
-    let menus:any[] = [];
+    const menus:Menu[] = [];
 
     await query.get().then(async (snapshot) => {
         for (let index:number = 0; index < snapshot.size; index++) {
-            let doc = snapshot.docs[index];
+            const doc = snapshot.docs[index];
 
-            // 식단 정보 초기화
-            let menu:any = {};
-                menu.Code = doc.data().Code;
-                menu.UserID = doc.data().UserID;
-    
-            let foods:any[] = [];
-    
-            for (let i:number = 0; i < doc.data().Foods.length; i++) {
-                // 음식 정보 firestore document
-                let foodref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-                = doc.data().Foods[i].Code;
-                
-                let fooddata = await foodref.get();
-    
-                // 음식 정보 초기화
-                foods.push({
-                    "Quantity" : doc.data().Foods[i].Quantity,
-                    "Unit" : doc.data().Foods[i].Unit,
-                    "Data" : fooddata.data()
-                });
-            }
-            menu.Foods = foods;
+            if (doc.data().UserID != ID) continue;
+
+            const menu:Menu = new Menu();
+            await menu.Create(doc.id);
     
             menus.push(menu);
         }
@@ -314,16 +394,16 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
 });
 
 export const SearchFood = functions.https.onRequest(async (req, res) => {
-    let Search:String = req.body.Search;
+    const Search:String = req.body.Search;
 
-    let foods:any[] = [];
+    const foods:any[] = [];
 
-    let query = admin.firestore().collection("data_foods").orderBy("식품명").startAt(Search).endAt(Search + "\uF8FF"); 
+    const query = admin.firestore().collection("data_foods").orderBy("식품명").startAt(Search).endAt(Search + "\uF8FF"); 
     await query.get().then((snapshot) => {
         for (let i:number = 0; i < snapshot.size; i++) {
-            let doc = snapshot.docs[i];
+            const doc = snapshot.docs[i];
 
-            foods.push(doc.data());         
+            foods.push(doc.data().식품명);         
         }
     }).catch(err => {
         console.error(err);
@@ -333,32 +413,32 @@ export const SearchFood = functions.https.onRequest(async (req, res) => {
 });
 
 /**
- * 
+ * 공유 식단 게시글 작성
  */
 export const SetPostData = functions.https.onRequest(async (req, res) => {
-    let ID:String = req.body.UserID ?? "";
-    let DateTime:number = req.body.DateTime ?? 0;
-    let Context:String = req.body.Context ?? "";
-    let MenuCode:String[] = req.body.Menus ?? [];
+    const ID:String = req.body.UserID ?? "";
+    const DateTime:number = req.body.DateTime ?? 0;
+    const Context:String = req.body.Context ?? "";
+    const MenuCode:String[] = req.body.Menus ?? [];
 
-    let timestamp:admin.firestore.Timestamp = admin.firestore.Timestamp.fromMillis(DateTime);
+    const timestamp:admin.firestore.Timestamp = admin.firestore.Timestamp.fromMillis(DateTime);
     console.log(DateTime);
     console.log(timestamp);
 
-    let post:any = {
+    const post:any = {
         "p_id" : ID,
         "p_date" : admin.firestore.Timestamp.fromMillis(DateTime),
         "p_text" : Context
     };
     
-    let menus:any[] = [];
+    const menus:any[] = [];
     for (let i:number = 0; i < MenuCode.length; i++) {
         menus.push(admin.firestore().doc("data_menu/" + MenuCode[i]));
     }
     post.p_menu = menus;
 
     // 패킷 데이터 초기화
-    let resresult:any = {};
+    const resresult:any = {};
     resresult.Packet = "SetPostData";
     resresult.Result = true;
     resresult.Context = "";
@@ -374,15 +454,48 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
     res.send(resresult);
 });
 
+
+/**
+ * 공유 식단 게시글 정보 
+ */
 export const GetPostData = functions.https.onRequest(async (req, res) => {
-    let query = admin.firestore().collection("data_post").orderBy("P_date", "desc");
+    const query = admin.firestore().collection("data_post");
 
-    await query.get().then((snapshot) => {
+    const resresult:any[] = [];
+
+    await query.get().then(async (snapshot) => {
         for (let i:number = 0; i < snapshot.size; i++) {
-            let doc = snapshot.docs[i];
+            const doc = snapshot.docs[i];
 
-            doc;
+            const post:Post = new Post();
+            await post.Create(doc.id);
+
+            resresult.push(post);
         }
+    }).catch(err => {
+        console.error(err);
+    });
+
+    res.send(resresult);
+});
+
+/**
+ * 공유 식단 게시글 댓글 작성
+ */
+export const AddCommentData = functions.https.onRequest(async (req, res) => {
+    const ID:String = req.body.ID ?? "";
+    const PostID:String = req.body.PostID ?? "";
+    const DateTime:number = req.body.DateTime ?? 0;
+    const Context:String = req.body.Context ?? "";
+
+    const time:admin.firestore.Timestamp = admin.firestore.Timestamp.fromMillis(DateTime);
+
+    const query = admin.firestore().collection("data_post").doc(PostID.toString()).collection("data_post_comment");
+
+    await query.add({
+        "c_id" : ID,
+        "c_text" : Context,
+        "c_time" : time
     }).catch(err => {
         console.error(err);
     });
