@@ -372,8 +372,7 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
     const ID:String = req.body.ID ?? "";
     //let Password:String = req.body.Password;
 
-    const query:FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData>
-    = admin.firestore().collection("data_menu");
+    const query = admin.firestore().collection("data_menu").where("UserID", "==", ID);
 
     // 클라이언트에 보낼 메뉴 정보
     const menus:Menu[] = [];
@@ -404,7 +403,7 @@ export const SearchFood = functions.https.onRequest(async (req, res) => {
         for (let i:number = 0; i < snapshot.size; i++) {
             const doc = snapshot.docs[i];
 
-            foods.push(doc.data());         
+            foods.push(doc.data().식품명);         
         }
     }).catch(err => {
         console.error(err);
