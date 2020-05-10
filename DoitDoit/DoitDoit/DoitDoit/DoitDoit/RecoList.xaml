@@ -16,10 +16,11 @@
             <StackLayout>
                 <Label Text="★ 추천 식단 ★" TextColor="Black" FontSize="23" FontAttributes="Bold"
                        Margin="0,15,0,0" HorizontalTextAlignment="Center" />
-                <StackLayout BindableLayout.ItemsSource="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Posts}">
+                <StackLayout x:Name="PostList" BindableLayout.ItemsSource="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Posts}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
+                                <DatePicker Date="{Binding Date}" IsEnabled="False"/>
                                 <StackLayout Orientation="Horizontal">
                                     <StackLayout Orientation="Horizontal">
                                         <Label Text="{Binding UserID}" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
