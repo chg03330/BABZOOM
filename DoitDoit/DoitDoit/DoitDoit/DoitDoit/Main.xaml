@@ -13,10 +13,10 @@
                 <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" />
                 <Button Text="메뉴" FontSize="10" Clicked="SideMenu_Clicked"/>
             </StackLayout>          
-            <Label Text="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Password}" TextColor="Black" FontSize="17" HorizontalOptions="Center" />
+            <Label Text="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Id}" TextColor="Black" FontSize="17" HorizontalOptions="Center" />
         <StackLayout>
-            <Label Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-            <Label Text="   #당뇨병  #고등어  #양파" TextColor="Black" />
+                <Button Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent" x:Name="ToRecoList" Clicked="ToRecoListButton_Clicked" />
+                <Label Text="   #당뇨병  #고등어  #양파" TextColor="Black" />
         </StackLayout>
         <StackLayout  HorizontalOptions="Center">
             <Button Text="추천 식단 내용" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="120" HeightRequest="40"

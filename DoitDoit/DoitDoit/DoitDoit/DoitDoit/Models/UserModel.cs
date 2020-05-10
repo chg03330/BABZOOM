@@ -35,6 +35,7 @@ namespace DoitDoit.Models
         private bool gender;
         private String name;
         private ObservableCollection<FoodViewModel> foodViewModels;
+        private ObservableCollection<Post> posts;
         #endregion
         
         #region 유저 정보 Property
@@ -46,6 +47,12 @@ namespace DoitDoit.Models
         public bool Gender { get => this.gender; set { this.gender = value; } }
         public String Name { get => this.name; set { this.name = value; } }
         public ObservableCollection<FoodViewModel> FoodViewModels { get => foodViewModels; set { this.foodViewModels = value; } }
+        public ObservableCollection<Post> Posts {
+            get => this.posts;
+            set {
+                this.posts = value;
+            }
+        }
         #endregion
 
         /************************** 생성자**********************************/

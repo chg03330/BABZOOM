@@ -56,15 +56,15 @@ namespace DoitDoit
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            //var fvm = usermodel.FoodViewModels.Where(model => {
-            //    return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
-            //});
+            var fvm = usermodel.FoodViewModels.Where(model => {
+                return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
+            });
 
-            //list = new ObservableCollection<FoodViewModel>();
-            //foreach (FoodViewModel f in fvm) {
-            //    f.Code = f.Code.Substring(0, 8);
-            //    list.Add(f);
-            //}
+            list = new ObservableCollection<FoodViewModel>();
+            foreach (FoodViewModel f in fvm) {
+                f.Code = f.Code.Substring(0, 8);
+                list.Add(f);
+            }
 
             BindableLayout.SetItemsSource(this.liststack, list);
         }
