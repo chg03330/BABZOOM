@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoitDoit.RecoList"
+             BackgroundColor="White">
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="★ 추천 식단 ★" TextColor="Black" FontSize="23" FontAttributes="Bold"
+                       Margin="0,15,0,0" HorizontalTextAlignment="Center" />
+                <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="밥줌님의 식단" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
+                        <Label Text="댓글 13" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
+                           FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
+                    </StackLayout>
+                    <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                    <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="자세히 보기" Clicked="MenuDetail_Clicked" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="B님의 식단" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
+                        <Label Text="댓글 5" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
+                           FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
+                    </StackLayout>
+                    <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                    <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="자세히 보기" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="C님의 식단" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
+                        <Label Text="댓글 9" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
+                           FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
+                    </StackLayout>
+                    <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                    <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="자세히 보기" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="D님의 식단" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
+                        <Label Text="댓글 7" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
+                           FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
+                    </StackLayout>
+                    <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                    <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="자세히 보기" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+
+</ContentPage>
