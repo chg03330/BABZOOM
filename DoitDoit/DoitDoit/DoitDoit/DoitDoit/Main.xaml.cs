@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using DoitDoit.Models;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +22,18 @@ namespace DoitDoit
         public Main ()
 		{
             InitializeComponent ();
-		}
+
+            Task.Run(async () => {
+                Network.FirebaseServer server = new Network.FirebaseServer();
+
+                string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                    ObservableCollection<Models.Post> posts = JsonConvert.DeserializeObject<ObservableCollection<Models.Post>>(result);
+                    UserModel.GetInstance.Posts = posts;
+                });
+            });
+        }
 
         private void Reco_Clicked(Object sender, EventArgs e)
         {
@@ -51,9 +64,19 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ContentPage_Appearing(object sender, EventArgs e)
+        private async void ContentPage_Appearing(object sender, EventArgs e)
         {
             
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ToRecoListButton_Clicked(object sender, EventArgs e) {
+            RecoList recolist = new RecoList();
+            Navigation.PushModalAsync(recolist);
         }
     } // END Of Main CLASS
 }
