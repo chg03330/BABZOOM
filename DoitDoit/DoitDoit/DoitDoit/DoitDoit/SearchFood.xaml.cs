@@ -15,6 +15,7 @@ namespace DoitDoit {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SearchFood : ContentPage {
         public String text { get; set; }
+        public AddUserMenu AM { get; set; }
         string selectItem;
         public SearchFood() {
             InitializeComponent();
@@ -24,10 +25,9 @@ namespace DoitDoit {
         private async void ContentPage_Appearing(object sender, EventArgs e)  {
 
             s_bar.Text = text;
+            selectItem = "";
 
-            #region 검색
-            Dictionary<string, string> search = new Dictionary<string, string>();
-            search["Search"] = text;            
+            #region 검색                   
             FirebaseServer server = new FirebaseServer();
             List<String> fd = new List<String>();
             fd = await server.SearchFood(text);
@@ -37,7 +37,14 @@ namespace DoitDoit {
         }
 
         private void Register_Clicked(object sender, EventArgs e) {
-            Navigation.PushModalAsync(new MainPage());
+            if ("".Equals(selectItem))
+                DisplayAlert("오류", "선택한 식품이 없습니다.", "확인");
+            else
+            {
+                AM.addItem(selectItem);
+                AM.selectItem = selectItem;
+                OnBackButtonPressed();
+            }
         }
 
         private void lvFood_ItemSelected(object sender, SelectedItemChangedEventArgs e)
