@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:DoitDoit.Models" xmlns:doitdoit="clr-namespace:DoitDoit" xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:local="clr-namespace:DoitDoit.Models" xmlns:doitdoit="clr-namespace:DoitDoit"
              mc:Ignorable="d"
              x:Class="DoitDoit.UserCalenderDay"
              BackgroundColor="White"
@@ -12,7 +12,7 @@
     <ScrollView>
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
-            <DatePicker x:Name="CalenderDayTime" Date="{Binding dateTime}"
+            <DatePicker x:Name="CalenderDayTime" Date="{Binding dateTime, Mode=OneWay}"
                             Format="yyyy년 MM월 dd일" 
                             MinimumDate="1 Jan 2018" MaximumDate="31 Dec 2100" 
                             DateSelected="CalenderDayTime_DateSelected"

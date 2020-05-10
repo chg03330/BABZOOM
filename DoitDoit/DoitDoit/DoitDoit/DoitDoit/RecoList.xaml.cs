@@ -13,5 +13,9 @@ namespace DoitDoit {
         public RecoList() {
             InitializeComponent();
         }
+
+        private void MenuDetail_Clicked(object sender, EventArgs e) {
+
+        }
     }
 }

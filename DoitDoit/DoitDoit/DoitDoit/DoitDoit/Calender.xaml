@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar" xmlns:globalization="clr-namespace:System.Globalization;assembly=netstandard"
              x:Class="DoitDoit.Calender"
+             Appearing="ContentPage_Appearing"
              BackgroundColor="White">
     <Grid ColumnSpacing="6" RowSpacing="6">
             <Grid.RowDefinitions>
@@ -17,24 +18,24 @@
             </Grid.ColumnDefinitions>
 
             <Label Text="BOOBZOOM" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" 
-               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"/>
-        
+               Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+        <Button x:Name="AddButton" Clicked="AddButton_Clicked" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" />
+
         <controls:Calendar
-        Events="{Binding Events}"
              Grid.Column="0" Grid.Row="1" 
-               Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="AliceBlue">
+               Grid.ColumnSpan="2" Grid.RowSpan="2" BackgroundColor="AliceBlue" x:Name="UserCalender"
+             PropertyChanged="UserCalender_PropertyChanged">
             <controls:Calendar.EventTemplate>
                 <DataTemplate>
-                    <StackLayout
-                Padding="15,0,0,0">
-                        <Label
-                    Text="{Binding Code}"
-                    FontAttributes="Bold"
-                    FontSize="Medium" />
-                        <Label
-                    Text="{Binding data.식품명}"
-                    FontSize="Small"
-                    LineBreakMode="WordWrap" />
+                    <StackLayout Padding="15,0,0,0">
+                        <Label Text="{Binding Code}" FontAttributes="Bold" FontSize="Medium" />
+                        <StackLayout BindableLayout.ItemsSource="{Binding Foods}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding Data.식품명}" />
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
                     </StackLayout>
                 </DataTemplate>
             </controls:Calendar.EventTemplate>
