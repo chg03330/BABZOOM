@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DoitDoit.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+
 namespace DoitDoit
 {
     public class ButtonWithTag : Button
@@ -21,24 +23,26 @@ namespace DoitDoit
     }
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class UserCalenderDay : ContentPage
+    public partial class UserCalenderDay : ContentPage, INotifyPropertyChanged
     {
-        ObservableCollection<FoodViewModel> list;
-        UserModel a;
-        public DateTime dateTime { get; set; }
+        ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
+        UserModel usermodel = UserModel.GetInstance;
+        DateTime datetime = DateTime.Now;
+        public DateTime dateTime {
+            get => this.datetime;
+            set {
+                this.datetime = value;
+                this.OnPropertyChanged(nameof(this.dateTime));
+            }
+        }
         String nowTime;
 
 
         public UserCalenderDay()
         {
             InitializeComponent();
-            a = UserModel.GetInstance;
-            dateTime = DateTime.Now;
-            nowTime = dateTime.ToString("yyyyMMdd");
             this.CalenderDayTime.BindingContext = this;
-
-           
-
+            nowTime = dateTime.ToString("yyyyMMdd");
         }
 
         
@@ -52,14 +56,15 @@ namespace DoitDoit
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            var fvm = a.FoodViewModels.Where(model => { return model.Code is "20200503205700"; });
+            //var fvm = usermodel.FoodViewModels.Where(model => {
+            //    return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
+            //});
 
-
-            list = new ObservableCollection<FoodViewModel>();
-            foreach (FoodViewModel f in fvm) {
-                f.Code = f.Code.Substring(0, 8);
-                list.Add(f);
-            }
+            //list = new ObservableCollection<FoodViewModel>();
+            //foreach (FoodViewModel f in fvm) {
+            //    f.Code = f.Code.Substring(0, 8);
+            //    list.Add(f);
+            //}
 
             BindableLayout.SetItemsSource(this.liststack, list);
         }
@@ -78,16 +83,16 @@ namespace DoitDoit
         private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             this.dateTime = e.NewDate;
-            var fvm = a.FoodViewModels.Where(model => { return model.Code.Contains(e.NewDate.ToString("yyyyMMdd")); });
+            var fvm = usermodel.FoodViewModels.Where(model => {
+                return model.Code.Contains(e.NewDate.ToString("yyyyMMdd"));
+            });
+
             list.Clear();
-            if (fvm.Count() == 0)
-            {
+            if (fvm.Count() == 0) {
                 DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인");
             }
-            else 
-            { 
-                foreach(FoodViewModel f in fvm)
-                {
+            else {
+                foreach (FoodViewModel f in fvm) {
                     f.Code = f.Code.Substring(0, 8);
                     list.Add(f);
                 }

@@ -24,23 +24,43 @@ namespace DoitDoit
 
         }
 
-        private void ContentPage_Appearing(object sender, EventArgs e)
-        {
-            UserModel a = UserModel.GetInstance;
+        private async void ContentPage_Appearing(object sender, EventArgs e) {
+            UserModel usermodel = UserModel.GetInstance;
 
-            Events = new EventCollection();
-            for (int i = 0; i < a.FoodViewModels.Count; i++) 
-            {
-                string b = String.Format("yyyyMMdd", a.FoodViewModels[i].Code.Substring(0, 8));
-                Events.Add((DateTime.Parse(b)),a.FoodViewModels[i].Foods);
-                
+            this.UserCalender.Events = new EventCollection() {};
+
+            var menus = usermodel.FoodViewModels.GroupBy(
+                menu => {
+                    int year = Convert.ToInt32(menu.Code.Substring(0, 4));
+                    int month = Convert.ToInt32(menu.Code.Substring(4, 2));
+                    int day = Convert.ToInt32(menu.Code.Substring(6, 2));
+
+                    DateTime date = new DateTime(year, month, day);
+
+                    return date;
+                });
+
+            foreach (IGrouping<DateTime, FoodViewModel> group in menus) {
+                this.UserCalender.Events.Add(group.Key, group.ToList());
             }
+        }
 
-            
-            
-        }              
+        private void AddButton_Clicked(object sender, EventArgs e) {
 
-            
-        
+        }
+
+        private void UserCalender_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            Xamarin.Plugin.Calendar.Controls.Calendar cal = sender as Xamarin.Plugin.Calendar.Controls.Calendar;
+            if (cal is null || e is null || e.PropertyName is null) return;
+
+            if (e.PropertyName is "SelectedDate") {
+                //DisplayAlert("a", cal.SelectedDate.ToString(), "Close");
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                    UserCalenderDay dayform = new UserCalenderDay();
+                    dayform.dateTime = cal.SelectedDate;
+                    Navigation.PushModalAsync(dayform);
+                });
+            }
+        }
     }
 }
