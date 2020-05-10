@@ -31,7 +31,7 @@ namespace DoitDoit {
             FirebaseServer server = new FirebaseServer();
             List<String> fd = new List<String>();
             fd = await server.SearchFood(text);
-            
+
             lvFood.ItemsSource = fd;
             #endregion
         }

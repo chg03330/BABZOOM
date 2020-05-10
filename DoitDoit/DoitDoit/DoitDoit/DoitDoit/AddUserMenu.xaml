@@ -29,18 +29,9 @@
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Data.식품명}" />
-                            <Label Text="{Binding Data.DB군}" />
-                            <Label Text="{Binding Data.식품코드}" />
-                            <Label Text="{Binding Quantity}" />
-                            <Label Text="{Binding Unit}" />
-                            <Label Text="{Binding Code}" />
-                            <Label Text="파파" />
-                            <Label Text="카카" />
-                            <Label Text="투투" />
-                            <Label Text="엥" />
-                            <Label Text="테스트123" />
-                            <Label Text="포포" />
+                            <Label Text="{Binding 식품명}" />
+                            <Label Text="{Binding DB군}" />
+                            <Label Text="{Binding 식품코드}" />
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>

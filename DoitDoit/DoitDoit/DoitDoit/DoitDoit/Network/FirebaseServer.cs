@@ -17,8 +17,20 @@ namespace DoitDoit.Network {
 
         public async Task<string> FirebaseRequest(string function, Dictionary<string, string> values) {
             FormUrlEncodedContent requestcontent = new FormUrlEncodedContent(values);
+            return await this.Request(function, requestcontent);
+        }
 
-            HttpResponseMessage response = await client.PostAsync(String.Concat(src, function), requestcontent);
+        public async Task<string> FirebaseRequest(string function, String json) {
+            StringContent requestcontent = new StringContent(json, Encoding.UTF8, "application/json");
+            return await this.Request(function, requestcontent);
+        }
+
+        public async Task<string> FirebaseRequest(string function, object obj) {
+            return await this.FirebaseRequest(function, JsonConvert.SerializeObject(obj));
+        }
+
+        private async Task<string> Request(string function, HttpContent content) {
+            HttpResponseMessage response = await client.PostAsync(String.Concat(src, function), content);
             string responseString = await response.Content.ReadAsStringAsync();
 
             return responseString;
@@ -58,7 +70,7 @@ namespace DoitDoit.Network {
             return foods;
         }
 
-        public async Task<Food> SpecificFood(string foodname) {
+        public async Task<FoodData> SpecificFood(string foodname) {
             Packet packet = new Packet() { Command = "SpecificFood", Context = foodname };
 
             System.Net.Sockets.TcpClient server = this.GetServer();
@@ -80,7 +92,7 @@ namespace DoitDoit.Network {
 
             server.Close();
 
-            Food food = JsonConvert.DeserializeObject<Food>(resultjson);
+            FoodData food = JsonConvert.DeserializeObject<FoodData>(resultjson);
 
             return food;
         }

@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 using DoitDoit.Models;
 using DoitDoit.Network;
 using System.Collections.ObjectModel;
-using Android.Database;
+//using Android.Database;
 
 namespace DoitDoit
 {
@@ -19,8 +19,8 @@ namespace DoitDoit
     public partial class AddUserMenu : ContentPage
     {
         public DateTime dateTime { get; set; }
-        public ObservableCollection<Food> Foods { get; set; }
-        public Food food;
+        public ObservableCollection<FoodData> Foods { get; set; }
+        public FoodData food;
         public String selectItem { get; set; }
         String selectTime;
         public AddUserMenu()
@@ -28,7 +28,7 @@ namespace DoitDoit
             InitializeComponent();
             SearchText.Completed += searchText_Completed;
             addMenu_ClockTime.Time = DateTime.Now.TimeOfDay;
-            Foods = new ObservableCollection<Food>();
+            Foods = new ObservableCollection<FoodData>();
 
             BindableLayout.SetItemsSource(this.addList, Foods);
 
@@ -49,21 +49,48 @@ namespace DoitDoit
 
         public void searchText_Completed(object sender, EventArgs e)
         {
-            SearchFood sf = new SearchFood();
-            sf.text = SearchText.Text;
-            sf.AM = this;
-            Navigation.PushModalAsync(sf);
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
+                SearchFood sf = new SearchFood();
+                sf.text = SearchText.Text;
+                sf.AM = this;
+                await Navigation.PushModalAsync(sf);
+            });
         }
 
    
         private void Cancel_Clicked(object sender, EventArgs e)
         {
-            OnBackButtonPressed();
+            this.OnBackButtonPressed();
         }
 
         private void Add_Clicked(object sender, EventArgs e)
         {
-            
+            int year = this.dateTime.Year;
+            int month = this.dateTime.Month;
+            int day = this.dateTime.Day;
+            int hour = this.addMenu_ClockTime.Time.Hours;
+            int minute = this.addMenu_ClockTime.Time.Minutes;
+
+            DateTime date = new DateTime(year, month, day, hour, minute, 0);
+
+            var foods = from fooddata in this.Foods
+                        select new Food() { Code = fooddata.식품코드, Quantity = fooddata.내용량.ToString(),
+                         Data = fooddata, Unit = fooddata.내용량_단위};
+
+            FoodViewModel menu = new FoodViewModel {
+                UserID = UserModel.GetInstance.Id,
+                Foods = foods.ToArray(),
+                Code = date.ToString("yyyyMMddhhmmss")
+            };
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                UserModel.GetInstance.FoodViewModels.Add(menu);
+            });
+
+            FirebaseServer server = new FirebaseServer();
+            server.FirebaseRequest("SetMenuData", menu);
+
+            this.OnBackButtonPressed();
         }
 
         private void addMenu_DayTime_DateSelected(object sender, DateChangedEventArgs e)
