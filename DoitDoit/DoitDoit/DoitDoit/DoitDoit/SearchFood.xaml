@@ -4,18 +4,17 @@
              xmlns:local="clr-namespace:DoitDoit"
              xmlns:model="clr-namespace:DoitDoit.Models"
              x:Class="DoitDoit.SearchFood"
-             BackgroundColor="AliceBlue">
+             BackgroundColor="AliceBlue"
+             Appearing="ContentPage_Appearing">
 
     <ContentPage.BindingContext>
         <model:FoodList/>
     </ContentPage.BindingContext>
 
     <StackLayout>
-        <SearchBar Placeholder="Food Name" Text="{Binding FoodName}"/>
+        <SearchBar Placeholder="Food Name" x:Name="s_bar"/>
 
-        <ListView x:Name="IvFood" ItemsSource="{Binding Foods}" SelectedItem="{Binding SelectedFood}">
-
-
+        <ListView x:Name="lvFood" ItemSelected="lvFood_ItemSelected">
         </ListView>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >

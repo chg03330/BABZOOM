@@ -13,5 +13,10 @@ namespace DoitDoit {
         public RecoList() {
             InitializeComponent();
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }

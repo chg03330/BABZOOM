@@ -20,7 +20,7 @@
                 <TimePicker x:Name="addMenu_ClockTime"  Format="hh시 mm분" HorizontalOptions="End"/>
             </StackLayout>
             <StackLayout BackgroundColor="#e4eodd" Margin="10,10,10,0">
-                <Entry Text="검색할 요리 or 식자재 이름" x:Name="SearchText" TextColor="Black"  FontSize="14" ClearButtonVisibility="WhileEditing"  
+                <Entry Placeholder="검색할 요리 or 식자재 이름" x:Name="SearchText" TextColor="Black"  FontSize="14" ClearButtonVisibility="WhileEditing"  
                    VerticalTextAlignment="Center" HeightRequest="40" WidthRequest="40"
                        />
             </StackLayout>

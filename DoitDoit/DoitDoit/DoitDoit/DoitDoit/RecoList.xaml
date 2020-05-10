@@ -18,7 +18,7 @@
                     <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
                     <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="자세히 보기" Clicked="MenuDetail_Clicked" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                        <Button Text="자세히 보기" Clicked="Button_Clicked" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
                             HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
                     </StackLayout>
                 </StackLayout>

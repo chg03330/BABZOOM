@@ -28,9 +28,12 @@ namespace DoitDoit
 
         public void searchText_Completed(object sender, EventArgs e)
         {
-            SearchText.Focus();
+            SearchFood sf = new SearchFood();
+            sf.text = SearchText.Text;
+            Navigation.PushModalAsync(sf);
         }
 
+   
         private void Cancel_Clicked(object sender, EventArgs e)
         {
             OnBackButtonPressed();
