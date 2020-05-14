@@ -7,6 +7,7 @@ namespace DoitDoit.Models
 {
 
     
+    [Obsolete]
     public class MenuModel
     { 
         //public String Code { get; set; } = "";
