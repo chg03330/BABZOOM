@@ -16,12 +16,13 @@ namespace DoitDoit {
         public RecoList() {
             InitializeComponent();
 
-            UserModel.GetInstance.Posts.OrderBy(n => n.Date);
+            //UserModel.GetInstance.Posts.OrderBy(n => n.Date);
+
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-
+            Navigation.PushModalAsync(new RecoList_Post());
         }
     }
 

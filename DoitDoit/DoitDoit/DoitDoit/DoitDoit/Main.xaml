@@ -1,58 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:DoitDoit.Models"
              x:Class="DoitDoit.Main"
              BackgroundColor="White"
              Appearing="ContentPage_Appearing">
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal" >
-                <Label x:Name="Test"/>
-                <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-                <Button Text="메뉴" FontSize="10" Clicked="SideMenu_Clicked"/>
-            </StackLayout>          
-            <Label Text="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Id}" TextColor="Black" FontSize="17" HorizontalOptions="Center" />
-        <StackLayout>
-                <Button Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent" x:Name="ToRecoList" Clicked="ToRecoListButton_Clicked" />
-                <Label Text="   #당뇨병  #고등어  #양파" TextColor="Black" />
-        </StackLayout>
-        <StackLayout  HorizontalOptions="Center">
-            <Button Text="추천 식단 내용" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="120" HeightRequest="40"
-                    Clicked="Reco_Clicked" />
-            <Button Text="추천 식단" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="100" HeightRequest="40"
-                    Clicked="RecoMenu_Clicked" />
-            <Image Source="Graph.png" WidthRequest="20" HeightRequest="20" />
-        </StackLayout>
-        <StackLayout>
-            <Label Text="   #당뇨병  #두릅  #현미밥" TextColor="Black" />
-        </StackLayout>
-        <StackLayout  HorizontalOptions="Center">
-            <Button Text="추천 식단 내용" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="120" HeightRequest="40"
-                    Clicked="Reco2_Clicked" />
-            <Button Text="추천 식단" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="100" HeightRequest="40" 
-                    Clicked="RecoMenu2_Clicked" />
-            <Image Source="Graph.png" WidthRequest="20" HeightRequest="20" />
-        </StackLayout>
-        <StackLayout>
-            <Label Text="당뇨병에대한 기본상식" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-            <Label Text="정의" TextColor="Black" FontAttributes="Bold" />
-            <Label Text="당뇨병은 인슐린의 분비량이 부족하거나 정상적인 기능이 이루어지지 않는 등의 대사질환의 일종으로, 혈중 포도당의 농도가 높아지는 고혈당이 특징" 
-                   BackgroundColor="#B7BED2" />
-            <Label Text="증상" TextColor="Black" FontAttributes="Bold" />
-            <Label Text="오랜 기간 고혈당 상태가 유지되면 신체에서 여러 합병증이 발생하는데, 대표적인 것이 망막병증(실명할 수 있음), 신기능장애(신기능 저하로 심할 경우 투석이 필요함), 신경병증(저림, 통증)이고, 심혈관계 질환의 위험이 높아지게 된다." 
-                   BackgroundColor="#B7BED2" />
-        </StackLayout>
-        <StackLayout>
-            <Label Text="당뇨병에 좋은 음식" TextColor="Black" FontSize="20" FontAttributes="Bold" />
-            <Label Text="마늘 : 혈중 콜레스테롤 수치를 낮춰주고, 혈액의 흐름을 좋게 해준다." TextColor="Black" />
-            <Image Source="C:\Users\1210k\Desktop\졸작\마늘.jpg" WidthRequest="30" HeightRequest="30" />
-            <Label Text="토마토 : 식이섬유가 많고, 당분과 칼로리가 낮아 혈당조절에 유리하다." TextColor="Black" />
-            <Image Source="C:\Users\1210k\Desktop\졸작\토마토.jpg" WidthRequest="30" HeightRequest="30" />
-            <Label Text="땅콩 : 칼륨성분이 풍부하여, 체내에 축적된 나트륨을 배출시키고 혈당 상승을 억제해준다." TextColor="Black" />
-            <Image Source="C:\Users\1210k\Desktop\졸작\땅콩.jpg" WidthRequest="30" HeightRequest="30" />
-        </StackLayout>
+            <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
+            <Label Text="25000kcal" TextColor="Black" FontSize="17" HorizontalOptions="Center"/>
+            <Button Text="aaa" Clicked="SideMenu_Clicked"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
+                <Button Text="추천 식단 목록" Clicked="ToRecoListButton_Clicked" TextColor="Black" BackgroundColor="#A0BAED" HorizontalOptions="EndAndExpand" 
+                        Margin="0,15,15,0" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
+            </StackLayout>
+            <StackLayout BackgroundColor="#dbelfo" Margin="15,10,15,0">
+                <Label Text="식단A" TextColor="Black" FontSize="15" Margin="10,10,0,50" />
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="자세히 보기" Clicked="RecoMenu_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="100" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,15" />
+                </StackLayout>
+            </StackLayout>
+            <StackLayout BackgroundColor="#dbelfo" Margin="15,10,15,0">
+                <Label Text="식단B" TextColor="Black" FontSize="15" Margin="10,10,0,50" />
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="자세히 보기" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="100" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,15" />
+                </StackLayout>
+            </StackLayout>
+            <StackLayout BackgroundColor="#dbelfo" Margin="15,10,15,0">
+                <Label Text="식단C" TextColor="Black" FontSize="15" Margin="10,10,0,50" />
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="자세히 보기" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="100" HeightRequest="40" 
+                            HorizontalOptions="EndAndExpand" Margin="0,0,10,15" />
+                </StackLayout>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 
