@@ -17,15 +17,13 @@ namespace DoitDoit
 	public partial class InfoEntry : ContentPage
 	{
 		UserModel a;
-		String gender;
+		String gender="False";
 		public InfoEntry()
 		{
 			InitializeComponent ();
 			a = UserModel.GetInstance;
-			gender = "false";
 			if (!"".Equals(a.Name))
 				searchInfo();		
-
 		}
 
 		private async void searchInfo() {
@@ -35,13 +33,13 @@ namespace DoitDoit
 			FirebaseServer server = FirebaseServer.Server;
 			string result = await server.FirebaseRequest("GetUserData", post);
 			Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-			if ("true".Equals(resultdic["gender"]))
+			if (!"".Equals(resultdic["name"]))
 			{
 				a.Name = resultdic["name"];
 				a.Age = int.Parse(resultdic["age"]);
 				a.Height = float.Parse(resultdic["height"]);
 				a.Weight = float.Parse(resultdic["weight"]);
-				if ("true".Equals(resultdic["gender"]))
+				if ("True".Equals(resultdic["gender"]))
 					a.Gender = true;
 				else
 					a.Gender = false;
@@ -53,20 +51,20 @@ namespace DoitDoit
 				if (a.Gender == true)
 				{
 					labelGender.Text = "남자";
-					gender = "true";
+					gender = "True";
 					SWITCH.IsToggled = true;
 				}
 				else
 				{
 					labelGender.Text = "여자";
-					gender = "false";
+					gender = "False";
 					SWITCH.IsToggled = false;
 				}
 
 			}
 			else
 			{
-				await DisplayAlert("실패", "정보 불러오는게 실패했습니다.", "확인");
+				await DisplayAlert("알람", "정보 불러오는게 실패했습니다.\n신규회원이라면 정보를 등록해주세요", "확인");
 			}
 		}
 
@@ -98,6 +96,11 @@ namespace DoitDoit
 				labelGender.Text = "여자";
 				gender = "false";
 			}
+		}
+
+		private void Cancel_Clicked(object sender, EventArgs e)
+		{
+			OnBackButtonPressed();
 		}
 	}
 }

@@ -34,7 +34,7 @@
        
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="20">
             <Button Text="확인" Clicked="OK_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60"/>
-            <Button Text="취소"  BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60" />
+            <Button Text="취소" Clicked="Cancel_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60" />
         </StackLayout>
     </StackLayout>
     
