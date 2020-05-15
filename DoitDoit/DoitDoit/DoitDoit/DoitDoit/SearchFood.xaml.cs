@@ -28,7 +28,7 @@ namespace DoitDoit {
             selectItem = "";
 
             #region 검색                   
-            FirebaseServer server = new FirebaseServer();
+            FirebaseServer server = FirebaseServer.Server;
             List<String> fd = new List<String>();
             fd = await server.SearchFood(text);
 
