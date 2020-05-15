@@ -35,7 +35,7 @@ namespace DoitDoit
             post["ID"] = id;
             post["Password"] = pw;
 
-            FirebaseServer server = new FirebaseServer();
+            FirebaseServer server = FirebaseServer.Server;
             string result = await server.FirebaseRequest("SignIn", post);
 
             Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
