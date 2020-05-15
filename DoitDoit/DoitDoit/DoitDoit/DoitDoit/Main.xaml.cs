@@ -97,5 +97,10 @@ namespace DoitDoit
             Navigation.PushModalAsync(recolist);
         }
         #endregion
+
+        private void ToRecoList_Post_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushModalAsync(new RecoList_Post());
+        }
     } // END Of Main CLASS
 }
