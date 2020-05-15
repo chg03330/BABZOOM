@@ -29,13 +29,16 @@ namespace DoitDoit
 
             this.UserCalender.Events = new EventCollection() {};
 
+            ///
+            /// 싱글톤 내 usermodel 의 식단 정보를 년월일 (DateTime) struct로 그룹화
+            ///
             var menus = usermodel.FoodViewModels.GroupBy(
                 menu => {
-                    int year = Convert.ToInt32(menu.Code.Substring(0, 4));
-                    int month = Convert.ToInt32(menu.Code.Substring(4, 2));
-                    int day = Convert.ToInt32(menu.Code.Substring(6, 2));
+                    int year = Convert.ToInt32(menu.Code.Substring(0, 4));      // 년
+                    int month = Convert.ToInt32(menu.Code.Substring(4, 2));     // 월
+                    int day = Convert.ToInt32(menu.Code.Substring(6, 2));       // 일
 
-                    DateTime date = new DateTime(year, month, day);
+                    DateTime date = new DateTime(year, month, day);             // 데이트 객체 생성
 
                     return date;
                 });
@@ -49,6 +52,12 @@ namespace DoitDoit
 
         }
 
+        /// <summary>
+        /// 달력 내의 일자를 클릭하였을 때
+        /// ( Calander 객체의 PropertyChanged 이벤트 -> SelectedDate 가 바뀌었을 때 동작 )
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserCalender_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             Xamarin.Plugin.Calendar.Controls.Calendar cal = sender as Xamarin.Plugin.Calendar.Controls.Calendar;
             if (cal is null || e is null || e.PropertyName is null) return;
@@ -62,5 +71,5 @@ namespace DoitDoit
                 });
             }
         }
-    }
+    } // END OF Calender CLASS
 }

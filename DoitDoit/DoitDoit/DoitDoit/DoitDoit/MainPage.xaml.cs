@@ -21,10 +21,15 @@ namespace DoitDoit
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 로그인 버튼 클릭했을 때의 이벤트 처리기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Login_Clicked(object sender, EventArgs e)
         {
-            String id = Entry_ID.Text;
-            String pw = PASSWORD.Text;
+            String id = this.Entry_ID.Text;
+            String pw = this.PASSWORD.Text;
 
             Dictionary<string, string> post = new Dictionary<string, string>();
             post["ID"] = id;

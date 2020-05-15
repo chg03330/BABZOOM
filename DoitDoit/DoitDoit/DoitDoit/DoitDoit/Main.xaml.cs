@@ -30,7 +30,8 @@ namespace DoitDoit
 
             // UI 스레드에서 실행
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                ObservableCollection<Models.Post> posts = JsonConvert.DeserializeObject<ObservableCollection<Models.Post>>(result);
+                ObservableCollection<Models.Post> posts =
+                    JsonConvert.DeserializeObject<ObservableCollection<Models.Post>>(result);
                 UserModel.GetInstance.Posts = posts;
             });
         }
