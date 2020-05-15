@@ -16,7 +16,7 @@
                 <Button Text="추천 식단 목록" Clicked="ToRecoListButton_Clicked" TextColor="Black" BackgroundColor="#A0BAED" HorizontalOptions="EndAndExpand" 
                         Margin="0,15,15,0" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
             </StackLayout>
-            <StackLayout x:Name="PostList" BindableLayout.ItemsSource="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Posts}">
+            <StackLayout x:Name="PostList">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout BackgroundColor="#dbelfo" Margin="15,15,15,0">
