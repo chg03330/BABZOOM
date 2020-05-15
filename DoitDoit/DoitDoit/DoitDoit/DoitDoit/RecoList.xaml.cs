@@ -20,9 +20,16 @@ namespace DoitDoit {
 
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private async void Button_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new RecoList_Post());
+            if (sender is ButtonWithTag button) {
+                RecoList_Post post = new RecoList_Post();
+                string postcode = (String)button.Tag;
+
+                await DisplayAlert("", postcode, "close");
+
+                Navigation.PushModalAsync(post);
+            }
         }
     }
 
