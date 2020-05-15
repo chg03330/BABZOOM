@@ -32,7 +32,7 @@ namespace DoitDoit
 			Dictionary<string, string> post = new Dictionary<string, string>();
 			post["ID"] = a.Id;
 			post["Password"] = a.Password;
-			FirebaseServer server = FirebaseServer.Server;
+			FirebaseServer server = new FirebaseServer();
 			string result = await server.FirebaseRequest("GetUserData", post);
 			Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
 			if ("true".Equals(resultdic["gender"]))
@@ -80,7 +80,7 @@ namespace DoitDoit
 			post["Name"] = NAME.Text;
 			post["Gender"] = gender;
 			post["Age"] = AGE.Text;
-			FirebaseServer server = FirebaseServer.Server;
+			FirebaseServer server = new FirebaseServer();
 			string result = await server.FirebaseRequest("SetUserData", post);
 
 			Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);

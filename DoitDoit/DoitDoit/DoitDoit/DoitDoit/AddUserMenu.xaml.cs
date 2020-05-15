@@ -42,7 +42,7 @@ namespace DoitDoit
         }
 
         public async void addItem(String a) {
-            FirebaseServer server = FirebaseServer.Server;
+            FirebaseServer server = new FirebaseServer();
             food = await server.SpecificFood(a);
             Foods.Add(food);
         }
@@ -87,7 +87,7 @@ namespace DoitDoit
                 UserModel.GetInstance.FoodViewModels.Add(menu);
             });
 
-            FirebaseServer server = FirebaseServer.Server;
+            FirebaseServer server = new FirebaseServer();
             server.FirebaseRequest("SetMenuData", menu);
 
             this.OnBackButtonPressed();
