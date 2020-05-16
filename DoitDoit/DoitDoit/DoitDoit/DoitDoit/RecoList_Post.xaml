@@ -1,31 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:layout="clr-namespace:Layout"
+             xmlns:converter="clr-namespace:DoitDoit.Converter"
              x:Class="DoitDoit.RecoList_Post"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             Appearing="ContentPage_Appearing"
+             BindingContext="{Binding Path=PostData, Source={RelativeSource Mode=Self}}">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:PostMenuTimeConverter x:Key="postmenutimeconverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Orientation="Vertical">
                 <!-- Place new controls here -->
-                <Label Text="밥줌님의 2020년 5월 4일 식단" TextColor="Black" FontSize="23" FontAttributes="Bold"
+                <Label x:Name="PostMenuDay" TextColor="Black" FontSize="23" FontAttributes="Bold"
                        Margin="0,15,0,0" HorizontalTextAlignment="Center" />
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <StackLayout BackgroundColor="#dbelfo" Margin="15,25,20,0" WidthRequest="150">
-                        <Label Text="오전 10시" TextColor="Black" FontSize="18" Margin="0,10,0,0"
+                <!-- 공유 식단 전체 리스트 -->
+                <layout:WrapLayout HorizontalOptions="Center" x:Name="PostMenuList">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <!-- 시간 + 음식 리스트 StackLayout -->
+                            <StackLayout BackgroundColor="#dbelfo" Margin="15,25,0,0" Padding="0,0,0,50" WidthRequest="150">
+                                <Label
+                                    Text="{Binding Path=Code, Converter={StaticResource Key=postmenutimeconverter}}"
+                                    TextColor="Black" FontSize="18" Margin="0,10,0,0"
                         HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                        <Label Text="요리1" TextColor="Black" Margin="10,10,0,0" />
-                        <Label Text="요리2" TextColor="Black" Margin="10,10,0,0" />
-                        <Label Text="요리3" TextColor="Black" Margin="10,10,0,100" />
-                    </StackLayout>
-                    <StackLayout BackgroundColor="#dbelfo" Margin="15,25,15,0" WidthRequest="150">
-                        <Label Text="오후 7시" TextColor="Black" FontSize="18" Margin="0,10,0,0"
-                       HorizontalTextAlignment="Center" FontAttributes="Bold" />
-                        <Label Text="요리1" TextColor="Black" Margin="10,10,0,0" />
-                        <Label Text="요리2" TextColor="Black" Margin="10,10,0,0" />
-                        <Label Text="요리3" TextColor="Black" Margin="10,10,0,100" />
-                    </StackLayout>
-                </StackLayout>
+                                <!-- 음식 리스트 StackLayout -->
+                                <StackLayout BindableLayout.ItemsSource="{Binding Foods}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{Binding Data.식품명}" TextColor="Black" Margin="10,10,0,0" />
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                                <!-- END OF StackLayout -->
+                            </StackLayout>
+                            <!-- END OF StackLayout -->
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </layout:WrapLayout>
+                <!-- END OF WrapLayout -->
                 <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
                 <StackLayout BackgroundColor="#e4eodd" Margin="15,10,120,10">
                     <Label Text="영양소A" TextColor="Black" Margin="10,10,0,0" />
@@ -35,6 +54,7 @@
                 <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
                 <StackLayout BackgroundColor="#afc5db" Margin="15,10,15,0">
                     <Label Text="게시글 내용" TextColor="Black" FontSize="15" Margin="10,10,0,70" />
+                    <Label Text="{Binding Context}"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

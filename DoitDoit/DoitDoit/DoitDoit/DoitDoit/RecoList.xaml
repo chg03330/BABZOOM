@@ -4,10 +4,11 @@
              x:Class="DoitDoit.RecoList"
              xmlns:local="clr-namespace:DoitDoit.Models"
              xmlns:doit="clr-namespace:DoitDoit"
+             xmlns:converter="clr-namespace:DoitDoit.Converter"
              BackgroundColor="White">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <doit:CommentCountConverter x:Key="commentconverter" />
+            <converter:CommentCountConverter x:Key="commentconverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 

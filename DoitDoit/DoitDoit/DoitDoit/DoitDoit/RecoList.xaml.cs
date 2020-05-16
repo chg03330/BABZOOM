@@ -20,26 +20,15 @@ namespace DoitDoit {
 
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            if (sender is ButtonWithTag button) {
-                RecoList_Post post = new RecoList_Post();
-                string postcode = (String)button.Tag;
+            if (!(sender is Button button)) return;
+            if (!(button.BindingContext is Models.Post postdata)) return;
 
-                await DisplayAlert("", postcode, "close");
+            RecoList_Post post = new RecoList_Post();
+            post.PostData = postdata;
 
-                Navigation.PushModalAsync(post);
-            }
-        }
-    }
-
-    public class CommentCountConverter : IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return $"댓글 {value}";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            return 0;
+            Navigation.PushModalAsync(post);
         }
     }
 }

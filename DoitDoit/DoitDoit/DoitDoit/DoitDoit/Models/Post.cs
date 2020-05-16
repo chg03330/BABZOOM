@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace DoitDoit.Models {
     [Serializable]
-    public class Post {
+    public class Post : NotifyableObject {
+        private ObservableCollection<FoodViewModel> menus = new ObservableCollection<FoodViewModel>();
+
         public string Code { get; set; } = "";
         public string UserID { get; set; } = "";
         public string Context { get; set; } = "";
@@ -20,7 +23,13 @@ namespace DoitDoit.Models {
 
         public string[] Menu { get; set; }
 
-        public FoodViewModel[] Menus { get; set; } = new FoodViewModel[] { };
+        public ObservableCollection<FoodViewModel> Menus {
+            get => this.menus;
+            set {
+                this.menus = value;
+                this.OnPropertyChanged(nameof(this.Menus));
+            }
+        }
         public Comment[] Comments { get; set; } = new Comment[] { };
     }
 
