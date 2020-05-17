@@ -378,6 +378,7 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
 
     // 클라이언트에 보낼 메뉴 정보
     const menus:Menu[] = [];
+    let menucode:String = "";
 
     await query.get().then(async (snapshot) => {
         for (let index:number = 0; index < snapshot.size; index++) {
@@ -387,7 +388,7 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
 
             const menu:Menu = new Menu();
             await menu.Create(doc.id);
-    
+
             menus.push(menu);
         }
     }).catch(err => console.error(err));

@@ -45,7 +45,26 @@ namespace DoitDoit
             nowTime = dateTime.ToString("yyyyMMdd");
         }
 
-        
+        /// <summary>
+        /// 공유 식단 작성 버튼 눌렀을 때 이벤트 처리기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShareButton_Clicked(object sender, EventArgs e) {
+            RecoList_Post post = new RecoList_Post();
+
+            Models.Post postdata = new Models.Post();
+
+            foreach (FoodViewModel menu in this.list) {
+                postdata.Menus.Add(menu);
+            }
+
+            post.PostData = postdata;
+            post.ModifyMode = true;
+
+            Navigation.PushModalAsync(post);
+        }
+
         private void addUserMenu_Clicked(object sender, EventArgs e)
         {
             AddUserMenu ad = new AddUserMenu();
@@ -56,6 +75,12 @@ namespace DoitDoit
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
+            string menus = "";
+            foreach (FoodViewModel menu in usermodel.FoodViewModels) {
+                menus += (menu.Code + "\n");
+            }
+            DisplayAlert("", menus, "close");
+
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
             });
