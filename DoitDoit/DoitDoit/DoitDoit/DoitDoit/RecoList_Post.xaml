@@ -56,6 +56,10 @@
                     <Label Text="게시글 내용" TextColor="Black" FontSize="15" Margin="10,10,0,70" />
                     <Label Text="{Binding Context}"/>
                 </StackLayout>
+                <StackLayout>
+                    <Button x:Name="BtnOk" Text="확인" Clicked="Ok_Clicked"/>
+                    <Button Text="취소" Clicked="Cancel_Clicked"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

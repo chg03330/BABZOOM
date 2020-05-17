@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DoitDoit.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,17 @@ namespace DoitDoit
             foreach (Models.FoodViewModel menu in this.PostData.Menus) {
                 DisplayAlert("", menu.Code, "Close");
             }
+
+            #region ModifyMode예외처리
+            if (this.ModifyMode == false)
+            {
+                BtnOk.IsEnabled = false;
+            }
+            else
+            {
+                BtnOk.IsEnabled = true;
+            }
+            #endregion
         }
 
         private void SetMenuDay() {
@@ -67,6 +79,19 @@ namespace DoitDoit
             string context = $"{this.PostData.UserID}님의 {day}식단";
 
             label.Text = context;
+        }
+
+        private void Cancel_Clicked(object sender, EventArgs e)
+        {
+            this.OnBackButtonPressed();
+        }
+
+        private void Ok_Clicked(object sender, EventArgs e)
+        {
+            postdata.Date = DateTime.Now;
+            FirebaseServer server = FirebaseServer.Server;
+            server.FirebaseRequest("SetPostData", postdata);
+            DisplayAlert("안내", "됐을까요?", "확인");
         }
     }
 }

@@ -61,7 +61,7 @@ namespace DoitDoit
 
             post.PostData = postdata;
             post.ModifyMode = true;
-
+            post.PostData.UserID = Models.UserModel.GetInstance.Id;
             Navigation.PushModalAsync(post);
         }
 
@@ -87,7 +87,7 @@ namespace DoitDoit
 
             list = new ObservableCollection<FoodViewModel>();
             foreach (FoodViewModel f in fvm) {
-                f.Code = f.Code.Substring(0, 8);
+                //f.Code = f.Code.Substring(0, 8);
                 list.Add(f);
             }
 
@@ -118,7 +118,7 @@ namespace DoitDoit
             }
             else {
                 foreach (FoodViewModel f in fvm) {
-                    f.Code = f.Code.Substring(0, 8);
+                    //f.Code = f.Code.Substring(0, 8);
                     list.Add(f);
                 }
             }
