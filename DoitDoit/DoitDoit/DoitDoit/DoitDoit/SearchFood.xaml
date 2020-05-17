@@ -12,17 +12,10 @@
     </ContentPage.BindingContext>
 
     <StackLayout>
-        <SearchBar Placeholder="Food Name" x:Name="s_bar"/>
+        <SearchBar Placeholder="Food Name" x:Name="s_bar" SearchButtonPressed="s_bar_SearchButtonPressed" />
 
         <ListView x:Name="lvFood" ItemSelected="lvFood_ItemSelected">
         </ListView>
-
-        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
-            <Button Text="추가" Command ="{Binding AddFoodCommand}" BackgroundColor="#A0BAED"
-                    WidthRequest="150" CornerRadius="30" TextColor="White"/>
-            <Button Text="삭제" Command ="{Binding RemoveFoodCommand}" BackgroundColor="#A0BAED"
-                    WidthRequest="150" CornerRadius="30" TextColor="white"/>
-        </StackLayout>
 
         <StackLayout  HorizontalOptions="Center">
             <Button Text="등록" Clicked="Register_Clicked" BackgroundColor="#A0BAED"

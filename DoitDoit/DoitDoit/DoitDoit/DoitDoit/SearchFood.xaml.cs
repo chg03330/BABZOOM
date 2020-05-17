@@ -38,7 +38,7 @@ namespace DoitDoit {
 
         private void Register_Clicked(object sender, EventArgs e) {
             if ("".Equals(selectItem))
-                DisplayAlert("오류", "선택한 식품이 없습니다.", "확인");
+                DisplayAlert("안내", "선택한 식품이 없습니다.", "확인");
             else
             {
                 AM.addItem(selectItem);
@@ -50,7 +50,21 @@ namespace DoitDoit {
         private void lvFood_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             selectItem = e.SelectedItem.ToString();
-            DisplayAlert("a", selectItem, "a");
+            //DisplayAlert("a", selectItem, "a");
+        }
+
+        private async void s_bar_SearchButtonPressed(object sender, EventArgs e)
+        {
+            #region 해당 화면 내 검색    
+            text = s_bar.Text;
+            selectItem = "";
+               
+            FirebaseServer server = FirebaseServer.Server;
+            List<String> fd = new List<String>();
+            fd = await server.SearchFood(text);
+
+            lvFood.ItemsSource = fd;
+            #endregion
         }
     }
 }

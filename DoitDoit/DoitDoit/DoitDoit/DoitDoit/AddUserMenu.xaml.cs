@@ -66,8 +66,7 @@ namespace DoitDoit
 
         private void Add_Clicked(object sender, EventArgs e)
         {
-            if (Foods.Count != 0) // 빈 값 추가되는거 방지
-            {
+            if (Foods.Count != 0) { 
                 int year = this.dateTime.Year;
                 int month = this.dateTime.Month;
                 int day = this.dateTime.Day;
@@ -101,6 +100,7 @@ namespace DoitDoit
                 server.FirebaseRequest("SetMenuData", menu);
 
                 this.OnBackButtonPressed();
+            
             }
             else {
                 DisplayAlert("안내", "등록한 식단이 없습니다.", "확인");

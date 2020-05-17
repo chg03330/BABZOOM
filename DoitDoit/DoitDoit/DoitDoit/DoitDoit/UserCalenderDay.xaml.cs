@@ -69,7 +69,7 @@ namespace DoitDoit
             BindableLayout.SetItemsSource(this.liststack, list);
         }
 
-
+        /*
         private void Button_Clicked(object sender, EventArgs e)
         {
             ButtonWithTag button = sender as ButtonWithTag;
@@ -79,7 +79,7 @@ namespace DoitDoit
 
             DisplayAlert("확인용", "값:" + menu.Code, foodData.식품코드) ;
         }
-
+        */
         private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             this.dateTime = e.NewDate;

@@ -45,7 +45,10 @@
                                             <Label Text="{Binding Quantity}" />
                                             <Label Text="{Binding Unit}" />
                                             <Label Text="{Binding Code}" />
-                                            <doitdoit:ButtonWithTag Tag="{Binding BindingContext, Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout}, Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" Clicked="Button_Clicked"/>
+                                            <!--<doitdoit:ButtonWithTag Tag="{Binding BindingContext, 
+                                            Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout},
+                                            Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" 
+                                            Clicked="Button_Clicked"/>-->
                                         </StackLayout>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
