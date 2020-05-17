@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+
 using Xamarin.Forms;
 
 namespace DoitDoit.Converter {
@@ -16,8 +17,12 @@ namespace DoitDoit.Converter {
             }
             catch(Exception) {}
 
-            string minute = time.Substring(10, 2);
-
+            string minute = "0";
+            try {
+                minute = time.Substring(10, 2);
+            }
+            catch (Exception) { }
+            
             string noon = "오전";
             
             if (hour > 12) {

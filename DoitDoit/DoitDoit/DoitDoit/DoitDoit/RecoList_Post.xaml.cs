@@ -12,7 +12,23 @@ namespace DoitDoit
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class RecoList_Post : ContentPage
     {
-        public Models.Post PostData { get; set; }
+        private Models.Post postdata = null;
+        private bool modifymode = false;
+
+        public Models.Post PostData {
+            get => this.postdata;
+            set {
+                this.postdata = value;
+                this.OnPropertyChanged(nameof(this.PostData));
+            }
+        }
+        public bool ModifyMode {
+            get => this.modifymode;
+            set {
+                this.modifymode = value;
+                this.OnPropertyChanged(nameof(this.ModifyMode));
+            }
+        }
 
         public RecoList_Post()
         {
@@ -28,7 +44,9 @@ namespace DoitDoit
             this.SetMenuDay();
             Xamarin.Forms.BindableLayout.SetItemsSource(this.PostMenuList, this.PostData.Menus);
 
-            DisplayAlert("", this.PostData.Date.ToString(), "Close");
+            foreach (Models.FoodViewModel menu in this.PostData.Menus) {
+                DisplayAlert("", menu.Code, "Close");
+            }
         }
 
         private void SetMenuDay() {
