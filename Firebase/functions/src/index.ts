@@ -44,15 +44,17 @@ class Menu extends BObject {
             = ifood.Code;
 
             const data = await code.get();
-            
-            food.Data = new FoodData();
-            await food.Data.Create(data.id);
+            if (data.exists) {
+                food.Data = new FoodData();
 
-            food.Code = data.data()!.식품코드;
+                await food.Data.Create(data.id);
 
-            this.Foods.push(food);
+                food.Code = data.data()!.식품코드;
+    
+                this.Foods.push(food);
+            }
         }
-    }
+    } // END OF Create METHOD
 }
 
 class Food {
@@ -389,9 +391,13 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
             const menu:Menu = new Menu();
             await menu.Create(doc.id);
 
+            menucode = menucode + "" + menu.Code + "\n";
+
             menus.push(menu);
         }
     }).catch(err => console.error(err));
+
+    console.log(menucode);
 
     res.send(menus);
 });
@@ -422,7 +428,7 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
     const ID:String = req.body.UserID ?? "";
     const DateTime:number = req.body.DateTime ?? 0;
     const Context:String = req.body.Context ?? "";
-    const MenuCode:String[] = req.body.Menus ?? [];
+    const MenuCode:String[] = req.body.Menu ?? [];
 
     const timestamp:admin.firestore.Timestamp = admin.firestore.Timestamp.fromMillis(DateTime);
     console.log(DateTime);
