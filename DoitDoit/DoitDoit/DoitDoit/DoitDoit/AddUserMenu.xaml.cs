@@ -11,12 +11,13 @@ using Xamarin.Forms.Xaml;
 using DoitDoit.Models;
 using DoitDoit.Network;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 //using Android.Database;
 
 namespace DoitDoit
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddUserMenu : ContentPage
+    public partial class AddUserMenu : ContentPage, INotifyPropertyChanged
     {
         public DateTime dateTime { get; set; }
         public ObservableCollection<FoodData> Foods { get; set; }
@@ -51,7 +52,7 @@ namespace DoitDoit
         {
             Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => {
                 SearchFood sf = new SearchFood();
-                sf.text = SearchText.Text;
+                sf.text = SearchText.Text.Trim();
                 sf.AM = this;
                 await Navigation.PushModalAsync(sf);
             });
@@ -65,38 +66,61 @@ namespace DoitDoit
 
         private void Add_Clicked(object sender, EventArgs e)
         {
-            int year = this.dateTime.Year;
-            int month = this.dateTime.Month;
-            int day = this.dateTime.Day;
-            int hour = this.addMenu_ClockTime.Time.Hours;
-            int minute = this.addMenu_ClockTime.Time.Minutes;
+            if (Foods.Count != 0) // 빈 값 추가되는거 방지
+            {
+                int year = this.dateTime.Year;
+                int month = this.dateTime.Month;
+                int day = this.dateTime.Day;
+                int hour = this.addMenu_ClockTime.Time.Hours;
+                int minute = this.addMenu_ClockTime.Time.Minutes;
 
-            DateTime date = new DateTime(year, month, day, hour, minute, 0);
+                DateTime date = new DateTime(year, month, day, hour, minute, 0);
 
-            var foods = from fooddata in this.Foods
-                        select new Food() { Code = fooddata.식품코드, Quantity = fooddata.내용량.ToString(),
-                         Data = fooddata, Unit = fooddata.내용량_단위};
+                var foods = from fooddata in this.Foods
+                            select new Food()
+                            {
+                                Code = fooddata.식품코드,
+                                Quantity = fooddata.내용량.ToString(),
+                                Data = fooddata,
+                                Unit = fooddata.내용량_단위
+                            };
 
-            FoodViewModel menu = new FoodViewModel {
-                UserID = UserModel.GetInstance.Id,
-                Foods = foods.ToArray(),
-                Code = date.ToString("yyyyMMddhhmmss")
-            };
+                FoodViewModel menu = new FoodViewModel
+                {
+                    UserID = UserModel.GetInstance.Id,
+                    Foods = foods.ToArray(),
+                    Code = date.ToString("yyyyMMddhhmmss")
+                };
 
-            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                UserModel.GetInstance.FoodViewModels.Add(menu);
-            });
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                {
+                    UserModel.GetInstance.FoodViewModels.Add(menu);
+                });
 
-            FirebaseServer server = FirebaseServer.Server;
-            server.FirebaseRequest("SetMenuData", menu);
+                FirebaseServer server = FirebaseServer.Server;
+                server.FirebaseRequest("SetMenuData", menu);
 
-            this.OnBackButtonPressed();
+                this.OnBackButtonPressed();
+            }
+            else {
+                DisplayAlert("안내", "등록한 식단이 없습니다.", "확인");
+            }
         }
 
         private void addMenu_DayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             //var date = e.NewDate;
             //DisplayAlert("선택한 날짜", date.ToString("yyyy년 MM월 dd일"), "OK");
+        }
+
+        private void Del_Clicked(object sender, EventArgs e)
+        {
+            ButtonWithTag button = sender as ButtonWithTag;
+            FoodData foodData = button.BindingContext as FoodData;
+            FoodViewModel menu = button.Tag as FoodViewModel;
+
+            Foods.Remove(foodData);
+
         }
     }
 }
