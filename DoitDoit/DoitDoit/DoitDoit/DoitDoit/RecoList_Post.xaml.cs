@@ -45,19 +45,11 @@ namespace DoitDoit
             this.SetMenuDay();
             Xamarin.Forms.BindableLayout.SetItemsSource(this.PostMenuList, this.PostData.Menus);
 
-            foreach (Models.FoodViewModel menu in this.PostData.Menus) {
-                DisplayAlert("", menu.Code, "Close");
-            }
-
             #region ModifyMode예외처리
-            if (this.ModifyMode == false)
-            {
-                BtnOk.IsEnabled = false;
-            }
-            else
-            {
-                BtnOk.IsEnabled = true;
-            }
+            this.BtnOk.IsVisible = this.ModifyMode;
+            this.PostContextLabel.IsVisible = !this.ModifyMode;
+            this.PostContextEditor.IsVisible = this.ModifyMode;
+            this.BtnComment.IsVisible = !this.ModifyMode;
             #endregion
         }
 
@@ -86,12 +78,38 @@ namespace DoitDoit
             this.OnBackButtonPressed();
         }
 
-        private void Ok_Clicked(object sender, EventArgs e)
+        private async void Ok_Clicked(object sender, EventArgs e)
         {
             postdata.Date = DateTime.Now;
-            FirebaseServer server = FirebaseServer.Server;
-            server.FirebaseRequest("SetPostData", postdata);
-            DisplayAlert("안내", "됐을까요?", "확인");
-        }
+            this.PostData.Context = this.PostContextEditor.Text;
+            
+            bool accept = await DisplayAlert("안내", "됐을까요?", "OK", "Cancel");
+
+            if (accept) {
+                FirebaseServer server = FirebaseServer.Server;
+                string packetjson = await server.FirebaseRequest("SetPostData", postdata);
+                Packet packet = Newtonsoft.Json.JsonConvert.DeserializeObject<Packet>(packetjson);
+
+                if (packet.Result) {
+                    this.PostData.Code = packet.Context;
+                    Models.UserModel.GetInstance.Posts.Add(this.PostData);
+                }
+
+                this.OnBackButtonPressed();
+            }
+        } // END OF Ok_clicked EVENT LISTENER
+
+        /// <summary>
+        /// 댓글 버튼이 눌렸을 때의 이벤트 처리기
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CommentButton_Clicked(object sender, EventArgs e) {
+            Post_com comment = new Post_com {
+                PostData = this.PostData
+            };
+
+            Navigation.PushModalAsync(comment);
+        } // END OF CommentButton_Clicked EVENT LISTENER
     }
 }

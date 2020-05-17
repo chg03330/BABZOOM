@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoitDoit.Post_com"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             Appearing="ContentPage_Appearing">
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
@@ -13,19 +14,22 @@
                 <Label Text="댓글 내용" TextColor="Black" Margin="10,10,0,40" />
                 <Entry x:Name="CommentWrite" />
             </StackLayout>
-            <Button Text="작성" TextColor="Black" BackgroundColor="White" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"
-                CornerRadius="10" WidthRequest="80" BorderColor="#dbelfo" BorderWidth="3"/>
-            <StackLayout BackgroundColor="#e4eodd" Margin="15,20,15,0">
-                <Label Text="A님의 댓글1" TextColor="Black" Margin="10,10,0,40" />
-            </StackLayout>
-            <StackLayout BackgroundColor="#e4eodd" Margin="15,15,15,0">
-                <Label Text="B님의 댓글2" TextColor="Black" Margin="10,10,0,40" />
-            </StackLayout>
-            <StackLayout BackgroundColor="#e4eodd" Margin="15,15,15,0">
-                <Label Text="C님의 댓글3" TextColor="Black" Margin="10,10,0,40" />
-            </StackLayout>
-            <StackLayout BackgroundColor="#e4eodd" Margin="15,15,15,0">
-                <Label Text="D님의 댓글4" TextColor="Black" Margin="10,10,0,40" />
+            <Button Text="작성"
+                    TextColor="Black"
+                    BackgroundColor="White"
+                    HorizontalOptions="EndAndExpand"
+                    Margin="0,0,15,0"
+                    CornerRadius="10" WidthRequest="80" BorderColor="#dbelfo" BorderWidth="3"
+                    Clicked="Button_Clicked"/>
+            <StackLayout x:Name="CommentStackLayout">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout BackgroundColor="#e4eodd" Margin="15,20,15,0" Padding="10,10,0,40">
+                            <Label Text="{Binding ID}" TextColor="Black"  />
+                            <Label Text="{Binding Context}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
             </StackLayout>
         </StackLayout>
     </ScrollView>

@@ -38,7 +38,7 @@ namespace DoitDoit
             selectTime = dateTime.ToString("yyyyMMdd");
             this.addMenu_DayTime.Date = dateTime;
             SearchText.Text = "";
-            DisplayAlert("확인", ""+Foods.Count(), "확인");
+            DisplayAlert("확인", Foods.Count().ToString(), "확인");
             
         }
 

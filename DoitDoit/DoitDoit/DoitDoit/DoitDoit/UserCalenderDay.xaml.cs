@@ -75,12 +75,6 @@ namespace DoitDoit
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            string menus = "";
-            foreach (FoodViewModel menu in usermodel.FoodViewModels) {
-                menus += (menu.Code + "\n");
-            }
-            DisplayAlert("", menus, "close");
-
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
             });

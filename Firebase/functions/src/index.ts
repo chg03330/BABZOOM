@@ -99,16 +99,18 @@ class Post extends BObject {
         this.Date = timestamp.toDate();
         this.Context = doc.p_text;
 
-        for (let i:number = 0; i < doc.p_menu.length; i++) {
-            const menudocref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-            = doc.p_menu[i];
-
-            const docdata = await menudocref.get();
-            
-            const menu:Menu = new Menu();
-            await menu.Create(docdata.id);
-
-            this.Menus.push(menu);
+        if (doc.p_menu && doc.p_menu.length) {
+            for (let i:number = 0; i < doc.p_menu.length; i++) {
+                const menudocref:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+                = doc.p_menu[i];
+    
+                const docdata = await menudocref.get();
+                
+                const menu:Menu = new Menu();
+                await menu.Create(docdata.id);
+    
+                this.Menus.push(menu);
+            }
         }
 
         const commentcollection = query.collection("data_post_comment");
@@ -122,6 +124,7 @@ class Post extends BObject {
                 comm.Context = cdoc.data().c_text;
                 const ctimestamp:admin.firestore.Timestamp = cdoc.data().c_time;
                 comm.Date = ctimestamp.toDate();
+                comm.Code = cdoc.id;
 
                 this.Comments.push(comm);
             }
@@ -133,6 +136,7 @@ class Post extends BObject {
 }
 
 class Comment  {
+    public Code:string = "";
     public ID:string = "";
     public Context:string = "";
     public Date:Date | null = null;
@@ -452,6 +456,7 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
     resresult.Result = true;
     resresult.Context = "";
     
+    const data:void | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> =
     await admin.firestore().collection("data_post")
     .add(post)
     .catch(err => {
@@ -459,6 +464,10 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
         resresult.Result = false;
         resresult.Context = "식단 등록에 실패하였습니다.";
     });
+
+    if ((<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>data).id) {
+        resresult.Context = (<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>data).id;
+    }
 
     res.send(resresult);
 });
@@ -501,11 +510,24 @@ export const AddCommentData = functions.https.onRequest(async (req, res) => {
 
     const query = admin.firestore().collection("data_post").doc(PostID.toString()).collection("data_post_comment");
 
+    const resresult:any = {};
+    resresult.Packet = "AddCommentData";
+    resresult.Result = true;
+    resresult.Context = "";
+
+    const data:void | FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData> =
     await query.add({
         "c_id" : ID,
         "c_text" : Context,
         "c_time" : time
     }).catch(err => {
         console.error(err);
+        resresult.Result = false;
     });
+
+    if ((<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>data).id) {
+        resresult.Context = (<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>data).id;
+    }
+
+    res.send(resresult);
 });

@@ -52,12 +52,14 @@
                     <Label Text="영양소C" TextColor="Black" Margin="10,10,0,20" />
                 </StackLayout>
                 <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-                <StackLayout BackgroundColor="#afc5db" Margin="15,10,15,0">
-                    <Label Text="게시글 내용" TextColor="Black" FontSize="15" Margin="10,10,0,70" />
-                    <Label Text="{Binding Context}"/>
+                <StackLayout BackgroundColor="#afc5db" Margin="15,10,15,0" Padding="10,10,0,20">
+                    <Label Text="게시글 내용" TextColor="Black" FontSize="15" />
+                    <Label Text="{Binding Context}" x:Name="PostContextLabel" IsVisible="True"/>
+                    <Editor x:Name="PostContextEditor" IsVisible="False" />
                 </StackLayout>
                 <StackLayout>
                     <Button x:Name="BtnOk" Text="확인" Clicked="Ok_Clicked"/>
+                    <Button x:Name="BtnComment" Text="댓글" Clicked="CommentButton_Clicked" />
                     <Button Text="취소" Clicked="Cancel_Clicked"/>
                 </StackLayout>
             </StackLayout>
