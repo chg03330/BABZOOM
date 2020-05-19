@@ -214,8 +214,8 @@ class User {
     Context - 안내 텍스트
 */
 export const SignIn = functions.https.onRequest(async (request, response) => {
-    const a:User = new User(request.body.ID, request.body.Password);
-    const loginresult:boolean = await a.sign(true);
+    const user:User = new User(request.body.ID, request.body.Password);
+    const loginresult:boolean = await user.sign(true);
 
     const responseresult:any = {};
     responseresult.Packet = "Login";
@@ -226,7 +226,7 @@ export const SignIn = functions.https.onRequest(async (request, response) => {
 
     if(loginresult){
         responseresult.Result = true;
-        responseresult.Context = "아이디,비밀번호가 일치합니다.";
+        responseresult.Context = JSON.stringify(user);
 
         //user = a;
     }
@@ -361,7 +361,7 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
     resresult.Context = "";
 
     // 데이터베이스 저장
-    await admin.firestore().collection("data_menu").doc(menu.Code.toString())
+    await admin.firestore().collection("data_menu").doc(menu.Code.toString() + "" + menu.UserID)
     .set(menuj)
     .catch(err => {
         console.error(err);

@@ -16,91 +16,73 @@ namespace DoitDoit
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class InfoEntry : ContentPage
 	{
-		UserModel a;
-		String gender="False";
+		private readonly UserModel usermodel;
+		public bool Mode { get; set; } = false;
+
 		public InfoEntry()
 		{
 			InitializeComponent ();
-			a = UserModel.GetInstance;
-			if (!"".Equals(a.Name))
-				searchInfo();		
+			usermodel = UserModel.GetInstance;
+			/// 회원가입 화면에서 왔을 경우 Cancel 버튼 비활성화
+			this.CanelButton.IsVisible = !this.Mode;
 		}
 
-		private async void searchInfo() {
-			Dictionary<string, string> post = new Dictionary<string, string>();
-			post["ID"] = a.Id;
-			post["Password"] = a.Password;
-			FirebaseServer server = FirebaseServer.Server;
-			string result = await server.FirebaseRequest("GetUserData", post);
-			Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-			if (!"".Equals(resultdic["name"]))
-			{
-				a.Name = resultdic["name"];
-				a.Age = int.Parse(resultdic["age"]);
-				a.Height = float.Parse(resultdic["height"]);
-				a.Weight = float.Parse(resultdic["weight"]);
-				if ("True".Equals(resultdic["gender"]))
-					a.Gender = true;
-				else
-					a.Gender = false;
-
-				NAME.Text = a.Name;
-				HEIGHT.Text = a.Height.ToString();
-				WEIGHT.Text = a.Weight.ToString();
-				AGE.Text = a.Age.ToString();
-				if (a.Gender == true)
-				{
-					labelGender.Text = "남자";
-					gender = "True";
-					SWITCH.IsToggled = true;
-				}
-				else
-				{
-					labelGender.Text = "여자";
-					gender = "False";
-					SWITCH.IsToggled = false;
-				}
-
-			}
-			else
-			{
-				await DisplayAlert("알람", "정보 불러오는게 실패했습니다.\n신규회원이라면 정보를 등록해주세요", "확인");
-			}
-		}
-
+		/// <summary>
+		/// OK 버튼 눌렀을 때의 이벤트 처리기
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
         private async void OK_Clicked(object sender, EventArgs e)
         {
-			Dictionary<string, string> post = new Dictionary<string, string>();
-			post["ID"] = a.Id;
-			post["Password"] = a.Password;
-			post["Height"] = HEIGHT.Text;
-			post["Weight"] = WEIGHT.Text;
-			post["Name"] = NAME.Text;
-			post["Gender"] = gender;
-			post["Age"] = AGE.Text;
-			FirebaseServer server = FirebaseServer.Server;
-			string result = await server.FirebaseRequest("SetUserData", post);
+            bool accept = await DisplayAlert("결과", "ㅇㅋ", "OK", "Cancel");
 
-			Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-			await DisplayAlert("결과", "ㅇㅋ", "확인");
-			Navigation.PushModalAsync(new Main());
-        }
+			if (accept) {
+				#region SET USERMODEL & POST DATA
+				Dictionary<string, string> post = new Dictionary<string, string> {
+					["ID"] = usermodel.Id,
+					["Password"] = usermodel.Password,
+					["Height"] = (usermodel.Height = Convert.ToSingle(this.HEIGHT.Text)).ToString(),
+					["Weight"] = (usermodel.Weight = Convert.ToSingle(this.WEIGHT.Text)).ToString(),
+					["Name"] = (usermodel.Name = NAME.Text),
+					["Gender"] = (usermodel.Gender = this.SWITCH.IsToggled).ToString(),
+					["Age"] = (usermodel.Age = Convert.ToInt32(AGE.Text)).ToString()
+				};
+				#endregion
+
+#pragma warning disable 4014
+				/// 서버에 유저 정보를 보낸다.
+				Task.Run(async () => {
+					FirebaseServer server = FirebaseServer.Server;
+					string result = await server.FirebaseRequest("SetUserData", post);
+				});
+#pragma warning restore 4014
+
+				/// 회원가입에서 왔을 경우 -> Main 화면
+				/// 사이드 메뉴에서 왔을 경우 -> Back
+				if (this.Mode) {
+					await Navigation.PushModalAsync(new Main());
+				}
+				else {
+					this.OnBackButtonPressed();
+				}
+			}
+		}
 
 		private void Switch_Toggled(object sender, ToggledEventArgs e)
 		{
-			if (e.Value == true) {
-				labelGender.Text = "남자";
-				gender = "true";
-			}
-			else {
-				labelGender.Text = "여자";
-				gender = "false";
-			}
+			//if (e.Value == true) {
+			//	labelGender.Text = "남자";
+			//	gender = "true";
+			//}
+			//else {
+			//	labelGender.Text = "여자";
+			//	gender = "false";
+			//}
 		}
 
 		private void Cancel_Clicked(object sender, EventArgs e)
 		{
-			OnBackButtonPressed();
+			this.OnBackButtonPressed();
 		}
 	}
 }

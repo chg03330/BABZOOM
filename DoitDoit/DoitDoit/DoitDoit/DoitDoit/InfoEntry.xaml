@@ -1,40 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DoitDoit"
+             xmlns:model="clr-namespace:DoitDoit.Models"
+             xmlns:converter="clr-namespace:DoitDoit.Converter"
              x:Class="DoitDoit.InfoEntry"
              BackgroundColor="#C4DEFF">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:BooleanToGenderConverter x:Key="btogconverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout VerticalOptions="Center">
         <Image Source="C:\Users\1210k\Desktop\자마린연습\DoitDoit\DoitDoit\DoitDoit.Android\Resources\drawable\LOGO.png" 
                    WidthRequest="100" HeightRequest="30" />
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="이름" TextColor="Black" FontSize="20" />
-            <Entry WidthRequest="70" x:Name="NAME" />
+            <Entry WidthRequest="70" x:Name="NAME" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Name, Mode=OneWay}" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="나이" TextColor="Black" FontSize="20" />
-            <Entry WidthRequest="70" x:Name="AGE" />
+            <Entry WidthRequest="70" Keyboard="Numeric" x:Name="AGE" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Age, Mode=OneWay}" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="체중" TextColor="Black" FontSize="20" />
-            <Entry WidthRequest="70" x:Name="HEIGHT" />
+            <Entry WidthRequest="70" Keyboard="Numeric" x:Name="HEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Height, Mode=OneWay}" />
             <Label Text="kg" TextColor="Black" FontSize="15" VerticalTextAlignment="Center" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="키" TextColor="Black" FontSize="20" />
-            <Entry WidthRequest="70" x:Name="WEIGHT"/>
+            <Entry WidthRequest="70" Keyboard="Numeric" x:Name="WEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Weight, Mode=OneWay}"/>
             <Label Text="cm" TextColor="Black" FontSize="15" VerticalTextAlignment="Center" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
             <Label Text="성별" TextColor="Black" FontSize="20" />
-            <Switch x:Name="SWITCH" IsToggled="False" Toggled="Switch_Toggled"></Switch>
-            <Label Text="여자" FontSize="20" x:Name="labelGender"></Label>
+            <Switch x:Name="SWITCH" IsToggled="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Gender, Mode=OneWay}" Toggled="Switch_Toggled" />
+            <Label Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Gender, Converter={StaticResource Key=btogconverter}, Mode=OneWay}" FontSize="20" x:Name="labelGender" />
         </StackLayout>
         
        
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="20">
             <Button Text="확인" Clicked="OK_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60"/>
-            <Button Text="취소" Clicked="Cancel_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60" />
+            <Button x:Name="CanelButton" Text="취소" Clicked="Cancel_Clicked" BackgroundColor="#A0BAED" CornerRadius="20" WidthRequest="60" />
         </StackLayout>
     </StackLayout>
     

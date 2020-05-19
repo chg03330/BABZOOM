@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using DoitDoit.Models;
-using DoitDoit.Network;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 //using Android.Database;

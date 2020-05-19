@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoitDoit.Android", "DoitDoi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoitDoit.iOS", "DoitDoit\DoitDoit.iOS\DoitDoit.iOS.csproj", "{35DE92CE-539E-4A62-B631-DD2EE6F623EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoitDoit", "DoitDoit\DoitDoit\DoitDoit.csproj", "{598A8B7B-D6C6-4F2E-B55F-E6F75D1B1102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoitDoit", "DoitDoit\DoitDoit\DoitDoit.csproj", "{598A8B7B-D6C6-4F2E-B55F-E6F75D1B1102}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
