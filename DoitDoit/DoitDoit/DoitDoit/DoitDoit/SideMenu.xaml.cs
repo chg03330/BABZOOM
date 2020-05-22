@@ -39,7 +39,7 @@ namespace DoitDoit
 
         private void MenuShare_Clicked(object sender, EventArgs e)
         {
-            //Navigation.PushModalAsync(new RecoList_Post());
+            Navigation.PushModalAsync(new Page1());
         }
 
         private void Logout_Clicked(object sender, EventArgs e)

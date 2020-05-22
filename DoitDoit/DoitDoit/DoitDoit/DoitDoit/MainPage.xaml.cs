@@ -81,7 +81,7 @@ namespace DoitDoit
         
         private void Cancel_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new Calender());
+            Navigation.PushModalAsync(new Page1());
         }
     }
 }
