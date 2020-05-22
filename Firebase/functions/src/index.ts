@@ -105,6 +105,9 @@ class Post extends BObject {
                 = doc.p_menu[i];
     
                 const docdata = await menudocref.get();
+                if (!docdata.exists) {
+                    continue;
+                }
                 
                 const menu:Menu = new Menu();
                 await menu.Create(docdata.id);
@@ -361,7 +364,7 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
     resresult.Context = "";
 
     // 데이터베이스 저장
-    await admin.firestore().collection("data_menu").doc(menu.Code.toString() + "" + menu.UserID)
+    await admin.firestore().collection("data_menu").doc(menu.Code.toString())
     .set(menuj)
     .catch(err => {
         console.error(err);

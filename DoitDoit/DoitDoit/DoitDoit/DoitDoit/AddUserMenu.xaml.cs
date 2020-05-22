@@ -86,7 +86,7 @@ namespace DoitDoit
                 {
                     UserID = UserModel.GetInstance.Id,
                     Foods = foods.ToArray(),
-                    Code = date.ToString("yyyyMMddhhmmss")
+                    Code = date.ToString("yyyyMMddhhmmss") + UserModel.GetInstance.Id
                 };
 
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
