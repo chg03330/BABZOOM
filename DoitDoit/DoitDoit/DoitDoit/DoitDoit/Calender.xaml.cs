@@ -24,7 +24,7 @@ namespace DoitDoit
 
         }
 
-        private async void ContentPage_Appearing(object sender, EventArgs e) {
+        private void ContentPage_Appearing(object sender, EventArgs e) {
             UserModel usermodel = UserModel.GetInstance;
 
             this.UserCalender.Events = new EventCollection() {};

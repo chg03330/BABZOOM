@@ -105,6 +105,9 @@ class Post extends BObject {
                 = doc.p_menu[i];
     
                 const docdata = await menudocref.get();
+                if (!docdata.exists) {
+                    continue;
+                }
                 
                 const menu:Menu = new Menu();
                 await menu.Create(docdata.id);
@@ -214,8 +217,8 @@ class User {
     Context - 안내 텍스트
 */
 export const SignIn = functions.https.onRequest(async (request, response) => {
-    const a:User = new User(request.body.ID, request.body.Password);
-    const loginresult:boolean = await a.sign(true);
+    const user:User = new User(request.body.ID, request.body.Password);
+    const loginresult:boolean = await user.sign(true);
 
     const responseresult:any = {};
     responseresult.Packet = "Login";
@@ -226,7 +229,7 @@ export const SignIn = functions.https.onRequest(async (request, response) => {
 
     if(loginresult){
         responseresult.Result = true;
-        responseresult.Context = "아이디,비밀번호가 일치합니다.";
+        responseresult.Context = JSON.stringify(user);
 
         //user = a;
     }

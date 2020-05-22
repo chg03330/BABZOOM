@@ -5,6 +5,8 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
+using Newtonsoft.Json;
+
 namespace DoitDoit.Models
 {
 
@@ -13,6 +15,7 @@ namespace DoitDoit.Models
     /// SINGLETON
     /// 유저 정보를 가지고 있는 객체
     /// </summary>
+    [Serializable]
     public class UserModel : INotifyPropertyChanged
     {
         #region 싱글톤

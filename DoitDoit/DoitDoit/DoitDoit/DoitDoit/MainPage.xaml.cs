@@ -38,18 +38,24 @@ namespace DoitDoit
             FirebaseServer server = FirebaseServer.Server;
             string result = await server.FirebaseRequest("SignIn", post);
 
-            Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+            Packet packet = JsonConvert.DeserializeObject<Packet>(result);
 
+            UserModel usermodel = UserModel.GetInstance;
 
-            if ("true".Equals(resultdic["Result"]))
-            {
-                UserModel a = UserModel.GetInstance;
-                a.Id=id;
-                a.Password=pw;
+            Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(packet.Context);
 
-                
+            if (packet.Result) {
+                usermodel.Id = id;
+                usermodel.Password = pw;
+
+                usermodel.Name = resultdic["name"];
+                usermodel.Age = int.Parse(resultdic["age"]);
+                usermodel.Height = float.Parse(resultdic["height"]);
+                usermodel.Weight = float.Parse(resultdic["weight"]);
+                usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
+
                 Dictionary<string, string> req = new Dictionary<string, string>();
-                req["ID"] = a.Id;
+                req["ID"] = usermodel.Id;
 
                 string result1 = await server.FirebaseRequest("GetMenuData", req);
 
@@ -57,7 +63,7 @@ namespace DoitDoit
 
                 list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
 
-                a.FoodViewModels = list;
+                usermodel.FoodViewModels = list;
 
                 await Navigation.PushModalAsync(new Main());
             }

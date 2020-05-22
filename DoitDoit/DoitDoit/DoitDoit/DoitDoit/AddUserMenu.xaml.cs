@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using DoitDoit.Models;
-using DoitDoit.Network;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 //using Android.Database;
@@ -88,7 +86,7 @@ namespace DoitDoit
                 {
                     UserID = UserModel.GetInstance.Id,
                     Foods = foods.ToArray(),
-                    Code = date.ToString("yyyyMMddhhmmss")
+                    Code = date.ToString("yyyyMMddhhmmss") + UserModel.GetInstance.Id
                 };
 
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
