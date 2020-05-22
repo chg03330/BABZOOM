@@ -44,6 +44,7 @@ namespace DoitDoit.Models
         private int age;
         private bool gender;
         private String name;
+        private Nutrition.nutBases bases;
         private ObservableCollection<FoodViewModel> foodViewModels;
         private ObservableCollection<Post> posts;
         #endregion
@@ -94,6 +95,13 @@ namespace DoitDoit.Models
             set {
                 this.name = value;
                 this.OnPropertyChanged(nameof(this.Name));
+            }
+        }
+        public Nutrition.nutBases Bases {
+            get => this.bases;
+            set {
+                this.bases = value;
+                this.OnPropertyChanged(nameof(this.Bases));
             }
         }
         public ObservableCollection<FoodViewModel> FoodViewModels {

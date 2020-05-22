@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DoitDoit.Nutrition
 {
-    class nutBase
+    public class nutBase
     {
         public float AVG_INTAKE { set; get; }
         public float HOP_INTAKE { set; get; }

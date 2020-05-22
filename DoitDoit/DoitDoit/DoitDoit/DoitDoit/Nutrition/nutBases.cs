@@ -1,7 +1,7 @@
-﻿using Android.Telecom;
+﻿//using Android.Telecom;
 using DoitDoit.Models;
-using Java.Security.Spec;
-using Org.Apache.Http.Client.Methods;
+//using Java.Security.Spec;
+//using Org.Apache.Http.Client.Methods;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -12,17 +12,18 @@ using System.Text;
      */
 namespace DoitDoit.Nutrition
 {
-    class nutBases
+    public class nutBases
     {
-        BITAMIN_C bitamin_c; THIAMIN thiamin; RIBOFLAVIN riboflavin;
-        NIACIN niacin; BITAMIN_B6 bitamin_b6; BITAMIN_B12 bitamin_b12;
-        BITAMIN_A bitamin_a; BITAMIN_D bitamin_d; BITAMIN_E bitamin_e;
-        BITAMIN_K bitamin_k; IRON iron; ZINC zinc; COOPER cooper;
-        FLUORINE fluorine; CHLORINE chlorine; KALIUM kalium;
-        MAGNESIUM magnesium; MANGANESE manganese; IODINE iodine;
-        SELENIUM selenium; NATRIUM natrium; PHOSPHORUS phosphorus;
-        CALCIUM calcium; CALORIE calorie; PROTEIN protein;
-        nutBases(Boolean sex, int age)
+        public BITAMIN_C bitamin_c; public THIAMIN thiamin; public RIBOFLAVIN riboflavin;
+        public NIACIN niacin; public BITAMIN_B6 bitamin_b6; public BITAMIN_B12 bitamin_b12;
+        public BITAMIN_A bitamin_a; public BITAMIN_D bitamin_d; public BITAMIN_E bitamin_e;
+        public BITAMIN_K bitamin_k; public IRON iron; public ZINC zinc; public COOPER cooper;
+        public FLUORINE fluorine; public CHLORINE chlorine; public KALIUM kalium;
+        public MAGNESIUM magnesium; public MANGANESE manganese; public IODINE iodine;
+        public SELENIUM selenium; public NATRIUM natrium; public PHOSPHORUS phosphorus;
+        public CALCIUM calcium; public CALORIE calorie; public PROTEIN protein;
+
+        public nutBases(Boolean sex, int age)
         {
             bitamin_b6 = new BITAMIN_B6(sex, age);
             bitamin_c = new BITAMIN_C(sex, age);
@@ -52,7 +53,7 @@ namespace DoitDoit.Nutrition
         }
     }
 
-    class BITAMIN_A : nutBase
+    public class BITAMIN_A : nutBase
     {
         public BITAMIN_A(Boolean sex, int age) 
         {
@@ -253,7 +254,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_C :nutBase
+    public class BITAMIN_C :nutBase
     {
         public BITAMIN_C(Boolean sex, int age)
         {
@@ -480,7 +481,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_B6 : nutBase
+    public class BITAMIN_B6 : nutBase
     {
         public BITAMIN_B6(Boolean sex, int age) 
         {
@@ -544,7 +545,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_B12 : nutBase
+    public class BITAMIN_B12 : nutBase
     {
         public BITAMIN_B12(Boolean sex, int age)
         {
@@ -627,7 +628,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_D : nutBase
+    public class BITAMIN_D : nutBase
     {
         public BITAMIN_D(Boolean sex, int age) 
         {
@@ -797,7 +798,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_E : nutBase
+    public class BITAMIN_E : nutBase
     {
         public BITAMIN_E(Boolean sex, int age)
         {
@@ -887,7 +888,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }
-    class BITAMIN_K : nutBase
+    public class BITAMIN_K : nutBase
     {
         public BITAMIN_K(Boolean sex, int age)
         {
@@ -967,7 +968,7 @@ namespace DoitDoit.Nutrition
     }
 
 
-    class THIAMIN : nutBase 
+    public class THIAMIN : nutBase 
     {
         public THIAMIN(Boolean sex, int age) 
         {
@@ -1058,7 +1059,7 @@ namespace DoitDoit.Nutrition
             }
         }
     } //티아민
-    class RIBOFLAVIN : nutBase
+    public class RIBOFLAVIN : nutBase
     {
         public RIBOFLAVIN(Boolean sex, int age) 
         {
@@ -1135,7 +1136,7 @@ namespace DoitDoit.Nutrition
             }
         }
     } // 리보플라빈
-    class NIACIN : nutBase
+    public class NIACIN : nutBase
     {
         public NIACIN(Boolean sex, int age) 
         {
@@ -1219,7 +1220,7 @@ namespace DoitDoit.Nutrition
             }
         }
     } // 니아신
-    class IRON : nutBase 
+    public class IRON : nutBase 
     {
         public IRON(Boolean sex, int age)
         {
@@ -1417,7 +1418,7 @@ namespace DoitDoit.Nutrition
             }
         }
     } // 철
-    class ZINC : nutBase
+    public class ZINC : nutBase
     {
         public ZINC(Boolean sex, int age)
         {
@@ -1584,7 +1585,7 @@ namespace DoitDoit.Nutrition
             }
         }
     } // 아연
-    class COOPER : nutBase
+    public class COOPER : nutBase
     {
         public COOPER(Boolean sex, int age)
         {
@@ -1667,7 +1668,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }//구리
-    class FLUORINE : nutBase
+    public class FLUORINE : nutBase
     {
         public FLUORINE(Boolean sex, int age)
         {
@@ -1782,7 +1783,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 플루오린-불소
-    class CHLORINE : nutBase
+    public class CHLORINE : nutBase
     {
         public CHLORINE(Boolean sex, int age)
         {
@@ -1984,7 +1985,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 클로린-염소
-    class KALIUM : nutBase 
+    public class KALIUM : nutBase 
     {
         public KALIUM(Boolean sex, int age)
         {
@@ -2049,7 +2050,7 @@ namespace DoitDoit.Nutrition
         }
 
     }// 칼륨
-    class MAGNESIUM : nutBase 
+    public class MAGNESIUM : nutBase 
     {
         public MAGNESIUM(Boolean sex, int age)
         {
@@ -2154,7 +2155,7 @@ namespace DoitDoit.Nutrition
         }
     } // 마그네슘
 
-    class MANGANESE : nutBase
+    public class MANGANESE : nutBase
     {
         public MANGANESE(Boolean sex, int age) 
         {
@@ -2218,7 +2219,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 망간
-    class IODINE : nutBase
+    public class IODINE : nutBase
     {
         public IODINE(Boolean sex, int age)
         {
@@ -2308,7 +2309,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 요오드
-    class SELENIUM : nutBase
+    public class SELENIUM : nutBase
     {
         public SELENIUM(Boolean sex, int age)
         {
@@ -2398,7 +2399,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }//셀레늄
-    class NATRIUM : nutBase
+    public class NATRIUM : nutBase
     {
         public NATRIUM(Boolean sex, int age)
         {
@@ -2600,7 +2601,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 나트륨
-    class PHOSPHORUS : nutBase
+    public class PHOSPHORUS : nutBase
     {
         public PHOSPHORUS(Boolean sex, int age)
         {
@@ -2678,7 +2679,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }//포스퍼러스 - 인
-    class CALCIUM : nutBase
+    public class CALCIUM : nutBase
     {
         public CALCIUM(Boolean sex, int age)
         {
@@ -2855,7 +2856,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }// 칼슘
-    class CALORIE : nutBase
+    public class CALORIE : nutBase
     {
         public CALORIE(Boolean sex, int age)
         {
@@ -3053,7 +3054,7 @@ namespace DoitDoit.Nutrition
             }
         }
     }//칼로리
-    class PROTEIN: nutBase
+    public class PROTEIN: nutBase
     {
         public PROTEIN(Boolean sex, int age)
         {

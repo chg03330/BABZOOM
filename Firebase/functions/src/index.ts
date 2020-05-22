@@ -65,10 +65,22 @@ class Food {
     public Data:FoodData | null = null;
 }
 
+class Nut {
+    public Quantity:number = 0;
+    public Unity:String = "";
+    public Name:String = "";
+    public Code:String = "";
+}
+
 class FoodData extends BObject {
     public 식품코드:String = "";
     public DB군:String = "";
     public 식품명:String = "";
+    public 내용량:number = 0;
+    public 내용량_단위:String = "";
+    public 식품군명:String = "";
+
+    public 영양소:Nut[] = [];
 
     public async Create(docid:string): Promise<void> {
         const query = admin.firestore().collection("data_foods").doc(docid);
@@ -343,6 +355,36 @@ export const SetMenuData = functions.https.onRequest(async (req, res) => {
 
     // 음식 정보 초기화
     for (let i:number = 0; i < menu.Foods.length; i++) {
+        var docref = admin.firestore().doc("data_foods/" + menu.Foods[i].Code.toString());
+        var docsnapshot = await docref.get();
+        if (!docsnapshot.exists) {
+            if (menu.Foods[i].Data != null) {
+                const fd:FoodData = menu.Foods[i].Data!;
+                const fooddata:any = {};
+                fooddata.식품명 = fd.식품명;
+                fooddata.DB군 = fd.DB군;
+                fooddata.내용량 = fd.내용량;
+                fooddata.내용량_단위 = fd.내용량_단위;
+                fooddata.식품군명 = fd.식품군명;
+                fooddata.식품코드 = fd.식품코드;
+
+                const nuts:any[] = [];
+
+                for (const nut of fd.영양소) {
+                    const nutdocref:FirebaseFirestore.DocumentReference
+                    = admin.firestore().doc("data_nut/" + nut.Code);
+                    nuts.push({
+                        "Code" : nutdocref,
+                        "Quantity" : nut.Quantity
+                    });
+                }
+
+                fooddata.영양소 = nuts;
+
+                await docref.set(fooddata);
+            }
+        }
+
         foods.push({
             "Code" : admin.firestore().doc("data_foods/" + menu.Foods[i].Code.toString()),
             "Quantity" : menu.Foods[i].Quantity,

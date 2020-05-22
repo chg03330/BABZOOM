@@ -19,7 +19,6 @@ namespace DoitDoit {
         string selectItem;
         public SearchFood() {
             InitializeComponent();
-           
         }
 
         private async void ContentPage_Appearing(object sender, EventArgs e)  {

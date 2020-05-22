@@ -54,6 +54,8 @@ namespace DoitDoit
                 usermodel.Weight = float.Parse(resultdic["weight"]);
                 usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
 
+                usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
+
                 Dictionary<string, string> req = new Dictionary<string, string>();
                 req["ID"] = usermodel.Id;
 

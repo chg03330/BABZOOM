@@ -73,7 +73,7 @@ namespace DoitDoit
         }
 
 
-        private void ContentPage_Appearing(object sender, EventArgs e)
+        private async void ContentPage_Appearing(object sender, EventArgs e)
         {
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
@@ -83,6 +83,10 @@ namespace DoitDoit
             foreach (FoodViewModel f in fvm) {
                 //f.Code = f.Code.Substring(0, 8);
                 list.Add(f);
+                //foreach (Food food in f.Foods) {
+                //    FoodData data = await Network.FirebaseServer.Server.SpecificFood(food.Data.식품명);
+                    
+                //}
             }
 
             BindableLayout.SetItemsSource(this.liststack, list);
@@ -117,6 +121,6 @@ namespace DoitDoit
                 }
             }
         }
-    }
+    } // END OF UserCalenderDay CLASS
 
 }
