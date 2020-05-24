@@ -63,14 +63,14 @@ namespace DoitDoit
             ///////////////////////////////////////
             DateTime now = DateTime.Now;
 
-            var thismonthmenus = usermodel.GetMenuGroup(now.Month, 1);
+            var thismonthmenus = usermodel.GetMenuGroup(now, 1);
             var mkcal = this.GetMenusSum(thismonthmenus, "N00001");
             this.MKcal.Text = mkcal.ToString();
 
             //////////////////////////////////////
             ///
             //////////////////////////////////////
-            var thisdaymenus = usermodel.GetMenuGroup(now.Day, 0);
+            var thisdaymenus = usermodel.GetMenuGroup(now, 0);
             var dkcal = this.GetMenusSum(thisdaymenus, "N00001");
             this.DKcal.Text = dkcal.ToString();
         }

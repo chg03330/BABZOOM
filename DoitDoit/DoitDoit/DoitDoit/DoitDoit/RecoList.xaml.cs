@@ -15,9 +15,6 @@ namespace DoitDoit {
     public partial class RecoList : ContentPage {
         public RecoList() {
             InitializeComponent();
-
-            //UserModel.GetInstance.Posts.OrderBy(n => n.Date);
-
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -29,6 +26,30 @@ namespace DoitDoit {
             post.PostData = postdata;
 
             Navigation.PushModalAsync(post);
+        }
+
+        private async void RefreshButton_Clicked(object sender, EventArgs e) {
+            if (!(sender is Button button)) return;
+
+            button.IsEnabled = false;
+
+            Network.FirebaseServer server = Network.FirebaseServer.Server;
+
+            string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                Models.Post[] posts =
+                Newtonsoft.Json.JsonConvert.DeserializeObject<Models.Post[]>(result);
+
+                var ps = (from p in posts
+                          where !UserModel.GetInstance.Posts.Any(post => post.Code == p.Code)
+                          select p);
+
+                foreach (Models.Post p in ps) UserModel.GetInstance.Posts.Add(p);
+
+                UserModel.GetInstance.SortPosts();
+                button.IsEnabled = true;
+            });
         }
     }
 }

@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 namespace DoitDoit.Converter {
     class PostMenuTimeConverter : IValueConverter {
+        public bool Type { get; set; } = false;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             string time = value as string;
             if (String.IsNullOrWhiteSpace(time)) return "";
@@ -31,6 +33,8 @@ namespace DoitDoit.Converter {
             }
 
             string result = $"{noon} {hour}시 {minute}분";
+
+            if (this.Type) result += " 식단";
 
             return result;
         }
