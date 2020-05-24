@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Entry = Microcharts.Entry;
 using Microcharts;
+using DoitDoit.ExMethod;
 
 namespace DoitDoit
 {
@@ -30,7 +31,7 @@ namespace DoitDoit
         ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
         UserModel usermodel = UserModel.GetInstance;
         DateTime datetime = DateTime.Now;
-        List<Entry> entries;
+        
         #region 영양소 property
         public Double Kcal { get; set; }
         public Double Tan { get; set; }
@@ -39,6 +40,8 @@ namespace DoitDoit
         #endregion
         DonutChart dc;
 
+        String nowTime;
+
         public DateTime dateTime {
             get => this.datetime;
             set {
@@ -46,24 +49,12 @@ namespace DoitDoit
                 this.OnPropertyChanged(nameof(this.dateTime));
             }
         }
-        String nowTime;
-
-        private double GetMenusSum(IEnumerable<FoodViewModel> menus, string NutCode)
-        {
-            var sum = menus.Sum(menu =>
-            menu.Foods.Sum(food =>
-            food.Data.영양소.Where(nut =>
-            nut.Code == NutCode).First().Quantity));
-            
-            return sum;
-        }
-
+        
         public UserCalenderDay()
         {
             InitializeComponent();
             this.CalenderDayTime.BindingContext = this;
             nowTime = dateTime.ToString("yyyyMMdd");
-            entries = new List<Entry>();
         }
 
         /// <summary>
@@ -94,7 +85,7 @@ namespace DoitDoit
         }
 
 
-        private async void ContentPage_Appearing(object sender, EventArgs e)
+        private void ContentPage_Appearing(object sender, EventArgs e)
         {
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
@@ -115,30 +106,32 @@ namespace DoitDoit
 
         }
         private void updateChart() {
-            calNut();                                                                //칼로리계산
+            List<Entry> entries = new List<Entry>();
+            calNut(entries);                                                                //칼로리계산
             dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
             Chart1.Chart = dc;                                                      //차트 바인딩
         }
+
         #region calNut()함수 / 칼로리계산, List<Entry>에 Entry개체추가
-        private void calNut() {
+        private void calNut(List<Entry> entries) {
             Random rnd = new Random();
-            var thisdaymenus = usermodel.GetMenuGroup(dateTime.Day, 0);
+            var thisdaymenus = usermodel.GetMenuGroup(dateTime, 0);
             String a;
             for (int i = 1; i < 5; i++)
             {
-                a = "N0000";
-                a += i.ToString();
+                a = $"N0000{i}";
+
                 String b;
                 switch (a)
                 {
                     case "N00001":
                         b = "칼로리";
-                        Kcal = this.GetMenusSum(thisdaymenus, a);
+                        Kcal = thisdaymenus.GetMenusSum(a);
                         laCal.Text = Kcal.ToString() + " Kcal";
                         break;
                     case "N00002":
                         b = "탄수화물";
-                        Tan = this.GetMenusSum(thisdaymenus, a);
+                        Tan = thisdaymenus.GetMenusSum(a);
                         entries.Add(new Entry((float)Tan)
                         {
                             Label = b,
@@ -148,7 +141,7 @@ namespace DoitDoit
                         break;
                     case "N00003":
                         b = "지방";
-                        Ji = this.GetMenusSum(thisdaymenus, a);
+                        Ji = thisdaymenus.GetMenusSum(a);
                         entries.Add(new Entry((float)Ji)
                         {
                             Label = b,
@@ -158,7 +151,7 @@ namespace DoitDoit
                         break;
                     case "N00004":
                         b = "단백질";
-                        Dan = this.GetMenusSum(thisdaymenus, a);
+                        Dan = thisdaymenus.GetMenusSum(a);
                         entries.Add(new Entry((float)Dan)
                         {
                             Label = b,
@@ -203,6 +196,14 @@ namespace DoitDoit
                 }
                 nutSL.IsVisible = true;
             }
+        }
+
+        private void NutButton_Clicked(object sender, EventArgs e) {
+            UserCalenderDay_Nut nut = new UserCalenderDay_Nut();
+            if (!(this.list is null)) {
+                nut.Menus = this.list.ToArray();
+            }
+            Navigation.PushModalAsync(nut);
         }
     } // END OF UserCalenderDay CLASS
 

@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Plugin.Calendar.Models;
 
+using DoitDoit.ExMethod;
+
 namespace DoitDoit
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -22,15 +24,6 @@ namespace DoitDoit
         {
             InitializeComponent();
 
-        }
-
-        private double GetMenusSum(IEnumerable<FoodViewModel> menus, string NutCode) {
-            var sum = menus.Sum(menu =>
-            menu.Foods.Sum(food =>
-            food.Data.영양소.Where(nut =>
-            nut.Code == NutCode).First().Quantity));
-
-            return sum;
         }
 
         private void ContentPage_Appearing(object sender, EventArgs e) {
@@ -64,14 +57,14 @@ namespace DoitDoit
             DateTime now = DateTime.Now;
 
             var thismonthmenus = usermodel.GetMenuGroup(now, 1);
-            var mkcal = this.GetMenusSum(thismonthmenus, "N00001");
+            var mkcal = thismonthmenus.GetMenusSum("N00001");
             this.MKcal.Text = mkcal.ToString();
 
             //////////////////////////////////////
             ///
             //////////////////////////////////////
             var thisdaymenus = usermodel.GetMenuGroup(now, 0);
-            var dkcal = this.GetMenusSum(thisdaymenus, "N00001");
+            var dkcal = thisdaymenus.GetMenusSum("N00001");
             this.DKcal.Text = dkcal.ToString();
         }
 

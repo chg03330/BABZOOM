@@ -84,6 +84,7 @@
 
                 <StackLayout Orientation="Horizontal">
                     <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="10"
+                            Clicked="NutButton_Clicked"
                         WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand" />
                 </StackLayout>
             </StackLayout>
