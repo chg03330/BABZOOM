@@ -7,6 +7,8 @@ using Xamarin.Forms.Xaml;
 using DoitDoit.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Entry = Microcharts.Entry;
+using Microcharts;
 
 namespace DoitDoit
 {
@@ -28,6 +30,15 @@ namespace DoitDoit
         ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
         UserModel usermodel = UserModel.GetInstance;
         DateTime datetime = DateTime.Now;
+        List<Entry> entries;
+        #region 영양소 property
+        public Double Kcal { get; set; }
+        public Double Tan { get; set; }
+        public Double Dan { get; set; }
+        public Double Ji { get; set; }
+        #endregion
+        DonutChart dc;
+
         public DateTime dateTime {
             get => this.datetime;
             set {
@@ -37,12 +48,22 @@ namespace DoitDoit
         }
         String nowTime;
 
+        private double GetMenusSum(IEnumerable<FoodViewModel> menus, string NutCode)
+        {
+            var sum = menus.Sum(menu =>
+            menu.Foods.Sum(food =>
+            food.Data.영양소.Where(nut =>
+            nut.Code == NutCode).First().Quantity));
+            
+            return sum;
+        }
 
         public UserCalenderDay()
         {
             InitializeComponent();
             this.CalenderDayTime.BindingContext = this;
             nowTime = dateTime.ToString("yyyyMMdd");
+            entries = new List<Entry>();
         }
 
         /// <summary>
@@ -88,9 +109,69 @@ namespace DoitDoit
                     
                 //}
             }
-
             BindableLayout.SetItemsSource(this.liststack, list);
+
+            updateChart();
+
         }
+        private void updateChart() {
+            calNut();                                                                //칼로리계산
+            dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
+            Chart1.Chart = dc;                                                      //차트 바인딩
+        }
+        #region calNut()함수 / 칼로리계산, List<Entry>에 Entry개체추가
+        private void calNut() {
+            Random rnd = new Random();
+            var thisdaymenus = usermodel.GetMenuGroup(dateTime.Day, 0);
+            String a;
+            for (int i = 1; i < 5; i++)
+            {
+                a = "N0000";
+                a += i.ToString();
+                String b;
+                switch (a)
+                {
+                    case "N00001":
+                        b = "칼로리";
+                        Kcal = this.GetMenusSum(thisdaymenus, a);
+                        laCal.Text = Kcal.ToString() + " Kcal";
+                        break;
+                    case "N00002":
+                        b = "탄수화물";
+                        Tan = this.GetMenusSum(thisdaymenus, a);
+                        entries.Add(new Entry((float)Tan)
+                        {
+                            Label = b,
+                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
+                        });
+                        laTan.Text = Tan.ToString() + " g";
+                        break;
+                    case "N00003":
+                        b = "지방";
+                        Ji = this.GetMenusSum(thisdaymenus, a);
+                        entries.Add(new Entry((float)Ji)
+                        {
+                            Label = b,
+                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
+                        });
+                        laJi.Text = Ji.ToString() +" g";
+                        break;
+                    case "N00004":
+                        b = "단백질";
+                        Dan = this.GetMenusSum(thisdaymenus, a);
+                        entries.Add(new Entry((float)Dan)
+                        {
+                            Label = b,
+                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
+                        });
+                        laDan.Text = Dan.ToString() + " g";
+                        break;
+                }
+            }
+            Kcal = Kcal - ((Dan * 4.1) + (Ji * 9.3) + (Tan * 4.1));
+            entries.Add(new Entry((float)Kcal) { Label="칼로리", Color = SkiaSharp.SKColor.Parse("#999999") });
+        }
+        #endregion
 
         /*
         private void Button_Clicked(object sender, EventArgs e)
@@ -113,12 +194,14 @@ namespace DoitDoit
             list.Clear();
             if (fvm.Count() == 0) {
                 DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인");
+                nutSL.IsVisible = false;
             }
             else {
                 foreach (FoodViewModel f in fvm) {
                     //f.Code = f.Code.Substring(0, 8);
                     list.Add(f);
                 }
+                nutSL.IsVisible = true;
             }
         }
     } // END OF UserCalenderDay CLASS
