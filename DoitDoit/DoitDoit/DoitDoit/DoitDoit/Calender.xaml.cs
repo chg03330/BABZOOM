@@ -24,6 +24,15 @@ namespace DoitDoit
 
         }
 
+        private double GetMenusSum(IEnumerable<FoodViewModel> menus, string NutCode) {
+            var sum = menus.Sum(menu =>
+            menu.Foods.Sum(food =>
+            food.Data.영양소.Where(nut =>
+            nut.Code == NutCode).First().Quantity));
+
+            return sum;
+        }
+
         private void ContentPage_Appearing(object sender, EventArgs e) {
             UserModel usermodel = UserModel.GetInstance;
 
@@ -46,6 +55,24 @@ namespace DoitDoit
             foreach (IGrouping<DateTime, FoodViewModel> group in menus) {
                 this.UserCalender.Events.Add(group.Key, group.ToList());
             }
+
+
+            ////////////////////////////////////
+            /// 현재 달을 가져와서 그 달에 포함된 식단 그룹화
+            /// 그 식단 그룹 내에 있는 모든 음식의 에너지 합
+            ///////////////////////////////////////
+            DateTime now = DateTime.Now;
+
+            var thismonthmenus = usermodel.GetMenuGroup(now.Month, 1);
+            var mkcal = this.GetMenusSum(thismonthmenus, "N00001");
+            this.MKcal.Text = mkcal.ToString();
+
+            //////////////////////////////////////
+            ///
+            //////////////////////////////////////
+            var thisdaymenus = usermodel.GetMenuGroup(now.Day, 0);
+            var dkcal = this.GetMenusSum(thisdaymenus, "N00001");
+            this.DKcal.Text = dkcal.ToString();
         }
 
         private void AddButton_Clicked(object sender, EventArgs e) {
@@ -69,6 +96,9 @@ namespace DoitDoit
                     dayform.dateTime = cal.SelectedDate;
                     Navigation.PushModalAsync(dayform);
                 });
+            }
+            else if (e.PropertyName is "Month") {
+
             }
         }
     } // END OF Calender CLASS

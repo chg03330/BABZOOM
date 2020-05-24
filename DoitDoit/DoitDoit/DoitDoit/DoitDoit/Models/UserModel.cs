@@ -5,11 +5,12 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 
+using System.Linq;
+
 using Newtonsoft.Json;
 
 namespace DoitDoit.Models
 {
-
     // 싱글톤 Pattern
     /// <summary>
     /// SINGLETON
@@ -119,6 +120,42 @@ namespace DoitDoit.Models
             }
         }
         #endregion
+
+        /// <summary>
+        /// 현재 가지고 있는 식단 목록중에서 해당 일 / 월 / 년 에 해당하는 식단 그룹을 가져옵니다.
+        /// </summary>
+        /// <param name="val">
+        /// 
+        /// </param>
+        /// <param name="mode">
+        /// 0 = 일
+        /// 1 = 월
+        /// 2 = 년
+        /// </param>
+        /// <returns></returns>
+        public IEnumerable<FoodViewModel> GetMenuGroup(int val, int mode = 0) {
+            var result = this.FoodViewModels.Where(menu => {
+                string Code = "";
+                int i = 2;
+
+                switch(mode) {
+                    case 0:
+                        Code = menu.Code.Substring(6, 2);
+                        break;
+                    case 1:
+                        Code = menu.Code.Substring(4, 2);
+                        break;
+                    case 2:
+                        Code = menu.Code.Substring(0, 4);
+                        i = 4;
+                        break;
+                }
+
+                return Code == val.ToString().PadLeft(i, '0');
+            });
+
+            return result;
+        }
 
         /************************** 생성자**********************************/
         private UserModel() {}

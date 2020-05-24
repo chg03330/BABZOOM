@@ -65,11 +65,20 @@ class Food {
     public Data:FoodData | null = null;
 }
 
-class Nut {
+class Nut extends BObject {
     public Quantity:number = 0;
-    public Unity:String = "";
+    public Unit:String = "";
     public Name:String = "";
     public Code:String = "";
+
+    public async Create(docid: string): Promise<void> {
+        const query = admin.firestore().collection("data_nut").doc(docid);
+        const doc = (await query.get()).data()!;
+
+        this.Code = docid;
+        this.Name = doc.Name;
+        this.Unit = doc.Unit;
+    }
 }
 
 class FoodData extends BObject {
@@ -89,6 +98,25 @@ class FoodData extends BObject {
         this.식품코드 = doc.식품코드;
         this.DB군 = doc.DB군;
         this.식품명 = doc.식품명;
+        this.내용량 = doc.내용량;
+        this.내용량_단위 = doc.내용량_단위;
+        this.식품군명 = doc.식품군명;
+
+        
+        if (doc.영양소 && doc.영양소.length) {
+            for (let i:number = 0; i < doc.영양소.length; i++) {
+                const code:FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
+                = doc.영양소[i].Code;
+
+                const nut:Nut = new Nut();
+                nut.Code = code.id;
+                
+                const quantity:number = doc.영양소[i].Quantity;
+                nut.Quantity = quantity;
+
+                this.영양소.push(nut);
+            }
+        }
     }
 }
 
