@@ -10,6 +10,7 @@
         <ResourceDictionary>
             <converter:CommentCountConverter x:Key="commentconverter" />
             <converter:PostNameConverter x:Key="postnameconverter"/>
+            <converter:PostMenuTimeConverter x:Key="postmenutimeconverter" Type="True"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -18,6 +19,7 @@
             <StackLayout>
                 <Label Text="★ 추천 식단 ★" TextColor="Black" FontSize="23" FontAttributes="Bold"
                        Margin="0,15,0,0" HorizontalTextAlignment="Center" />
+                <Button Text="새로고침" Clicked="RefreshButton_Clicked"/>
                 <StackLayout x:Name="PostList" BindableLayout.ItemsSource="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Posts}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
@@ -30,10 +32,15 @@
                                     <Label Text="{Binding Converter={StaticResource Key=commentconverter}, Path=Comments.Count, Mode=OneWay}" TextColor="Black" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
                            FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
                                 </StackLayout>
-                                <Label Text="식단 a" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
-                                <Label Text="식단 b" TextColor="Black" FontSize="12" Margin="10,0,0,20" />
+                                <StackLayout BindableLayout.ItemsSource="{Binding Menus}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Text="{Binding Path=Code, Converter={StaticResource Key=postmenutimeconverter}" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
                                 <StackLayout Orientation="Horizontal">
-                                    <doit:ButtonWithTag Tag="{Binding Code}" Text="자세히 보기" Clicked="Button_Clicked" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
+                                    <doit:ButtonWithTag Tag="{Binding Path=Code}}" Text="자세히 보기" Clicked="Button_Clicked" FontSize="12" BackgroundColor="#A0BAED" CornerRadius="10" WidthRequest="90" HeightRequest="40" 
                             HorizontalOptions="EndAndExpand" Margin="0,0,10,10" />
                                 </StackLayout>
                             </StackLayout>

@@ -47,7 +47,7 @@ namespace DoitDoit.Models
         private String name;
         private Nutrition.nutBases bases;
         private ObservableCollection<FoodViewModel> foodViewModels;
-        private ObservableCollection<Post> posts;
+        private ObservableCollection<Post> posts = new ObservableCollection<Post>();
         #endregion
 
         #region 유저 정보 Property
@@ -116,7 +116,7 @@ namespace DoitDoit.Models
             get => this.posts;
             set {
                 this.posts = value;
-                this.OnPropertyChanged(nameof(this.Posts));
+                this.OnPropertyChanged("Posts");
             }
         }
         #endregion
@@ -133,28 +133,40 @@ namespace DoitDoit.Models
         /// 2 = 년
         /// </param>
         /// <returns></returns>
-        public IEnumerable<FoodViewModel> GetMenuGroup(int val, int mode = 0) {
+        public IEnumerable<FoodViewModel> GetMenuGroup(DateTime time, int mode = 0) {
             var result = this.FoodViewModels.Where(menu => {
                 string Code = "";
-                int i = 2;
 
-                switch(mode) {
-                    case 0:
-                        Code = menu.Code.Substring(6, 2);
-                        break;
-                    case 1:
-                        Code = menu.Code.Substring(4, 2);
-                        break;
-                    case 2:
-                        Code = menu.Code.Substring(0, 4);
-                        i = 4;
-                        break;
+                int day = Convert.ToInt32(menu.Code.Substring(6, 2));
+                int month = Convert.ToInt32(menu.Code.Substring(4, 2));
+                int year = Convert.ToInt32(menu.Code.Substring(0, 4));
+
+                DateTime codetime = new DateTime(year, month, day);
+
+                if (time.Year == codetime.Year) {
+                    if (mode is 2) return true;
+                    if (time.Month == codetime.Month) {
+                        if (mode is 1) return true;
+                        if (time.Day == codetime.Day) {
+                            if (mode is 0) return true;
+                        }
+                    }
                 }
 
-                return Code == val.ToString().PadLeft(i, '0');
+                return false;
             });
 
             return result;
+        }
+
+        /// <summary>
+        /// 공유 식단 데이터를 날짜별로 정렬
+        /// 꼭 UI 스레드에서 실행 되어야 함
+        /// </summary>
+        public void SortPosts() {
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                this.Posts = new ObservableCollection<Post>(this.Posts.OrderByDescending(post => post.Date));
+            });
         }
 
         /************************** 생성자**********************************/
