@@ -3,19 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="DoitDoit.UserCalenderDay_Nut"
-             BackgroundColor="White">
+             BackgroundColor="White"
+             Appearing="ContentPage_Appearing">
 
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
             <Label Text="영양소 상세" TextColor="Black" HorizontalTextAlignment="Start" 
                    Margin="15,15,0,0" FontSize="30" FontAttributes="Bold" />
-            <microcharts:ChartView x:Name="CharView" />
-            <StackLayout BackgroundColor="#e4eodd" Margin="15,10,100,0">
-                <Label Text="영양소A 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
-                <Label Text="영양소B 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
-                <Label Text="영양소C 상세" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
-                <Label Text="영양소D 상세" TextColor="Black" FontSize="15" Margin="10,10,0,300" />
+            <!--<microcharts:ChartView x:Name="CharView" />-->
+            <StackLayout x:Name="nutSL" BackgroundColor="#e4eodd" Margin="15,10,100,0" Orientation="Horizontal">
+                <Label Text="{Binding nutName}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                <Label Text="{Binding nutQ}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                <Label Text="{Binding nutUnit}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
