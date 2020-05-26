@@ -21,6 +21,7 @@
             <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
             <Label Text="" x:Name="TotalKcal" TextColor="Black" FontSize="17" HorizontalOptions="Center"/>
             <microcharts:ChartView x:Name="ChartView"/>
+            <microcharts:ChartView x:Name="WeekChartView" />
             <Button Text="사이드버튼" Clicked="SideMenu_Clicked"/>
             <StackLayout Orientation="Horizontal">
                 <Label Text="추천 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
