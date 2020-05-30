@@ -10,11 +10,11 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using Microcharts.Forms;
 using Microcharts;
 using SkiaSharp;
 using SkiaSharp.Views;
 using System.ComponentModel;
+using DoitDoit.ExMethod;
 
 namespace DoitDoit
 {
@@ -25,15 +25,6 @@ namespace DoitDoit
 	public partial class Main : ContentPage
 	{
         private UserModel usermodel = UserModel.GetInstance;
-
-        private double GetMenusSum(IEnumerable<FoodViewModel> menus, string NutCode) {
-            var sum = menus.Sum(menu =>
-            menu.Foods.Sum(food =>
-            food.Data.영양소.Where(nut =>
-            nut.Code == NutCode).First().Quantity));
-
-            return sum;
-        }
 
         /// <summary>
         /// 서버에 있는 공유 식단 게시글 리스트를 가져옵니다.
@@ -123,12 +114,12 @@ namespace DoitDoit
                 DateTime date = now.AddMonths(-i);
 
                 var menus = UserModel.GetInstance.GetMenuGroup(date, 1);
-                double calsum = Math.Floor(this.GetMenusSum(menus, "N00001"));
+                double calsum = Math.Floor(menus.GetMenusSum("N00001"));
                 total += calsum;
 
                 Microcharts.Entry entry = new Microcharts.Entry(Convert.ToSingle(calsum));
                 entry.Color = SKColor.Parse("#FF0000");
-                entry.Label = date.ToString("yyyy년 MM월");
+                entry.Label = date.ToString("yyyy/MM");
                 entry.ValueLabel = calsum.ToString();
 
                 entries.Add(entry);
@@ -138,12 +129,39 @@ namespace DoitDoit
 
             entries.Reverse();
 
-            this.ChartView.Chart = new Microcharts.LineChart() 
+            this.ChartView.Chart = new LineChart() 
             { 
                 Entries = entries, LineMode = LineMode.Straight, LabelTextSize = 30,
             };
 
             this.ChartView.HeightRequest = 300;
+
+            List<Microcharts.Entry> entries2 = new List<Microcharts.Entry>();
+
+            double total2 = 0;
+            for (int i = 0; i < 7; i++) {
+                DateTime date = now.AddDays(-i);
+
+                var menus = UserModel.GetInstance.GetMenuGroup(date, 0);
+                double calsum = Math.Floor(menus.GetMenusSum("N00001"));
+                total2 += calsum;
+
+                Microcharts.Entry entry = new Microcharts.Entry(Convert.ToSingle(calsum));
+                entry.Color = SKColor.Parse("#FF0000");
+                entry.Label = date.ToString("yyyy/MM//dd");
+                entry.ValueLabel = calsum.ToString();
+
+                entries2.Add(entry);
+            }
+            entries2.Reverse();
+
+            this.WeekChartView.Chart = new LineChart() {
+                Entries = entries2,
+                LineMode = LineMode.Straight,
+                LabelTextSize = 30,
+            };
+
+            this.WeekChartView.HeightRequest = 300;
         }
 
         /// <summary>
