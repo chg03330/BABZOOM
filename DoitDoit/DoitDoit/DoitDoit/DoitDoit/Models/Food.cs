@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Microcharts;
+
 namespace DoitDoit.Models
 {
     public class Food
