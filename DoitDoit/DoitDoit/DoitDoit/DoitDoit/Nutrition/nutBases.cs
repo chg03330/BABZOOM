@@ -14,15 +14,30 @@ namespace DoitDoit.Nutrition
 {
     public class nutBases
     {
-        public BITAMIN_C bitamin_c; public THIAMIN thiamin; public RIBOFLAVIN riboflavin;
-        public NIACIN niacin; public BITAMIN_B6 bitamin_b6; public BITAMIN_B12 bitamin_b12;
-        public BITAMIN_A bitamin_a; public BITAMIN_D bitamin_d; public BITAMIN_E bitamin_e;
-        public BITAMIN_K bitamin_k; public IRON iron; public ZINC zinc; public COOPER cooper;
-        public FLUORINE fluorine; public CHLORINE chlorine; public KALIUM kalium;
-        public MAGNESIUM magnesium; public MANGANESE manganese; public IODINE iodine;
-        public SELENIUM selenium; public NATRIUM natrium; public PHOSPHORUS phosphorus;
-        public CALCIUM calcium; public CALORIE calorie; public PROTEIN protein;
-
+        #region nutBase프로퍼티
+        public BITAMIN_C bitamin_c { get; set; } public THIAMIN thiamin { set; get; } public RIBOFLAVIN riboflavin { set; get; }
+        public NIACIN niacin { set; get; }
+        public BITAMIN_B6 bitamin_b6 { set; get; }
+        public BITAMIN_B12 bitamin_b12 { set; get; }
+        public BITAMIN_A bitamin_a { set; get; }
+        public BITAMIN_D bitamin_d { set; get; }
+        public BITAMIN_E bitamin_e { set; get; }
+        public BITAMIN_K bitamin_k { set; get; }
+        public IRON iron; public ZINC zinc { set; get; }
+        public COOPER cooper { set; get; }
+        public FLUORINE fluorine { set; get; }
+        public CHLORINE chlorine { set; get; }
+        public KALIUM kalium { set; get; }
+        public MAGNESIUM magnesium { set; get; }
+        public MANGANESE manganese { set; get; }
+        public IODINE iodine { set; get; }
+        public SELENIUM selenium { set; get; }
+        public NATRIUM natrium { set; get; }
+        public PHOSPHORUS phosphorus { set; get; }
+        public CALCIUM calcium { set; get; }
+        public CALORIE calorie { set; get; }
+        public PROTEIN protein { set; get; }
+        #endregion
         public nutBases(Boolean sex, int age)
         {
             bitamin_b6 = new BITAMIN_B6(sex, age);
@@ -51,6 +66,7 @@ namespace DoitDoit.Nutrition
             calorie = new CALORIE(sex, age);
             protein = new PROTEIN(sex, age);
         }
+
     }
 
     public class BITAMIN_A : nutBase

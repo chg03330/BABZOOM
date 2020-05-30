@@ -6,23 +6,31 @@
              BackgroundColor="White"
              Appearing="ContentPage_Appearing">
 
-    <ContentPage.Content>
+    <ScrollView>
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
             <Label Text="영양소 상세" TextColor="Black" HorizontalTextAlignment="Start" 
                    Margin="15,15,0,0" FontSize="30" FontAttributes="Bold" />
-            <!--<microcharts:ChartView x:Name="CharView" />-->
-            <StackLayout x:Name="nutSL" BackgroundColor="#e4eodd" Margin="15,10,100,0" Orientation="Vertical">
+            <ScrollView >
+                <microcharts:ChartView x:Name="CharView" HeightRequest="150" VerticalOptions="Center"/>
+            </ScrollView>
+            <StackLayout x:Name="nutSL" BackgroundColor="#e4eodd"  Orientation="Vertical">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding nutName}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
-                            <Label Text="{Binding nutQ}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
-                            <Label Text="{Binding nutUnit}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding nutName}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                                <Label Text="{Binding nutQ}" TextColor="Black" FontSize="15" Margin="10,10,0,0" />
+                                <Label Text="{Binding nutUnit}" TextColor="Black" FontSize="15" Margin="0,10,0,0" />
+                            </StackLayout>
+                            <StackLayout HorizontalOptions="EndAndExpand">
+                                <microcharts:ChartView Chart="{Binding nutChart}" WidthRequest="250" HeightRequest="100" />
+                            </StackLayout>
                         </StackLayout>
+                        
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
 </ContentPage>

@@ -88,6 +88,11 @@ namespace DoitDoit
             }
         };
         DonutChart dc;
+        PointChart chart2;
+        LineChart chart3;
+         //chart4;
+        RadialGaugeChart chart5; 
+        RadarChart chart6;
         public Page1()
         {
             InitializeComponent();
@@ -102,6 +107,12 @@ namespace DoitDoit
                 LabelTextSize = 40f,
                 Entries = entries 
             };
+
+           /* chart2 = new PointChart() { Entries = entries, PointMode = PointMode.Square };
+            chart3 = new LineChart() { Entries = entries };
+          //  chart4 = new DonutChart() { Entries = entries };
+            chart5 = new RadialGaugeChart() { Entries = entries };
+            chart6 = new RadarChart() { Entries = entries };*/
         }
 
         /*
@@ -110,7 +121,18 @@ namespace DoitDoit
              */       
         private void ContentPage_Appearing(object sender, System.EventArgs e)
         {
-            chart1.Chart = dc;
+            chartv1.Chart = dc;
+            /*
+
+            chartv2.Chart = chart2;
+            chartv3.Chart = chart3;
+            //chartv4.Chart = chart4;
+            chartv5.Chart = chart5;
+            chartv6.Chart = chart6;
+
+    */
+
+
         }
     }
 }

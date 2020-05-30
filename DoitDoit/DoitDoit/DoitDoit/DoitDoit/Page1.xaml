@@ -10,6 +10,15 @@
     <!-- 
     
     여러가지 시도해본바, 이 모양이 제일 보기 이쁨-->
-    <forms:ChartView x:Name="chart1" HeightRequest="150" VerticalOptions="Center" />
-    
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <forms:ChartView x:Name="chartv1" HeightRequest="150" VerticalOptions="Center" />
+            <forms:ChartView x:Name="chartv2" HeightRequest="150" VerticalOptions="Center" />
+            <forms:ChartView x:Name="chartv3" HeightRequest="150" VerticalOptions="Center" />
+            <forms:ChartView x:Name="chartv4" HeightRequest="150" VerticalOptions="Center" />
+            <forms:ChartView x:Name="chartv5" HeightRequest="150" VerticalOptions="Center" />
+            <forms:ChartView x:Name="chartv6" HeightRequest="150" VerticalOptions="Center" />
+        </StackLayout>
+    </ScrollView>
+
 </ContentPage>
