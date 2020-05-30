@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Microcharts;
+using DoitDoit.ExMethod;
 //using Android.Database;
 
 namespace DoitDoit
@@ -120,5 +122,29 @@ namespace DoitDoit
             Foods.Remove(foodData);
 
         }
+
+        //private void updateChart() {
+        //    List<Microcharts.Entry> entries = new List<Microcharts.Entry>();
+        //    calNut(entries);                                                                //칼로리계산
+        //    DonutChart dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
+        //    Chart1.Chart = dc;                                                      //차트 바인딩
+        //}
+
+        //#region calNut()함수 / 칼로리계산, List<Entry>에 Entry개체추가
+        //private void calNut(List<Microcharts.Entry> entries) {
+        //    Microcharts.Entry[] nutentries = this.Foods.GetEntry();
+
+        //    for (int i = 0; i < 4; i++) {
+        //        if (!(i is 0)) {
+        //            entries.Add(nutentries[i]);
+        //        }
+        //    }
+
+        //    laCal.Text = nutentries[0].Value.ToString();
+        //    laTan.Text = nutentries[1].Value.ToString();
+        //    laJi.Text = nutentries[2].Value.ToString();
+        //    laDan.Text = nutentries[3].Value.ToString();
+        //}
+        //#endregion
     }
 }

@@ -33,13 +33,6 @@ namespace DoitDoit
             }
         }
 
-        #region 영양소 property
-        public Double Kcal { get; set; }
-        public Double Tan { get; set; }
-        public Double Dan { get; set; }
-        public Double Ji { get; set; }
-        #endregion
-        DonutChart dc;
         Models.UserModel usermodel;
 
         private DateTime datetime = DateTime.Now;
@@ -142,56 +135,24 @@ namespace DoitDoit
         private void updateChart() {
             List<Microcharts.Entry> entries = new List<Microcharts.Entry>();
             calNut(entries);                                                                //칼로리계산
-            dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
+            DonutChart dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
             Chart1.Chart = dc;                                                      //차트 바인딩
         }
 
         #region calNut()함수 / 칼로리계산, List<Entry>에 Entry개체추가
         private void calNut(List<Microcharts.Entry> entries) {
-            Random rnd = new Random();
             var thisdaymenus = this.PostData.Menus;
-            String a;
-            for (int i = 1; i < 5; i++) {
-                a = $"N0000{i}";
-
-                String b;
-                switch (a) {
-                    case "N00001":
-                        b = "칼로리";
-                        Kcal = thisdaymenus.GetMenusSum(a);
-                        laCal.Text = Kcal.ToString() + " Kcal";
-                        break;
-                    case "N00002":
-                        b = "탄수화물";
-                        Tan = thisdaymenus.GetMenusSum(a);
-                        entries.Add(new Microcharts.Entry((float)Tan) {
-                            Label = b,
-                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
-                        });
-                        laTan.Text = Tan.ToString() + " g";
-                        break;
-                    case "N00003":
-                        b = "지방";
-                        Ji = thisdaymenus.GetMenusSum(a);
-                        entries.Add(new Microcharts.Entry((float)Ji) {
-                            Label = b,
-                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
-                        });
-                        laJi.Text = Ji.ToString() + " g";
-                        break;
-                    case "N00004":
-                        b = "단백질";
-                        Dan = thisdaymenus.GetMenusSum(a);
-                        entries.Add(new Microcharts.Entry((float)Dan) {
-                            Label = b,
-                            Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)))
-                        });
-                        laDan.Text = Dan.ToString() + " g";
-                        break;
+            Microcharts.Entry[] nutentries = thisdaymenus.GetEntry();
+            for (int i = 0; i < 4; i++) {
+                if (!(i is 0)) {
+                    entries.Add(nutentries[i]);
                 }
             }
-            Kcal = Kcal - ((Dan * 4.1) + (Ji * 9.3) + (Tan * 4.1));
-            entries.Add(new Microcharts.Entry((float)Kcal) { Label = "칼로리", Color = SkiaSharp.SKColor.Parse("#999999") });
+
+            laCal.Text = nutentries[0].Value.ToString();
+            laTan.Text = nutentries[1].Value.ToString();
+            laJi.Text = nutentries[2].Value.ToString();
+            laDan.Text = nutentries[3].Value.ToString();
         }
         #endregion
     }

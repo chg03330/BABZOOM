@@ -134,6 +134,8 @@ namespace DoitDoit.Models
         /// </param>
         /// <returns></returns>
         public IEnumerable<FoodViewModel> GetMenuGroup(DateTime time, int mode = 0) {
+            if (mode > 2 || mode < 0) mode = 0;
+
             var result = this.FoodViewModels.Where(menu => {
                 string Code = "";
 
@@ -155,6 +157,14 @@ namespace DoitDoit.Models
 
                 return false;
             });
+
+            return result;
+        }
+
+        public IEnumerable<FoodViewModel> GetMenuGroup(DateTime time, int mode, out Microcharts.Entry[] nutentries) {
+            var result = this.GetMenuGroup(time, mode);
+
+            nutentries = ExMethod.MenuLINQ.GetEntry(result);
 
             return result;
         }
