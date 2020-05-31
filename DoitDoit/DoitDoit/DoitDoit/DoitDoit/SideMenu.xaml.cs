@@ -37,10 +37,10 @@ namespace DoitDoit
             Navigation.PushModalAsync(new UserCalenderDay());
         }
 
-        private void MenuShare_Clicked(object sender, EventArgs e)
+        /*private void MenuShare_Clicked(object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new Page1());
-        }
+        }*/
 
         private void Logout_Clicked(object sender, EventArgs e)
         {

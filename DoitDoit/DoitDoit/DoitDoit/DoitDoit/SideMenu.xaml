@@ -12,7 +12,7 @@
             <Button Text="정보수정" Clicked="Info_Clicked" BackgroundColor="#afc5db"/>
             <Button Text="달력" Clicked="Calendar_Clicked" BackgroundColor="#afc5db"/>
             <Button Text="식단작성" Clicked="MenuMake_Clicked" BackgroundColor="#afc5db"/>
-            <Button Text="식단공유" Clicked="MenuShare_Clicked" BackgroundColor="#afc5db"/>
+          <!--  <Button Text="식단공유" Clicked="MenuShare_Clicked" BackgroundColor="#afc5db"/> -->
             <Button Text="로그아웃" Clicked="Logout_Clicked" BackgroundColor="#afc5db"/>
         </StackLayout>
     </ContentPage.Content>

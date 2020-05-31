@@ -131,10 +131,10 @@ namespace DoitDoit
         }
 
         #region 이벤트 처리기
-        private void Reco_Clicked(Object sender, EventArgs e)
+        /*private void Reco_Clicked(Object sender, EventArgs e)
         {
             Navigation.PushModalAsync(new Post());
-        }
+        }*/
 
         private void RecoMenu_Clicked(Object sender, EventArgs e)
         {
