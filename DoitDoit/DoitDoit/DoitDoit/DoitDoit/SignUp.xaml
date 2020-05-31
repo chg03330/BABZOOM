@@ -5,7 +5,7 @@
              BackgroundColor="White">
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Image
+            <Image Source="logo.png"
                     WidthRequest="130" HeightRequest="130" Margin="0,0,0,10" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                 <Label Text="      아이디             " TextColor="Black" FontSize="20" />
