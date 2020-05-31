@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using DoitDoit.Models;
 using Newtonsoft.Json;
+using System.Net.Sockets;
 
 namespace DoitDoit.Network {
     /// <summary>
@@ -15,17 +16,23 @@ namespace DoitDoit.Network {
     /// 파이어베이스 서버 연결
     /// </summary>
     class FirebaseServer {
-        public static FirebaseServer Server { get; private set; } = new FirebaseServer();
+        private static FirebaseServer server = new FirebaseServer();
+        public static FirebaseServer Server => FirebaseServer.server;
         
         private const string src = "https://us-central1-babzoom-7cae1.cloudfunctions.net/";
         private readonly HttpClient client = new HttpClient();
 
-        private const string SEARCHSERVERADDRESS = "140.238.7.47";
+        private const string SEARCHSERVERADDRESS = 
+            "140.238.7.47";
+            //"127.0.0.1";
         private const int SEARCHSERVERPORT = 24243;
         private readonly System.Net.Sockets.TcpClient searchserver = null;
 
         private FirebaseServer() {
-            this.searchserver = this.GetServer();
+            try {
+                this.searchserver = this.GetServer();
+            }
+            catch(Exception) {}
         }
 
         ~FirebaseServer() {
@@ -60,6 +67,51 @@ namespace DoitDoit.Network {
             server.Connect(System.Net.IPAddress.Parse(SEARCHSERVERADDRESS), SEARCHSERVERPORT);
 
             return server;
+        }
+
+        public async Task<bool> SignIn(string id, string pw) {
+            UserModel usermodel = UserModel.GetInstance;
+
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["ID"] = id;
+            dic["Password"] = pw;
+
+            Packet packet = new Packet() { Command = "SignIn", Context = JsonConvert.SerializeObject(dic) };
+
+            TcpClient server = this.searchserver;
+            NetworkStream stream = server.GetStream();
+
+            byte[] packetbuf = packet.ToBytes();
+            stream.Write(packetbuf, 0, packetbuf.Length);
+
+            byte[] buf = new byte[1024 * 10];
+
+            string resultjson = "";
+            int count = 0;
+
+            do {
+                count = stream.Read(buf, 0, buf.Length);
+                resultjson += Encoding.UTF8.GetString(buf, 0, count);
+            } while (stream.DataAvailable);
+
+            Packet recvpacket = JsonConvert.DeserializeObject<Packet>(resultjson);
+
+            Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(recvpacket.Context);
+
+            if (recvpacket.Result) {
+                usermodel.Id = id;
+                usermodel.Password = pw;
+
+                usermodel.Name = resultdic["name"];
+                usermodel.Age = int.Parse(resultdic["age"]);
+                usermodel.Height = float.Parse(resultdic["height"]);
+                usermodel.Weight = float.Parse(resultdic["weight"]);
+                usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
+
+                usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
+            }
+
+            return recvpacket.Result;
         }
 
         public async Task<List<string>> SearchFood(string foodname) {
