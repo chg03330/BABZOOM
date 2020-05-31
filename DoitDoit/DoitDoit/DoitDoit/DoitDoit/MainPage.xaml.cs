@@ -40,13 +40,15 @@ namespace DoitDoit
                 Dictionary<string, string> req = new Dictionary<string, string>();
                 req["ID"] = model.Id;
 
-                string result1 = await server.FirebaseRequest("GetMenuData", req);
+                await server.GetMenuData();
 
-                ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
+                //string result1 = await server.FirebaseRequest("GetMenuData", req);
 
-                list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
+                //ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
 
-                model.FoodViewModels = list;
+                //list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
+
+                //model.FoodViewModels = list;
 
                 await Navigation.PushModalAsync(new Main());
             }

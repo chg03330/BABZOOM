@@ -46,7 +46,7 @@ namespace DoitDoit.Models
         private bool gender;
         private String name;
         private Nutrition.nutBases bases;
-        private ObservableCollection<FoodViewModel> foodViewModels;
+        private ObservableCollection<FoodViewModel> foodViewModels = new ObservableCollection<FoodViewModel>();
         private ObservableCollection<Post> posts = new ObservableCollection<Post>();
         #endregion
 

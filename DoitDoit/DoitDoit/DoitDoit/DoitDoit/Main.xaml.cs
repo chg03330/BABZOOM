@@ -60,6 +60,10 @@ namespace DoitDoit
             Task.Run(this.GetPostData);
 
             UserModel.GetInstance.PropertyChanged += this.PostsChanged;
+
+            UserModel.GetInstance.FoodViewModels.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((sender, target) => {
+                this.DisplayAlert("a", "a", "a");
+            });
         }
 
         ~Main() {
