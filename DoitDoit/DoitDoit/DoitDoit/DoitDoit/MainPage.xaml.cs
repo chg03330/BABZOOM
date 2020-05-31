@@ -26,38 +26,19 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void Login_Clicked(object sender, EventArgs e)
-        {
+        private async void Login_Clicked(object sender, EventArgs e) {
             String id = this.Entry_ID.Text;
             String pw = this.PASSWORD.Text;
 
-            Dictionary<string, string> post = new Dictionary<string, string>();
-            post["ID"] = id;
-            post["Password"] = pw;
-
             FirebaseServer server = FirebaseServer.Server;
-            string result = await server.FirebaseRequest("SignIn", post);
 
-            Packet packet = JsonConvert.DeserializeObject<Packet>(result);
+            UserModel model = UserModel.GetInstance;
 
-            UserModel usermodel = UserModel.GetInstance;
+            bool result = await server.SignIn(id, pw);
 
-            Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(packet.Context);
-
-            if (packet.Result) {
-                usermodel.Id = id;
-                usermodel.Password = pw;
-
-                usermodel.Name = resultdic["name"];
-                usermodel.Age = int.Parse(resultdic["age"]);
-                usermodel.Height = float.Parse(resultdic["height"]);
-                usermodel.Weight = float.Parse(resultdic["weight"]);
-                usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
-
-                usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
-
+            if (result) {
                 Dictionary<string, string> req = new Dictionary<string, string>();
-                req["ID"] = usermodel.Id;
+                req["ID"] = model.Id;
 
                 string result1 = await server.FirebaseRequest("GetMenuData", req);
 
@@ -65,12 +46,12 @@ namespace DoitDoit
 
                 list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
 
-                usermodel.FoodViewModels = list;
+                model.FoodViewModels = list;
 
                 await Navigation.PushModalAsync(new Main());
             }
             else {
-                await DisplayAlert(resultdic["Result"], resultdic["Context"], "Cancel");
+
             }
         }
 
