@@ -63,7 +63,13 @@ namespace DoitDoit
             nutClass rnC = nC;
             String name="";
             String unit = "";
-            switch (a)
+
+            if (Nut.NutInfo.Length >= a) {
+                (string, string) nameunit = Nut.NutInfo[a - 1];
+                name = nameunit.Item1;
+                unit = nameunit.Item2;
+            }
+            /*switch (a)
             {
                 case 1:
                     name = "에너지";
@@ -161,7 +167,7 @@ namespace DoitDoit
                     name = "셀레늄";
                     unit = "㎍";
                     break;
-            }
+            }*/
             rnC.nutName = name;
             rnC.nutUnit = unit;
             return rnC;
