@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoitDoit.SignUp"
-             BackgroundColor="#C4DEFF">
+             BackgroundColor="White">
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand">
-            <Image Source="C:\Users\1210k\Desktop\자마린연습\DoitDoit\DoitDoit\DoitDoit.Android\Resources\drawable\LOGO.png" 
-                   WidthRequest="150" HeightRequest="150" />
+            <Image
+                    WidthRequest="130" HeightRequest="130" Margin="0,0,0,10" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                 <Label Text="      아이디             " TextColor="Black" FontSize="20" />
                 <Entry WidthRequest="150" x:Name="ID" />
@@ -19,10 +19,17 @@
                 <Label Text="비밀번호 확인 " TextColor="Black" FontSize="20" />
                 <Entry WidthRequest="200" x:Name="PWCHECK" />
             </StackLayout>
+
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
+                <Button Text="회원가입" Clicked="SignedUp_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
+                        CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3"/>
+                <Button Text="취소" Clicked="Cancel2_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
+                        WidthRequest="60" CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3"/>
+            </StackLayout>
+            <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
                 <Button Text="회원가입" Clicked="SignedUp_Clicked" BackgroundColor="#A0BAED" />
                 <Button Text="취소" Clicked="Cancel2_Clicked" BackgroundColor="#A0BAED"  WidthRequest="60"/>
-            </StackLayout>
+            </StackLayout>-->
 
         </StackLayout>
     </ContentPage.Content>

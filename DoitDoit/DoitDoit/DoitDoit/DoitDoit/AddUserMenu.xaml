@@ -11,6 +11,7 @@
     <ContentPage.Content>
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
+            <!--수정전
             <StackLayout HeightRequest="80" WidthRequest="40">
                 <DatePicker x:Name="addMenu_DayTime"
                             Format="yyyy년 MM월 dd일" 
@@ -19,20 +20,30 @@
                             FontSize="20" HorizontalOptions="Center"/>
                 <TimePicker x:Name="addMenu_ClockTime"  Format="hh시 mm분" HorizontalOptions="End"/>
             </StackLayout>
+            -->
+            <StackLayout Orientation="Horizontal">
+                <DatePicker x:Name="addMenu_DayTime"
+                            Format="yyyy년 MM월 dd일" 
+                            MinimumDate="1 Jan 2018" MaximumDate="31 Dec 2100" 
+                            DateSelected="addMenu_DayTime_DateSelected"
+                            FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
+                <TimePicker x:Name="addMenu_ClockTime"  Format="hh시 mm분" FontSize="16" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+            </StackLayout>
             <StackLayout BackgroundColor="#e4eodd" Margin="10,10,10,0">
                 <Entry Placeholder="검색할 요리 or 식자재 이름" x:Name="SearchText" TextColor="Black"  FontSize="14" ClearButtonVisibility="WhileEditing"  
                    VerticalTextAlignment="Center" HeightRequest="40" WidthRequest="40"
                        />
             </StackLayout>
             <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
-            <StackLayout x:Name="addList" BackgroundColor="#dbelfo" Orientation="Vertical">
+            <StackLayout x:Name="addList" BackgroundColor="#F2E3EA" Orientation="Vertical">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding 식품명}" />
-                            <Label Text="{Binding DB군}" />
-                            <Label Text="{Binding 식품코드}" />
-                            <doitdoit:ButtonWithTag Tag="{Binding BindingContext, Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout}, Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" Clicked="Del_Clicked"/>
+                            <Label Text="{Binding 식품명}" FontSize="15" FontAttributes="Bold" />
+                            <Label Text="{Binding DB군}" FontAttributes="Bold"/>
+                            <Label Text="{Binding 식품코드}" FontAttributes="Bold"/>
+                            <doitdoit:ButtonWithTag Tag="{Binding BindingContext, Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout}, Mode=FindAncestor}}" 
+                                                    Text="ㅡ" BackgroundColor="White" FontFamily="15" FontAttributes="Bold" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" Clicked="Del_Clicked"/>
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
@@ -45,10 +56,10 @@
             </StackLayout>
             -->
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" Spacing="20">
-            <Button Text="등록" TextColor="Black" BackgroundColor="#e4eodd" CornerRadius="10"
-                    WidthRequest="80" BorderColor="Black" BorderWidth="1" Clicked="Add_Clicked"/>
-            <Button Text="취소" TextColor="Black" BackgroundColor="#e4eodd" CornerRadius="10" 
-                    WidthRequest="80" BorderColor="Black" BorderWidth="1" Clicked="Cancel_Clicked"/>
+                <Button Text="등록" TextColor="Black" FontAttributes="Bold" BackgroundColor="#EAECF4" CornerRadius="10"
+                    WidthRequest="80" BorderColor="#7986CB" BorderWidth="3" Clicked="Add_Clicked"/>
+                <Button Text="취소" TextColor="Black" FontAttributes="Bold" BackgroundColor="#EAECF4" CornerRadius="10" 
+                    WidthRequest="80" BorderColor="#7986CB" BorderWidth="3" Clicked="Cancel_Clicked"/>
         </StackLayout>
 
         </StackLayout>

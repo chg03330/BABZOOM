@@ -14,13 +14,6 @@
     <Compile Remove="Models\Class1.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="logo.png" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microcharts.Forms" Version="0.7.1" />

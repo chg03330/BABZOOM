@@ -26,7 +26,8 @@
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <!-- 시간 + 음식 리스트 StackLayout -->
-                            <StackLayout BackgroundColor="#dbelfo" Margin="15,25,0,0" Padding="0,0,0,50" WidthRequest="150">
+                            <StackLayout BackgroundColor="#F2E3EA" Margin="15,25,20,0" Padding="0,0,0,50" WidthRequest="150">
+                            <!--<StackLayout BackgroundColor="#dbelfo" Margin="15,25,0,0" Padding="0,0,0,50" WidthRequest="150">-->
                                 <Label
                                     Text="{Binding Path=Code, Converter={StaticResource Key=postmenutimeconverter}}"
                                     TextColor="Black" FontSize="18" Margin="0,10,0,0"
@@ -35,7 +36,7 @@
                                 <StackLayout BindableLayout.ItemsSource="{Binding Foods}">
                                     <BindableLayout.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Text="{Binding Data.식품명}" TextColor="Black" Margin="10,10,0,0" />
+                                            <Label Text="{Binding Data.식품명}" TextColor="Black" FontAttributes="Bold" Margin="10,10,0,0" />
                                         </DataTemplate>
                                     </BindableLayout.ItemTemplate>
                                 </StackLayout>
@@ -46,24 +47,24 @@
                     </BindableLayout.ItemTemplate>
                 </layout:WrapLayout>
                 <!-- END OF WrapLayout -->
-                <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-                <StackLayout x:Name="nutSL" BackgroundColor="#e4eodd" Margin="20,10,120,10" Orientation="Vertical">
+                <Label Text="" BackgroundColor="#7986CB" HeightRequest="1" Margin="10,10,10,0" />
+                <StackLayout x:Name="nutSL" BackgroundColor="#EACAD5" Margin="15,10,80,10" Orientation="Vertical">
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0" />
-                        <Label x:Name="laCal" TextColor="Black" Margin="10,10,0,0" HorizontalOptions="Start"/>
+                        <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0" FontAttributes="Bold"/>
+                        <Label x:Name="laCal" TextColor="Black" Margin="10,10,0,0" HorizontalOptions="Start" FontAttributes="Bold"/>
                     </StackLayout>
                     <forms:ChartView x:Name="Chart1" HeightRequest="150" VerticalOptions="Center"/>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="탄수화물" TextColor="Black" Margin="10,10,0,0" />
-                        <Label x:Name="laTan" TextColor="Black" Margin="10,10,0,0" />
+                        <Label Text="탄수화물" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
+                        <Label x:Name="laTan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="지방" TextColor="Black" Margin="10,10,0,0" />
-                        <Label x:Name="laJi" TextColor="Black" Margin="10,10,0,0" />
+                        <Label Text="지방" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
+                        <Label x:Name="laJi" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Label Text="단백질" TextColor="Black" Margin="10,10,0,0" />
-                        <Label x:Name="laDan" TextColor="Black" Margin="10,10,0,0" />
+                        <Label Text="단백질" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
+                        <Label x:Name="laDan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold"/>
                     </StackLayout>
 
 
@@ -73,16 +74,25 @@
                         WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand" />
                     </StackLayout>
                 </StackLayout>
-                <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-                <StackLayout BackgroundColor="#afc5db" Margin="15,10,15,0" Padding="10,10,0,20">
-                    <Label Text="게시글 내용" TextColor="Black" FontSize="15" />
+                <Label Text="" BackgroundColor="#7986CB" HeightRequest="2" Margin="10,10,10,0" />
+                <StackLayout BackgroundColor="#DCE3EF" Margin="15,10,15,10">
+                    <Label Text="게시글 내용" TextColor="Black" FontSize="15" FontAttributes="Bold"/>
                     <Label Text="{Binding Context}" x:Name="PostContextLabel" IsVisible="True"/>
                     <Editor x:Name="PostContextEditor" IsVisible="False" />
                 </StackLayout>
-                <StackLayout>
-                    <Button x:Name="BtnOk" Text="확인" Clicked="Ok_Clicked"/>
-                    <Button x:Name="BtnComment" Text="댓글" Clicked="CommentButton_Clicked" />
-                    <Button Text="취소" Clicked="Cancel_Clicked"/>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button x:Name="BtnOk" Text="확인" Clicked="Ok_Clicked"
+                            TextColor="Black" BackgroundColor="#DCE3EF" 
+                        Margin="0,0,15,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
+                        BorderColor="#9AB4D4" BorderWidth="3" HorizontalOptions="Start"/>
+                    <Button x:Name="BtnComment" Text="댓글" Clicked="CommentButton_Clicked" 
+                            TextColor="Black" BackgroundColor="#DCE3EF" 
+                        Margin="0,0,15,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
+                        BorderColor="#9AB4D4" BorderWidth="3" HorizontalOptions="Start"/>
+                    <Button Text="취소" Clicked="Cancel_Clicked"
+                            TextColor="Black" BackgroundColor="#DCE3EF" 
+                        Margin="30,0,0,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
+                        BorderColor="#9AB4D4" BorderWidth="3" HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
