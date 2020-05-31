@@ -479,6 +479,21 @@ export const GetMenuData = functions.https.onRequest(async (req, res) => {
     res.send(menus);
 });
 
+export const DeleteMenuData = functions.https.onRequest(async (req, res) => {
+    const Code:String = req.body.Code;
+    
+    const collection = admin.firestore().collection("data_menu");
+    const doc = collection.doc(Code.toString());
+    doc.delete().catch(err => console.error(err));
+
+    const resresult:any = {};
+    resresult.Packet = "DeleteMenuData";
+    resresult.Result = true;
+    resresult.Context = "";
+
+    res.send(resresult);
+});
+
 export const SearchFood = functions.https.onRequest(async (req, res) => {
     const Search:String = req.body.Search;
 

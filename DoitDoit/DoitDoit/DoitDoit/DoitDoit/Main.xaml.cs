@@ -26,6 +26,9 @@ namespace DoitDoit
 	{
         private UserModel usermodel = UserModel.GetInstance;
 
+        private double monthtotal = 0;
+        private double weektotal = 0;
+
         /// <summary>
         /// 서버에 있는 공유 식단 게시글 리스트를 가져옵니다.
         /// </summary>
@@ -61,6 +64,70 @@ namespace DoitDoit
 
         ~Main() {
             UserModel.GetInstance.PropertyChanged -= this.PostsChanged;
+        }
+
+        private Microcharts.LineChart CreateChart(int term, int mode) {
+            if (mode > 2 || mode < 0) mode = 0;
+
+            List<Microcharts.Entry> entries = new List<Microcharts.Entry>();
+
+            DateTime now = DateTime.Now;
+
+            for (int i = 0; i < term; i++) {
+                string label = "";
+
+                DateTime date;
+                switch (mode) {
+                    case 0:
+                        date = now.AddDays(-i);
+                        label = date.ToString("MM/dd");
+                        break;
+                    case 1:
+                        date = now.AddMonths(-i);
+                        label = date.ToString("yyyy/MM");
+                        break;
+                    case 2:
+                        date = now.AddYears(-i);
+                        label = date.ToString("yyyy");
+                        break;
+                    default:
+                        date = DateTime.Now;
+                        break;
+                }
+
+                var menus = UserModel.GetInstance.GetMenuGroup(date, mode);
+
+                double calsum = Math.Floor(menus.GetMenusSum("N00001", out Microcharts.Entry entry));
+
+                switch (mode) {
+                    case 0:
+                        this.weektotal += calsum;
+                        break;
+                    case 1:
+                        this.monthtotal += calsum;
+                        break;
+                    case 2:
+
+                        break;
+                }
+                
+
+                entry.Color = SKColor.Parse("#FF0000");
+                entry.Label = label;
+                entry.ValueLabel = calsum.ToString();
+
+                entries.Add(entry);
+            }
+
+            entries.Reverse();
+
+            LineChart linechart = new LineChart() {
+                Entries = entries,
+                LineMode = LineMode.Straight,
+                LabelTextSize = 30,
+            };
+
+            return linechart;
         }
 
         #region 이벤트 처리기
@@ -102,66 +169,13 @@ namespace DoitDoit
         /// <param name="e"></param>
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
-            SKTypeface.FromFamilyName("MalgunGothic");
-
-            DateTime now = DateTime.Now;
-
-            List<Microcharts.Entry> entries = new List<Microcharts.Entry>();
-
-            double total = 0;
-
-            for (int i = 0; i < 5; i++) {
-                DateTime date = now.AddMonths(-i);
-
-                var menus = UserModel.GetInstance.GetMenuGroup(date, 1);
-                double calsum = Math.Floor(menus.GetMenusSum("N00001"));
-                total += calsum;
-
-                Microcharts.Entry entry = new Microcharts.Entry(Convert.ToSingle(calsum));
-                entry.Color = SKColor.Parse("#FF0000");
-                entry.Label = date.ToString("yyyy/MM");
-                entry.ValueLabel = calsum.ToString();
-
-                entries.Add(entry);
-            }
-
-            this.TotalKcal.Text = $"5개월간 총 {total}Kcal";
-
-            entries.Reverse();
-
-            this.ChartView.Chart = new LineChart() 
-            { 
-                Entries = entries, LineMode = LineMode.Straight, LabelTextSize = 30,
-            };
-
+            this.ChartView.Chart = this.CreateChart(5, 1);
             this.ChartView.HeightRequest = 300;
 
-            List<Microcharts.Entry> entries2 = new List<Microcharts.Entry>();
-
-            double total2 = 0;
-            for (int i = 0; i < 7; i++) {
-                DateTime date = now.AddDays(-i);
-
-                var menus = UserModel.GetInstance.GetMenuGroup(date, 0);
-                double calsum = Math.Floor(menus.GetMenusSum("N00001"));
-                total2 += calsum;
-
-                Microcharts.Entry entry = new Microcharts.Entry(Convert.ToSingle(calsum));
-                entry.Color = SKColor.Parse("#FF0000");
-                entry.Label = date.ToString("yyyy/MM//dd");
-                entry.ValueLabel = calsum.ToString();
-
-                entries2.Add(entry);
-            }
-            entries2.Reverse();
-
-            this.WeekChartView.Chart = new LineChart() {
-                Entries = entries2,
-                LineMode = LineMode.Straight,
-                LabelTextSize = 30,
-            };
-
+            this.WeekChartView.Chart = this.CreateChart(7, 0);
             this.WeekChartView.HeightRequest = 300;
+
+            this.TotalKcal.Text = $"일주일간 총 {this.weektotal}Kcal";
         }
 
         /// <summary>
@@ -195,5 +209,25 @@ namespace DoitDoit
             }
         }
         #endregion
+
+        private void WeekButton_Clicked(object sender, EventArgs e) {
+            this.MonthButton.IsEnabled = true;
+            this.WeekButton.IsEnabled = false;
+
+            this.WeekChartView.IsVisible = true;
+            this.ChartView.IsVisible = false;
+
+            this.TotalKcal.Text = $"일주일간 총 {this.weektotal}Kcal";
+        }
+
+        private void MonthButton_Clicked(object sender, EventArgs e) {
+            this.MonthButton.IsEnabled = false;
+            this.WeekButton.IsEnabled = true;
+
+            this.WeekChartView.IsVisible = false;
+            this.ChartView.IsVisible = true;
+
+            this.TotalKcal.Text = $"5개월간 총 {this.monthtotal}Kcal";
+        }
     } // END Of Main CLASS
 }
