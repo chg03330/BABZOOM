@@ -26,13 +26,18 @@
             <StackLayout x:Name="CommentStackLayout">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout BackgroundColor="#e4eodd" Margin="15,20,15,0" Padding="10,10,0,40">
-                            <Label Text="{Binding ID}" TextColor="Black" FontAttributes="Bold" />
+                        <StackLayout BackgroundColor="#e4eodd" Margin="15,20,15,0" Padding="10,10,0,40" Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                <Label Text="{Binding ID}" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Start"/>
+                                <Button x:Name="DelPost" Clicked="DelPost_Clicked"  Text="X" TextColor="Black" FontSize="10" FontAttributes="Bold" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="100" WidthRequest="30" HeightRequest="30" HorizontalOptions="EndAndExpand"/>
+                            </StackLayout>
                             <Label Text="{Binding Context}" FontAttributes="Bold"/>
                         </StackLayout>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
+
+
         </StackLayout>
     </ScrollView>
 

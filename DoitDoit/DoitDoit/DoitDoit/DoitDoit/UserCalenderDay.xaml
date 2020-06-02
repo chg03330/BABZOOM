@@ -46,23 +46,24 @@
                             </StackLayout>
                             
                             <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
-                            <StackLayout BindableLayout.ItemsSource="{Binding Foods}" BackgroundColor="#dbelfo" Margin="20,0,20,0">
+                            <StackLayout BindableLayout.ItemsSource="{Binding Foods}" BackgroundColor="#dbelfo" Margin="20,0,20,0" Orientation="Vertical">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate>
                                         <StackLayout Orientation="Horizontal">
-                                            <Label Text="{Binding Data.식품명}" FontAttributes="Bold" />
-                                            <Label Text="{Binding Data.DB군}" FontAttributes="Bold"/>
+                                            <Label Text="●" FontSize="15" VerticalTextAlignment="Center" TextColor="White"/>
+                                            <Label Text="{Binding Data.식품명}" FontAttributes="Bold" FontSize="20"/>
+                                            <!--<Label Text="{Binding Data.DB군}" FontAttributes="Bold"/>
                                             <Label Text="{Binding Data.식품코드}" FontAttributes="Bold"/>
                                             <Label Text="{Binding Quantity}" FontAttributes="Bold"/>
                                             <Label Text="{Binding Unit}" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Code}" FontAttributes="Bold"/>
+                                            <Label Text="{Binding Code}" FontAttributes="Bold"/>-->
                                             <!--<doitdoit:ButtonWithTag Tag="{Binding BindingContext, 
                                             Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout},
                                             Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" 
                                             Clicked="Button_Clicked"/>-->
                                         </StackLayout>
                                     </DataTemplate>
-                                </BindableLayout.ItemTemplate>
+                                </BindableLayout.ItemTemplate>                                
                             </StackLayout>
                         </StackLayout>
                     </DataTemplate>

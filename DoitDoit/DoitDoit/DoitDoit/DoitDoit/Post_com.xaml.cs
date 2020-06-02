@@ -64,5 +64,16 @@ namespace DoitDoit
                 }
             }
         } // END OF Button_Clicked EVENT LISTENER
+
+
+        /// <summary>
+        /// 덧글 삭제버튼 누를시 기능
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DelPost_Clicked(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

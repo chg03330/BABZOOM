@@ -60,6 +60,15 @@ namespace DoitDoit.Models
             ("셀레늄","mg") // ㎍->mg
         };
 
+        /// <summary>
+        /// 영양소 코드를 받아서, 영양소 이름에 따른 단위값을 받음./
+        /// 받은걸로 차트에 표시될 개체(Entry)생성 /
+        /// 각 개체의 색은 랜덤 /
+        /// 칼로리,탄수화물,단백질,지방 는 고유 색깔을 가짐
+        /// </summary>
+        /// <param name="nutcode">영양소 코드</param>
+        /// <param name="val">영양소 량</param>
+        /// <returns></returns>
         public static Microcharts.Entry GetEntry(string nutcode, double val) {
             Random rnd = new Random();
 
@@ -69,7 +78,26 @@ namespace DoitDoit.Models
             (string, string) nameunit = Nut.NutInfo[codenum - 1];
 
             Entry result = new Entry(Convert.ToSingle(val));
-            result.Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)));
+            if (code.Equals("N00001"))
+            {
+                result.Color = SkiaSharp.SKColor.Parse("#D358F7");
+            }
+            else if (code.Equals("N00002"))
+            {
+                result.Color = SkiaSharp.SKColor.Parse("#5858FA");
+            }
+            else if (code.Equals("N00003"))
+            {
+                result.Color = SkiaSharp.SKColor.Parse("#81DAF5");
+            }
+            else if (code.Equals("N00004"))
+            {
+                result.Color = SkiaSharp.SKColor.Parse("#FE2E64");
+            }
+            else
+            {
+                result.Color = SkiaSharp.SKColor.Parse(String.Format("#{0:X6}", rnd.Next(0x1000000)));
+            }
             result.Label = $"{nameunit.Item1}({nameunit.Item2})";
             
             return result;

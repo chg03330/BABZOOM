@@ -154,6 +154,13 @@ namespace DoitDoit
             }
         }
 
+
+
+        /// <summary>
+        /// 누를경우 영양소 상세 소개 페이지
+        /// </summary>
+        /// <param name="sender">상세버튼</param>
+        /// <param name="e"></param>
         private void NutButton_Clicked(object sender, EventArgs e) {
             UserCalenderDay_Nut nut = new UserCalenderDay_Nut();
             if (!(this.list is null)) {
