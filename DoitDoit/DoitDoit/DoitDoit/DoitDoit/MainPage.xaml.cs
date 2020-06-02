@@ -10,7 +10,6 @@ using DoitDoit.Network;
 using Newtonsoft.Json;
 using DoitDoit.Models;
 using System.Collections.ObjectModel;
-using Android.App;
 
 namespace DoitDoit
 {

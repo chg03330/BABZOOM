@@ -14,21 +14,36 @@ using System.Linq;
 namespace DoitDoit.Network {
     class Token {
         public Packet packet { get; set; } = null;
-        public int ID { get; private set; } = -1;
+        public int ID => this.sendpacket.ID;
 
-        public Token(int id) {
-            this.ID = id;
+        public event Action<Packet> ReRequested;
+
+        private Packet sendpacket = null;
+        private int Requested = 0;
+        private int RequestNum = 3;
+
+        public Token(Packet sendpacket) {
+            this.sendpacket = sendpacket;
         }
 
         public async Task<Packet> GetPacket() {
-            var task = Task.Run(this.Wait);
-            
-            if (task.Wait(5000)) {
-                return this.packet;
+            while (this.Requested < this.RequestNum) {
+                var task = Task.Run(this.Wait);
+
+                if (task.Wait(5000)) {
+                    return this.packet;
+                }
+                else {
+                    if (this.Requested < this.RequestNum) {
+                        Console.WriteLine("ReRequested");
+                        this.ReRequested?.Invoke(this.sendpacket);
+                        this.Requested++;
+                        continue;
+                    }
+                }
             }
-            else {
-                return null;
-            }
+
+            return new Packet() { Result = false, Context = "Response Timeout" };
         }
 
         public async Task Wait() {
@@ -57,6 +72,7 @@ namespace DoitDoit.Network {
 
         private readonly object locker = new object();
 
+        private readonly List<Packet> fpackets = new List<Packet>();
         private readonly List<Token> tokens = new List<Token>();
 
         private FirebaseServer() {
@@ -75,41 +91,95 @@ namespace DoitDoit.Network {
             TcpClient server = this.searchserver;
             NetworkStream stream = server.GetStream();
 
-            List<Packet> fpackets = new List<Packet>();
+            byte[] buf = new byte[1024 * 100];
 
-            while (true) {
-                string resultjson = "";
-                byte[] buf = new byte[1024 * 10];
+            int pointer = 0;
+            bool flag = false;
+            string stbuf = "";
+            int left = 0;
 
-                do {
-                    int count = stream.Read(buf, 0, buf.Length);
-                    resultjson += Encoding.UTF8.GetString(buf, 0, count);
-                } while (stream.DataAvailable);
+        RERUN: while (true) {
+                //string resultjson = "";
+                int count = stream.Read(buf, 0, buf.Length);
+                if (count is 0) continue;
 
-                Console.WriteLine(resultjson);
+                //Console.WriteLine(Encoding.UTF8.GetString(buf, 0, count));
 
-                Packet packet = JsonConvert.DeserializeObject<Packet>(resultjson);
+                while (pointer < count) {
+                    if (flag is false) {
+                        int length = BitConverter.ToInt32(new ReadOnlySpan<byte>(buf, pointer, 4).ToArray(), 0);
+                        pointer += 4;
 
-                if (packet.FragmentMax > 1) {
-                    fpackets.Add(packet);
-
-                    var fs = from f in fpackets
-                             where f.ID == packet.ID
-                             orderby f.FragmentID ascending
-                             select f;
-                    if (fs.Count() == packet.FragmentMax) {
-                        string context = "";
-                        foreach (Packet f in fs) {
-                            context += f.Context;
-                            fpackets.Remove(f);
+                        if (pointer + length > count) {
+                            stbuf += Encoding.UTF8.GetString(buf, pointer, count - pointer);
+                            left = pointer + length - count;
+                            flag = true;
+                            pointer = 0;
+                            goto RERUN;
                         }
-                        packet.Context = context;
-                        this.CommandPacket(packet);
+                        else {
+                            string result = Encoding.UTF8.GetString(buf, pointer, length);
+                            pointer += length;
+
+                            Console.WriteLine($"{length} {pointer} {count}" + "\n" + result);
+
+                            this.CommandPacket(result);
+                        }
                     }
+                    else {
+                        if (left > count) {
+                            stbuf += Encoding.UTF8.GetString(buf, pointer, count);
+                            left -= count;
+                            flag = true;
+                            pointer = 0;
+                            goto RERUN;
+                        }
+                        else {
+                            stbuf += Encoding.UTF8.GetString(buf, pointer, left);
+                            pointer += left;
+                            string result = String.Copy(stbuf);
+
+                            stbuf = "";
+                            left = 0;
+                            flag = false;
+
+                            this.CommandPacket(result);
+                        }
+                    }
+
+                    if (pointer >= count) {
+                        pointer = 0;
+                        break;
+                    }
+                } // PARSE WHILE LOOP
+            } // READ WHILE LOOP
+        }
+
+        private void CommandPacket(string resultjson) {
+            Packet packet = JsonConvert.DeserializeObject<Packet>(resultjson);
+
+            if (packet.FragmentMax > 1) {
+                fpackets.Add(packet);
+                List<Packet> ftp = new List<Packet>(fpackets);
+
+                var fs = from f in ftp
+                         where f.ID == packet.ID
+                         orderby f.FragmentID ascending
+                         select f;
+                if (fs.Count() == packet.FragmentMax) {
+                    string context = "";
+
+                    foreach (Packet f in fs) {
+                        context += f.Context;
+                        fpackets.Remove(f);
+                    }
+                    packet.Context = context;
+
+                    Task.Run(() => { this.CommandPacket(packet); });
                 }
-                else {
-                    this.CommandPacket(packet);
-                }
+            }
+            else {
+                Task.Run(() => { this.CommandPacket(packet); });
             }
         }
 
@@ -131,16 +201,28 @@ namespace DoitDoit.Network {
         private async Task<Packet> SendPacketData(Packet packet, bool response = false) {
             if (packet is null) return null;
 
+            TcpClient server = this.searchserver;
+            NetworkStream stream = server.GetStream();
+
             Token token = null;
             if (response) {
                 packet.ID = Packet.IDCreator;
 
-                token = new Token(packet.ID);
+                token = new Token(packet);
+
+                token.ReRequested += new Action<Packet>(repacket => {
+                    lock (this.fpackets) {
+                        this.fpackets.RemoveAll(rmpacket => rmpacket.ID == repacket.ID);
+                    }
+
+                    lock (this.locker) {
+                        byte[] buf = repacket.ToBytes();
+                        stream.Write(buf, 0, buf.Length);
+                    }
+                });
+
                 this.tokens.Add(token);
             }
-
-            TcpClient server = this.searchserver;
-            NetworkStream stream = server.GetStream();
 
             lock (this.locker) {
                 byte[] buf = packet.ToBytes();
@@ -151,7 +233,11 @@ namespace DoitDoit.Network {
                 return null;
             }
             else {
-                return await token.GetPacket();
+                Packet resultpacket = await token.GetPacket();
+
+                this.tokens.Remove(token);
+
+                return resultpacket;
             }
         }
 
@@ -195,7 +281,10 @@ namespace DoitDoit.Network {
             Packet packet = new Packet() { Command = "SignIn", Context = JsonConvert.SerializeObject(dic) };
             Packet recvpacket = await this.SendPacketData(packet, true);
             if (recvpacket is null) return false;
-            else if (recvpacket.Result == false) return false;
+
+            Console.WriteLine(recvpacket.Context);
+
+            if (recvpacket.Result == false) return false;
 
             Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(recvpacket.Context);
 
@@ -238,12 +327,46 @@ namespace DoitDoit.Network {
         public async Task GetMenuData() {
             Packet packet = new Packet() { Command = "GetMenuData" };
             Packet recvpacket = await this.SendPacketData(packet, true);
+            if (recvpacket.Result is false) return;
 
             List<FoodViewModel> menus = JsonConvert.DeserializeObject<List<FoodViewModel>>(recvpacket.Context);
 
             foreach (var menu in menus) {
                 UserModel.GetInstance.FoodViewModels.Add(menu);
             }
+        }
+
+        public async Task<DoitDoit.Models.FoodViewModel[]> GetSpecificPostData(string postcode) {
+            Packet packet = new Packet() { Command = "GetSpecificPostData", Context = postcode };
+            Packet recvpacket = await this.SendPacketData(packet, true);
+            if (recvpacket.Result is false) return new DoitDoit.Models.FoodViewModel[] { };
+
+            Console.WriteLine(recvpacket.Context);
+
+            DoitDoit.Models.FoodViewModel[] menus = JsonConvert.DeserializeObject<DoitDoit.Models.FoodViewModel[]>(recvpacket.Context);
+
+            return menus;
+        }
+
+        public async Task<DoitDoit.Models.Comment[]> GetPostCommentData(string postcode) {
+            Packet packet = new Packet() { Command = "GetPostCommentData", Context = postcode };
+            Packet recvpacket = await this.SendPacketData(packet, true);
+            if (recvpacket.Result is false) return new DoitDoit.Models.Comment[] { };
+
+            DoitDoit.Models.Comment[] comments = JsonConvert.DeserializeObject<DoitDoit.Models.Comment[]>(recvpacket.Context);
+
+            return comments;
+        }
+
+        public async Task<DoitDoit.Models.Post[]> GetPostData() {
+            Packet packet = new Packet() { Command = "GetPostData" };
+            Packet recvpacket = await this.SendPacketData(packet, true);
+            if (recvpacket.Result is false) return new DoitDoit.Models.Post[] { };
+
+            DoitDoit.Models.Post[] posts
+                = JsonConvert.DeserializeObject<DoitDoit.Models.Post[]>(recvpacket.Context);
+
+            return posts;
         }
     } // END OF FirebaseServer
 }

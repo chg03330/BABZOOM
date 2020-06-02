@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Newtonsoft.Json;
@@ -33,8 +34,9 @@ namespace DoitDoit.Network {
             string json = JsonConvert.SerializeObject(this);
 
             byte[] buf = Encoding.UTF8.GetBytes(json);
+            byte[] header = BitConverter.GetBytes(buf.Length);
 
-            return buf;
+            return header.Concat(buf).ToArray();
         }
     } // END OF Packet CLASS
 }

@@ -35,13 +35,12 @@ namespace DoitDoit
         private async void GetPostData() {
             Network.FirebaseServer server = Network.FirebaseServer.Server;
 
-            string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+            //string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+
+            Models.Post[] posts = await server.GetPostData();
 
             // UI 스레드에서 실행
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                Models.Post[] posts =
-                JsonConvert.DeserializeObject<Models.Post[]>(result);
-
                 var ps = (from p in posts
                           where !UserModel.GetInstance.Posts.Any(post => post.Code == p.Code)
                           select p);
@@ -60,10 +59,6 @@ namespace DoitDoit
             Task.Run(this.GetPostData);
 
             UserModel.GetInstance.PropertyChanged += this.PostsChanged;
-
-            UserModel.GetInstance.FoodViewModels.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler((sender, target) => {
-                this.DisplayAlert("a", "a", "a");
-            });
         }
 
         ~Main() {
