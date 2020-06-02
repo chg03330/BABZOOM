@@ -195,6 +195,7 @@ namespace DoitDoit.Network {
             Packet packet = new Packet() { Command = "SignIn", Context = JsonConvert.SerializeObject(dic) };
             Packet recvpacket = await this.SendPacketData(packet, true);
             if (recvpacket is null) return false;
+            else if (recvpacket.Result == false) return false;
 
             Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(recvpacket.Context);
 

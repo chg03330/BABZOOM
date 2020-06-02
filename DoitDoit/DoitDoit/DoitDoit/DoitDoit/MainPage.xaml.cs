@@ -27,8 +27,9 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-<<<<<<< Updated upstream
         private async void Login_Clicked(object sender, EventArgs e) {
+            Button a = sender as Button;
+            a.IsEnabled = false;
             String id = this.Entry_ID.Text;
             String pw = this.PASSWORD.Text;
 
@@ -37,42 +38,6 @@ namespace DoitDoit
             UserModel model = UserModel.GetInstance;
 
             bool result = await server.SignIn(id, pw);
-=======
-        private async void Login_Clicked(object sender, EventArgs e)
-        {
-            Button a = sender as Button;
-            a.IsEnabled = false;
-                String id = this.Entry_ID.Text;
-                String pw = this.PASSWORD.Text;
-                
-                    Dictionary<string, string> post = new Dictionary<string, string>();
-                    post["ID"] = id;
-                    post["Password"] = pw;
-
-                    FirebaseServer server = FirebaseServer.Server;
-                    string result = await server.FirebaseRequest("SignIn", post);
-
-                    Packet packet = JsonConvert.DeserializeObject<Packet>(result);
-
-
-
-            if (packet.Result)
-            {
-                UserModel usermodel = UserModel.GetInstance;
-
-                Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(packet.Context);
-
-                usermodel.Id = id;
-                usermodel.Password = pw;
-
-                usermodel.Name = resultdic["name"];
-                usermodel.Age = int.Parse(resultdic["age"]);
-                usermodel.Height = float.Parse(resultdic["height"]);
-                usermodel.Weight = float.Parse(resultdic["weight"]);
-                usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
-
-                usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
->>>>>>> Stashed changes
 
             if (result) {
                 Dictionary<string, string> req = new Dictionary<string, string>();
@@ -88,18 +53,13 @@ namespace DoitDoit
 
                 //model.FoodViewModels = list;
 
-                OnBackButtonPressed();
+                //OnBackButtonPressed();
                 await Navigation.PushModalAsync(new Main());
             }
-<<<<<<< Updated upstream
-            else {
-
-=======
             else
             {
-                await DisplayAlert(packet.Result.ToString(), packet.Context, "Cancel") ;
+                await DisplayAlert("안내", "아이디 또는 비밀번호를 다시 확인해주세요.", "Cancel") ;
                 a.IsEnabled = true;
->>>>>>> Stashed changes
             }
                 
         }
