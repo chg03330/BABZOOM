@@ -1074,7 +1074,7 @@ namespace DoitDoit.Nutrition
                 }
             }
         }
-    } //티아민
+    } //티아민 (비타민B1)
     public class RIBOFLAVIN : nutBase
     {
         public RIBOFLAVIN(Boolean sex, int age) 
@@ -1235,7 +1235,7 @@ namespace DoitDoit.Nutrition
                 }
             }
         }
-    } // 니아신
+    } // 니아신 (비타민B3)
     public class IRON : nutBase 
     {
         public IRON(Boolean sex, int age)
@@ -1605,16 +1605,16 @@ namespace DoitDoit.Nutrition
     {
         public COOPER(Boolean sex, int age)
         {
-            NUT_UNIT = "㎍";
+            NUT_UNIT = "mg";
             if (age < 3)
             {
-                AVG_INTAKE = 220;
-                HOP_INTAKE = 280;
+                AVG_INTAKE = 0.22f;
+                HOP_INTAKE = 0.28f;
             }
             else if (age < 6)
             {
-                AVG_INTAKE = 250;
-                HOP_INTAKE = 320;
+                AVG_INTAKE = 0.25f;
+                HOP_INTAKE = 0.32f;
             }
             else
             {
@@ -1625,31 +1625,31 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 340;
-                            HOP_INTAKE = 440;
+                            AVG_INTAKE = 0.34f;
+                            HOP_INTAKE = 0.44f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 440;
-                            HOP_INTAKE = 580;
+                            AVG_INTAKE = 0.44f;
+                            HOP_INTAKE = 0.58f;
                             break;
                         case 12:
                         case 13:
                         case 14:
-                            AVG_INTAKE = 570;
-                            HOP_INTAKE = 740;
+                            AVG_INTAKE = 0.57f;
+                            HOP_INTAKE = 0.74f;
                             break;
                         case 15:
                         case 16:
                         case 17:
                         case 18:
-                            AVG_INTAKE = 650;
-                            HOP_INTAKE = 840;
+                            AVG_INTAKE = 0.65f;
+                            HOP_INTAKE = 0.84f;
                             break;
                         default:
-                            AVG_INTAKE = 600;
-                            HOP_INTAKE = 800;
+                            AVG_INTAKE = 0.6f;
+                            HOP_INTAKE = 0.8f;
                             break;
                     }
                 }
@@ -1660,24 +1660,24 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 340;
-                            HOP_INTAKE = 440;
+                            AVG_INTAKE = 0.34f;
+                            HOP_INTAKE = 0.44f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 440;
-                            HOP_INTAKE = 580;
+                            AVG_INTAKE = 0.44f;
+                            HOP_INTAKE = 0.58f;
                             break;
                         case 12:
                         case 13:
                         case 14:
-                            AVG_INTAKE = 570;
-                            HOP_INTAKE = 740;
+                            AVG_INTAKE = 0.57f;
+                            HOP_INTAKE = 0.74f;
                             break;
                         default:
-                            AVG_INTAKE = 600;
-                            HOP_INTAKE = 800;
+                            AVG_INTAKE = 0.6f;
+                            HOP_INTAKE = 0.8f;
                             break;
                     }
                 }
@@ -2005,16 +2005,16 @@ namespace DoitDoit.Nutrition
     {
         public KALIUM(Boolean sex, int age)
         {
-            NUT_UNIT = "g";
+            NUT_UNIT = "mg";
             if (age < 3)
             {
-                AVG_INTAKE = 2.0f;
-                HOP_INTAKE = 2.0f;
+                AVG_INTAKE = 2000f;
+                HOP_INTAKE = 2000f;
             }
             else if (age < 6)
             {
-                AVG_INTAKE = 2.3f;
-                HOP_INTAKE = 2.3f;
+                AVG_INTAKE = 2300f;
+                HOP_INTAKE = 2300f;
             }
             else
             {
@@ -2025,18 +2025,18 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 2.6f;
-                            HOP_INTAKE = 2.6f;
+                            AVG_INTAKE = 2600f;
+                            HOP_INTAKE = 2600f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 3.0f;
-                            HOP_INTAKE = 3.0f;
+                            AVG_INTAKE = 3000f;
+                            HOP_INTAKE = 3000f;
                             break;
                         default:
-                            AVG_INTAKE = 3.5f;
-                            HOP_INTAKE = 3.5f;
+                            AVG_INTAKE = 3500f;
+                            HOP_INTAKE = 3500f;
                             break;
                     }
                 }
@@ -2047,18 +2047,18 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 2.6f;
-                            HOP_INTAKE = 2.6f;
+                            AVG_INTAKE = 2600f;
+                            HOP_INTAKE = 2600f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 3.0f;
-                            HOP_INTAKE = 3.0f;
+                            AVG_INTAKE = 3000f;
+                            HOP_INTAKE = 3000f;
                             break;
                         default:
-                            AVG_INTAKE = 3.5f;
-                            HOP_INTAKE = 3.5f;
+                            AVG_INTAKE = 3500f;
+                            HOP_INTAKE = 3500f;
                             break;
                     }
                 }
@@ -2332,13 +2332,13 @@ namespace DoitDoit.Nutrition
             NUT_UNIT = "mg";
             if (age < 3)
             {
-                AVG_INTAKE = 19;
-                HOP_INTAKE = 23;
+                AVG_INTAKE = 0.019f;
+                HOP_INTAKE = 0.023f;
             }
             else if (age < 6)
             {
-                AVG_INTAKE = 22;
-                HOP_INTAKE = 25;
+                AVG_INTAKE = 0.022f;
+                HOP_INTAKE = 0.025f;
             }
             else
             {
@@ -2349,31 +2349,31 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 30;
-                            HOP_INTAKE = 35;
+                            AVG_INTAKE = 0.03f;
+                            HOP_INTAKE = 0.035f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 39;
-                            HOP_INTAKE = 45;
+                            AVG_INTAKE = 0.039f;
+                            HOP_INTAKE = 0.045f;
                             break;
                         case 12:
                         case 13:
                         case 14:
-                            AVG_INTAKE = 49;
-                            HOP_INTAKE = 60;
+                            AVG_INTAKE = 0.049f;
+                            HOP_INTAKE = 0.06f;
                             break;
                         case 15:
                         case 16:
                         case 17:
                         case 18:
-                            AVG_INTAKE = 55;
-                            HOP_INTAKE = 65;
+                            AVG_INTAKE = 0.055f;
+                            HOP_INTAKE = 0.065f;
                             break;
                         default:
-                            AVG_INTAKE = 50;
-                            HOP_INTAKE = 60;
+                            AVG_INTAKE = 0.05f;
+                            HOP_INTAKE = 0.06f;
                             break;
                     }
                 }
@@ -2384,31 +2384,31 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 30;
-                            HOP_INTAKE = 35;
+                            AVG_INTAKE = 0.03f;
+                            HOP_INTAKE = 0.035f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 39;
-                            HOP_INTAKE = 45;
+                            AVG_INTAKE = 0.039f;
+                            HOP_INTAKE = 0.045f;
                             break;
                         case 12:
                         case 13:
                         case 14:
-                            AVG_INTAKE = 49;
-                            HOP_INTAKE = 60;
+                            AVG_INTAKE = 0.049f;
+                            HOP_INTAKE = 0.06f;
                             break;
                         case 15:
                         case 16:
                         case 17:
                         case 18:
-                            AVG_INTAKE = 55;
-                            HOP_INTAKE = 65;
+                            AVG_INTAKE = 0.055f;
+                            HOP_INTAKE = 0.065f;
                             break;
                         default:
-                            AVG_INTAKE = 50;
-                            HOP_INTAKE = 60;
+                            AVG_INTAKE = 0.05f;
+                            HOP_INTAKE = 0.06f;
                             break;
                     }
                 }
@@ -2419,16 +2419,16 @@ namespace DoitDoit.Nutrition
     {
         public NATRIUM(Boolean sex, int age)
         {
-            NUT_UNIT = "g";
+            NUT_UNIT = "mg";
             if (age < 3)
             {
-                AVG_INTAKE = 0.9f;
-                HOP_INTAKE = 0.9f;
+                AVG_INTAKE = 900f;
+                HOP_INTAKE = 900f;
             }
             else if (age < 6)
             {
-                AVG_INTAKE = 1.0f;
-                HOP_INTAKE = 1.0f;
+                AVG_INTAKE = 1000f;
+                HOP_INTAKE = 1000f;
             }
             else
             {
@@ -2439,14 +2439,14 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 1.2f;
-                            HOP_INTAKE = 1.2f;
+                            AVG_INTAKE = 1200f;
+                            HOP_INTAKE = 1200f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 1.4f;
-                            HOP_INTAKE = 1.4f;
+                            AVG_INTAKE = 1400f;
+                            HOP_INTAKE = 1400f;
                             break;
                         case 12:
                         case 13:
@@ -2501,8 +2501,8 @@ namespace DoitDoit.Nutrition
                         case 62:
                         case 63:
                         case 64:
-                            AVG_INTAKE = 1.5f;
-                            HOP_INTAKE = 1.5f;
+                            AVG_INTAKE = 1500f;
+                            HOP_INTAKE = 1500f;
                             break;
                         case 65:
                         case 66:
@@ -2514,12 +2514,12 @@ namespace DoitDoit.Nutrition
                         case 72:
                         case 73:
                         case 74:
-                            AVG_INTAKE = 1.3f;
-                            HOP_INTAKE = 1.3f;
+                            AVG_INTAKE = 1300f;
+                            HOP_INTAKE = 1300f;
                             break;
                         default:
-                            AVG_INTAKE = 1.1f;
-                            HOP_INTAKE = 1.1f;
+                            AVG_INTAKE = 1100f;
+                            HOP_INTAKE = 1100f;
                             break;
                     }
                 }
@@ -2530,14 +2530,14 @@ namespace DoitDoit.Nutrition
                         case 6:
                         case 7:
                         case 8:
-                            AVG_INTAKE = 1.2f;
-                            HOP_INTAKE = 1.2f;
+                            AVG_INTAKE = 1200f;
+                            HOP_INTAKE = 1200f;
                             break;
                         case 9:
                         case 10:
                         case 11:
-                            AVG_INTAKE = 1.4f;
-                            HOP_INTAKE = 1.4f;
+                            AVG_INTAKE = 1400f;
+                            HOP_INTAKE = 1400f;
                             break;
                         case 12:
                         case 13:
@@ -2592,8 +2592,8 @@ namespace DoitDoit.Nutrition
                         case 62:
                         case 63:
                         case 64:
-                            AVG_INTAKE = 1.5f;
-                            HOP_INTAKE = 1.5f;
+                            AVG_INTAKE = 1500f;
+                            HOP_INTAKE = 1500f;
                             break;
                         case 65:
                         case 66:
@@ -2605,12 +2605,12 @@ namespace DoitDoit.Nutrition
                         case 72:
                         case 73:
                         case 74:
-                            AVG_INTAKE = 1.3f;
-                            HOP_INTAKE = 1.3f;
+                            AVG_INTAKE = 1300f;
+                            HOP_INTAKE = 1300f;
                             break;
                         default:
-                            AVG_INTAKE = 1.1f;
-                            HOP_INTAKE = 1.1f;
+                            AVG_INTAKE = 1100f;
+                            HOP_INTAKE = 1100f;
                             break;
                     }
                 }
