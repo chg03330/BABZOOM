@@ -124,7 +124,10 @@ class Post extends BObject {
     public Code:String = "";
     public UserID:String = "";
     public Context:String = "";
+
     public Date:Date | null = null;
+    public MDate:Date | null = null;
+
     public Menus:Menu[] = [];
     public Comments:Comment[] = [];
 
@@ -135,8 +138,15 @@ class Post extends BObject {
 
         this.Code = docid;
         this.UserID = doc.p_id;
+
         const timestamp:admin.firestore.Timestamp = doc.p_date;
         this.Date = timestamp.toDate();
+
+        if (doc.p_m_date) {
+            const menutimestamp:admin.firestore.Timestamp = doc.p_m_date;
+            this.MDate = menutimestamp.toDate();
+        }
+
         this.Context = doc.p_text;
 
         if (doc.p_menu && doc.p_menu.length) {
@@ -165,8 +175,10 @@ class Post extends BObject {
                 const comm:Comment = new Comment();
                 comm.ID = cdoc.data().c_id;
                 comm.Context = cdoc.data().c_text;
+
                 const ctimestamp:admin.firestore.Timestamp = cdoc.data().c_time;
                 comm.Date = ctimestamp.toDate();
+                
                 comm.Code = cdoc.id;
 
                 this.Comments.push(comm);
@@ -519,6 +531,7 @@ export const SearchFood = functions.https.onRequest(async (req, res) => {
 export const SetPostData = functions.https.onRequest(async (req, res) => {
     const ID:String = req.body.UserID ?? "";
     const DateTime:number = req.body.DateTime ?? 0;
+    const MDateTime:number = req.body.MDateTime ?? 0;
     const Context:String = req.body.Context ?? "";
     const MenuCode:String[] = req.body.Menu ?? [];
 
@@ -531,6 +544,10 @@ export const SetPostData = functions.https.onRequest(async (req, res) => {
         "p_date" : admin.firestore.Timestamp.fromMillis(DateTime),
         "p_text" : Context
     };
+
+    if (MDateTime != 0) {
+        post.p_m_date = admin.firestore.Timestamp.fromMillis(MDateTime);
+    }
     
     const menus:any[] = [];
     for (let i:number = 0; i < MenuCode.length; i++) {

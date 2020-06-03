@@ -45,7 +45,9 @@ namespace DoitDoit
                           where !UserModel.GetInstance.Posts.Any(post => post.Code == p.Code)
                           select p);
 
-                foreach (Models.Post p in ps) UserModel.GetInstance.Posts.Add(p);
+                foreach (Models.Post p in ps) {
+                    UserModel.GetInstance.Posts.Add(p);
+                }
 
                 UserModel.GetInstance.SortPosts();
             });

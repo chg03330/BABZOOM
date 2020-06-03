@@ -96,14 +96,25 @@ namespace DoitDoit
 
         private async void Ok_Clicked(object sender, EventArgs e)
         {
-            postdata.Date = DateTime.Now;
+            if (this.PostData.Menus is null || this.PostData.Menus.Count is 0) {
+                await this.DisplayAlert("안내", "식단이 존재하지 않습니다.", "Cancel");
+                return;
+            }
+
+            string date = this.PostData.Menus.First().Code;
+            int year = Convert.ToInt32(date.Substring(0, 4));
+            int month = Convert.ToInt32(date.Substring(4, 2));
+            int tday = Convert.ToInt32(date.Substring(6, 2));
+
+            this.PostData.Date = DateTime.Now;
+            this.PostData.MDate = new DateTime(year, month, tday);
             this.PostData.Context = this.PostContextEditor.Text;
             
             bool accept = await DisplayAlert("안내", "됐을까요?", "OK", "Cancel");
 
             if (accept) {
                 FirebaseServer server = FirebaseServer.Server;
-                string packetjson = await server.FirebaseRequest("SetPostData", postdata);
+                string packetjson = await server.FirebaseRequest("SetPostData", this.PostData);
                 Packet packet = Newtonsoft.Json.JsonConvert.DeserializeObject<Packet>(packetjson);
 
                 if (packet.Result) {

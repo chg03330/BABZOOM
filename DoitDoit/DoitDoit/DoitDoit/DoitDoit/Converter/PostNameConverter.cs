@@ -13,11 +13,11 @@ namespace DoitDoit.Converter {
             if (post is null) return null;
 
             string day = "";
-            if (post.Menus.Count > 0) {
-                string date = post.Menus.First().Code;
-                string year = date.Substring(0, 4);
-                string month = date.Substring(4, 2);
-                string tday = date.Substring(6, 2);
+
+            if (post.MDate > new DateTime(1970, 1, 1)) {
+                string year = post.MDate.Year.ToString();
+                string month = post.MDate.Month.ToString();
+                string tday = post.MDate.Day.ToString();
 
                 day = $"{year}년 {month}월 {tday}일 ";
             }
