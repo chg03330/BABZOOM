@@ -34,12 +34,15 @@
                 <Label Text="공유 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
                 <Button Text="공유 식단 목록" Clicked="ToRecoListButton_Clicked" FontAttributes="Bold" TextColor="Black" BackgroundColor="#CECFE4" HorizontalOptions="EndAndExpand" 
                         Margin="0,15,15,0" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
-            </StackLayout>
+            </StackLayout>            
             <StackLayout x:Name="PostList">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout BackgroundColor="#EAECF4" Margin="15,10,15,0"><!--#dbelfo-->
-                            <DatePicker Date="{Binding Date}" IsEnabled="False"/>
+                        <Frame BorderColor="Black" CornerRadius="10" HasShadow="True">
+                            <StackLayout BackgroundColor="#EAECF4">
+                                <!--#dbelfo-->
+                                <!--Margin="15,10,15,0"-->
+                                <DatePicker Date="{Binding Date}" IsEnabled="False"/>
                             <StackLayout Orientation="Horizontal">
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Converter={StaticResource Key=postnameconverter}}" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
@@ -59,7 +62,8 @@
                                                     WidthRequest="100" HeightRequest="40" HorizontalOptions="EndAndExpand" Margin="0,0,10,15" BorderColor="#A5A3B7" BorderWidth="2" FontAttributes="Bold" />
                             </StackLayout>
                         </StackLayout>
-                    </DataTemplate>
+            </Frame>
+            </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </StackLayout>
