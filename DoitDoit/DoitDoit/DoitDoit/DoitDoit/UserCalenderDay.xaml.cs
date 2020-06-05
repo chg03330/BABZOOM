@@ -34,7 +34,7 @@ namespace DoitDoit
         
         DonutChart dc;
 
-        String nowTime;
+        //String nowTime;
 
         public DateTime dateTime {
             get => this.datetime;
@@ -48,7 +48,7 @@ namespace DoitDoit
         {
             InitializeComponent();
             this.CalenderDayTime.BindingContext = this;
-            nowTime = dateTime.ToString("yyyyMMdd");
+            //nowTime = dateTime.ToString("yyyyMMdd");
         }
 
         /// <summary>
@@ -84,24 +84,51 @@ namespace DoitDoit
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(this.dateTime.ToString("yyyyMMdd"));
             });
-
-            list = new ObservableCollection<FoodViewModel>();
-            foreach (FoodViewModel f in fvm) {
-                //f.Code = f.Code.Substring(0, 8);
-                list.Add(f);
-                //foreach (Food food in f.Foods) {
-                //    FoodData data = await Network.FirebaseServer.Server.SpecificFood(food.Data.식품명);
-                    
-                //}
+            list.Clear();
+            if (fvm.Count() == 0)
+            {
+                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.1", "확인"); 
+                nutSL.IsVisible = false;
             }
+            else
+            {
+                list = new ObservableCollection<FoodViewModel>();
+                foreach (FoodViewModel f in fvm)
+                {
+                    list.Add(f);
+                }
+                nutSL.IsVisible = true;
+                updateChart();
+            }
+            
+            /*
+            var fvm = usermodel.FoodViewModels.Where(model => {
+                return model.Code.Contains(e.NewDate.ToString("yyyyMMdd"));
+            });
+
+            list.Clear();
+            if (fvm.Count() == 0)
+            {
+                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.2", "확인");
+                nutSL.IsVisible = false;
+            }
+            else
+            {
+                foreach (FoodViewModel f in fvm)
+                {
+                    list.Add(f);
+                }
+                nutSL.IsVisible = true;
+            }*/
+
             BindableLayout.SetItemsSource(this.liststack, list);
 
-            updateChart();
 
         }
         private void updateChart() {
             List<Entry> entries = new List<Entry>();
             calNut(entries);                                                                //칼로리계산
+            //dc.Entries = null;
             dc = new DonutChart() { Entries = entries, LabelTextSize = 40f };             //차트생성
             Chart1.Chart = dc;                                                      //차트 바인딩
         }
@@ -136,13 +163,14 @@ namespace DoitDoit
         private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             this.dateTime = e.NewDate;
+            /*
             var fvm = usermodel.FoodViewModels.Where(model => {
                 return model.Code.Contains(e.NewDate.ToString("yyyyMMdd"));
             });
 
             list.Clear();
             if (fvm.Count() == 0) {
-                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인");
+                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.2", "확인");
                 nutSL.IsVisible = false;
             }
             else {
@@ -152,6 +180,8 @@ namespace DoitDoit
                 }
                 nutSL.IsVisible = true;
             }
+            */
+            this.ContentPage_Appearing(sender,(EventArgs)e);
         }
 
 

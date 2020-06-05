@@ -78,19 +78,19 @@ namespace DoitDoit.Models
             (string, string) nameunit = Nut.NutInfo[codenum - 1];
 
             Entry result = new Entry(Convert.ToSingle(val));
-            if (code.Equals("N00001"))
+            if (code.Equals("00001"))
             {
                 result.Color = SkiaSharp.SKColor.Parse("#D358F7");
             }
-            else if (code.Equals("N00002"))
+            else if (code.Equals("00002"))
             {
                 result.Color = SkiaSharp.SKColor.Parse("#5858FA");
             }
-            else if (code.Equals("N00003"))
+            else if (code.Equals("00003"))
             {
                 result.Color = SkiaSharp.SKColor.Parse("#81DAF5");
             }
-            else if (code.Equals("N00004"))
+            else if (code.Equals("00004"))
             {
                 result.Color = SkiaSharp.SKColor.Parse("#FE2E64");
             }

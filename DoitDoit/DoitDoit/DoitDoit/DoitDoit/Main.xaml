@@ -18,36 +18,45 @@
 
     <ScrollView>
         <StackLayout Orientation="Vertical">
-            <StackLayout Orientation="Horizontal">
-                <Button x:Name="WeekButton" Clicked="WeekButton_Clicked" Text="주간통계" IsEnabled="False"  TextColor="Black" BackgroundColor="#CECFE4" HorizontalOptions="Start" 
-                        Margin="0,5,0,5" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
-                <Button x:Name="MonthButton" Clicked="MonthButton_Clicked" Text="월간통계"  TextColor="Black" BackgroundColor="#CECFE4" HorizontalOptions="Center" 
-                        Margin="0,5,0,5" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
-            </StackLayout>
-            
             <Label Text="내 식단 통계" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,10,0,0" />
-            <Label Text="" x:Name="TotalKcal" TextColor="Black" FontSize="17" HorizontalOptions="Center"/>
+            <Frame BorderColor="#CECFE4" Padding="1" CornerRadius="10" HorizontalOptions="Center" IsClippedToBounds="True" HasShadow="True">
+                <Label Text="" x:Name="TotalKcal" TextColor="Black" FontSize="17" HorizontalOptions="Center" Margin="15,3,15,3"/>    
+            </Frame>            
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal">
+                    <Button x:Name="WeekButton" Clicked="WeekButton_Clicked" Text="주간통계" IsEnabled="False"  TextColor="Black" BackgroundColor="White" HorizontalOptions="Start" 
+                        Margin="0,5,0,0" CornerRadius="10" FontAttributes="Bold"/>
+                    <Button x:Name="MonthButton" Clicked="MonthButton_Clicked" Text="월간통계"  TextColor="Black" BackgroundColor="White" HorizontalOptions="Center" 
+                        Margin="0,5,0,0" CornerRadius="10" FontAttributes="Bold"/>
+                    <!--backgroundcolor="#CECFE4"-->
+                </StackLayout>
+            </StackLayout>
             <microcharts:ChartView x:Name="WeekChartView" />
             <microcharts:ChartView x:Name="ChartView" IsVisible="False" />
             <Button Text="사이드버튼" Clicked="SideMenu_Clicked"/>
             <StackLayout Orientation="Horizontal">
                 <Label Text="공유 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
-                <Button Text="공유 식단 목록" Clicked="ToRecoListButton_Clicked" FontAttributes="Bold" TextColor="Black" BackgroundColor="#CECFE4" HorizontalOptions="EndAndExpand" 
-                        Margin="0,15,15,0" HeightRequest="40" WidthRequest="120" CornerRadius="10" />
+                <Button Text="공유 식단 목록" Clicked="ToRecoListButton_Clicked" FontAttributes="Bold" TextColor="Black" BackgroundColor="#EFF5FB" HorizontalOptions="EndAndExpand" 
+                        Margin="0,15,15,0" HeightRequest="40" WidthRequest="120" CornerRadius="25" />
+                <!--TextColor="Black" BackgroundColor="#CECFE4"-->
             </StackLayout>            
             <StackLayout x:Name="PostList">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <Frame BorderColor="Black" CornerRadius="10" HasShadow="True">
-                            <StackLayout BackgroundColor="#EAECF4">
+                        <Frame BorderColor="#B0C4DE" CornerRadius="10" HasShadow="True" Padding="0" Margin="15,0,15,5" >
+                            <StackLayout>
+                                <!--BackgroundColor="#EAECF4"-->
                                 <!--#dbelfo-->
                                 <!--Margin="15,10,15,0"-->
-                                <DatePicker Date="{Binding Date}" IsEnabled="False"/>
+                                <DatePicker Date="{Binding Date}"  IsEnabled="False" FontAttributes="Bold" >                                    
+                                </DatePicker>
                             <StackLayout Orientation="Horizontal">
                                 <StackLayout Orientation="Horizontal">
+                                    <!--날짜-->
                                     <Label Text="{Binding Converter={StaticResource Key=postnameconverter}}" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
                                 </StackLayout>
-                                <Label Text="{Binding Converter={StaticResource Key=commentconverter}, Path=Comments.Count, Mode=OneWay}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="#FAFFFF"
+                                <!--댓글 수-->
+                                <Label Text="{Binding Converter={StaticResource Key=commentconverter}, Path=Comments.Count, Mode=OneWay}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"
                            FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
                             </StackLayout>
                             <StackLayout BindableLayout.ItemsSource="{Binding Menus}">
@@ -58,8 +67,9 @@
                                 </BindableLayout.ItemTemplate>
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <doit:ButtonWithTag Tag="{Binding Path=Code}" Text="자세히 보기" Clicked="PostButton_Clicked" TextColor="White" BackgroundColor="#B0C4DE" CornerRadius="15" 
-                                                    WidthRequest="100" HeightRequest="40" HorizontalOptions="EndAndExpand" Margin="0,0,10,15" BorderColor="#A5A3B7" BorderWidth="2" FontAttributes="Bold" />
+                                    <doit:ButtonWithTag Tag="{Binding Path=Code}" Text="자세히 보기" Clicked="PostButton_Clicked" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
+                                                    WidthRequest="100" HeightRequest="40" HorizontalOptions="EndAndExpand" Margin="0,15,10,15" BorderColor="#B0C4DE" BorderWidth="2" FontAttributes="Bold" />
+                                        <!--TextColor="White" BackgroundColor="#B0C4DE" BorderColor="#A5A3B7"-->
                             </StackLayout>
                         </StackLayout>
             </Frame>
