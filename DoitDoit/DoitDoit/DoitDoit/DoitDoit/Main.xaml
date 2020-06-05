@@ -68,8 +68,8 @@
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
                                     <doit:ButtonWithTag Tag="{Binding Path=Code}" Text="자세히 보기" Clicked="PostButton_Clicked" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
-                                                    WidthRequest="100" HeightRequest="40" HorizontalOptions="EndAndExpand" Margin="0,15,10,15" BorderColor="#B0C4DE" BorderWidth="2" FontAttributes="Bold" />
-                                        <!--TextColor="White" BackgroundColor="#B0C4DE" BorderColor="#A5A3B7"-->
+                                                    HorizontalOptions="EndAndExpand" Margin="0,15,10,15" BorderColor="#B0C4DE" BorderWidth="1" FontAttributes="Bold" />
+                                    <!--WidthRequest="100" HeightRequest="40" TextColor="White" BackgroundColor="#B0C4DE" BorderColor="#A5A3B7"-->
                             </StackLayout>
                         </StackLayout>
             </Frame>
