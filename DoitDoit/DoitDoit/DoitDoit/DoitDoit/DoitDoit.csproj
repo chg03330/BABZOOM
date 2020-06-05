@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="imageAdd.png" />
     <None Remove="ImageRefresh.png" />
   </ItemGroup>
 
@@ -46,6 +47,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="imageRefresh.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="imageAdd.png"/>
   </ItemGroup>
 
   <ItemGroup>

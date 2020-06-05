@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
+    
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
             <DatePicker x:Name="CalenderDayTime" Date="{Binding dateTime, Mode=OneWay}"
@@ -25,17 +25,20 @@
                             DateSelected="CalenderDayTime_DateSelected"
                             FontSize="27" FontAttributes="Bold" HorizontalOptions="Center"/>
             <StackLayout Orientation="Horizontal">
-                <Button Text="공유" TextColor="Black" BackgroundColor="#DCE3EF" FontAttributes="Bold"
-                        Margin="30,20,0,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
-                        BorderColor="#9AB4D4" BorderWidth="3"
+                <Button Text="공유" TextColor="Black" BackgroundColor="White" FontAttributes="Bold"
+                        Margin="30,20,0,0" CornerRadius="25" WidthRequest="60" HeightRequest="50" 
+                        BorderColor="#EFF5FB" BorderWidth="3"
                         Clicked="ShareButton_Clicked"/>
-                <Button Text="+" TextColor="White" FontSize="20" BackgroundColor="#DCE3EF" FontAttributes="Bold"
+                <!--BackgroundColor="#DCE3EF" BorderColor="#9AB4D4-->
+                <ImageButton Source="imageAdd.png" Aspect="AspectFit" HorizontalOptions="EndAndExpand" BackgroundColor="White" Clicked="addUserMenu_Clicked" Margin="0,35,20,0"/>
+            <!--<Button Text="+" TextColor="White" FontSize="20" BackgroundColor="#DCE3EF" FontAttributes="Bold"
                         Margin="0,20,30,0" CornerRadius="50" WidthRequest="40" HeightRequest="50"  HorizontalOptions="EndAndExpand" 
                         BorderColor="#9AB4D4" BorderWidth="3"
-                        Clicked="addUserMenu_Clicked"/>
+                        Clicked="addUserMenu_Clicked"/>-->
             </StackLayout>
             <Label Text="" BackgroundColor="#708098" HeightRequest="3" Margin="0,5,0,0" />
-
+        <ScrollView>
+            <StackLayout>
             <!-- 신 : 식단 Stack Layout -->
             <StackLayout x:Name="liststack">
                 <BindableLayout.ItemTemplate>
@@ -73,36 +76,36 @@
 
             <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
 
-            <StackLayout x:Name="nutSL" BackgroundColor="#EAECF4" Margin="20,10,80,10" Orientation="Vertical">
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                    <Label x:Name="laCal" TextColor="Black" Margin="10,10,0,0" HorizontalOptions="Start"  FontAttributes="Bold"/>
-                </StackLayout>
-                <forms:ChartView x:Name="Chart1" HeightRequest="150" VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="탄수화물" TextColor="Black" Margin="10,10,0,0" FontAttributes="Bold" />
-                    <Label x:Name="laTan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="지방" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                    <Label x:Name="laJi" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="단백질" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                    <Label x:Name="laDan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
-                </StackLayout>
+                <StackLayout x:Name="nutSL" BackgroundColor="#EAECF4" Margin="20,10,80,10" Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                        <Label x:Name="laCal" TextColor="Black" Margin="10,10,0,0" HorizontalOptions="Start"  FontAttributes="Bold"/>
+                    </StackLayout>
+                    <forms:ChartView x:Name="Chart1" HeightRequest="150" VerticalOptions="Center"/>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="탄수화물" TextColor="Black" Margin="10,10,0,0" FontAttributes="Bold" />
+                        <Label x:Name="laTan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="지방" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                        <Label x:Name="laJi" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="단백질" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                        <Label x:Name="laDan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+                    </StackLayout>
 
 
-                <StackLayout Orientation="Horizontal">
-                    <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="10" FontAttributes="Bold"
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="10" FontAttributes="Bold"
                         WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand"
                             Clicked="NutButton_Clicked"/>
+                    </StackLayout>
                 </StackLayout>
+                
             </StackLayout>
+        </ScrollView>
 
-            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-
-        </StackLayout>
-    </ScrollView>
+    </StackLayout>
 
 </ContentPage>
