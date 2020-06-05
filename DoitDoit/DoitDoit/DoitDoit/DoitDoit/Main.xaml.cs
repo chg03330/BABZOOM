@@ -15,6 +15,7 @@ using SkiaSharp;
 using SkiaSharp.Views;
 using System.ComponentModel;
 using DoitDoit.ExMethod;
+using System.Collections.Specialized;
 
 namespace DoitDoit
 {
@@ -202,12 +203,23 @@ namespace DoitDoit
 
         private void PostsChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName is "Posts") {
-                var list = (from post in UserModel.GetInstance.Posts
-                         orderby post.Date descending
-                         select post).Take(4);
-
-                BindableLayout.SetItemsSource(this.PostList, list);
+                this.RefreshPosts();
+                UserModel.GetInstance.Posts.CollectionChanged += this.PostsItemChanged;
             }
+        }
+
+        private void PostsItemChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            this.RefreshPosts();
+        }
+
+        private void RefreshPosts() {
+            var list = (from post in UserModel.GetInstance.Posts
+                        orderby post.Date descending
+                        select post).Take(4);
+
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                BindableLayout.SetItemsSource(this.PostList, list);
+            });
         }
         #endregion
 

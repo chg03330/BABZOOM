@@ -64,6 +64,7 @@ namespace DoitDoit
             this.PostContextLabel.IsVisible = !this.ModifyMode;
             this.PostContextEditor.IsVisible = this.ModifyMode;
             this.BtnComment.IsVisible = !this.ModifyMode;
+            this.BtnDelete.IsVisible = !this.ModifyMode;
             #endregion
 
             updateChart();
@@ -120,6 +121,8 @@ namespace DoitDoit
                 if (packet.Result) {
                     this.PostData.Code = packet.Context;
                     Models.UserModel.GetInstance.Posts.Add(this.PostData);
+
+                    Models.UserModel.GetInstance.SortPosts();
                 }
 
                 this.OnBackButtonPressed();
@@ -142,6 +145,20 @@ namespace DoitDoit
         private void NutButton_Clicked(object sender, EventArgs e) {
 
         }
+
+        private async void Delete_Clicked(object sender, EventArgs e) {
+            bool result = await this.DisplayAlert("안내", "게시글을 삭제할까요?", "OK", "cancel");
+
+            if (result) {
+                FirebaseServer.Server.DeletePostData(this.PostData.Code);
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                    Models.UserModel.GetInstance.Posts.Remove(this.PostData);
+                });
+                this.OnBackButtonPressed();
+            }
+        }
+
+
 
         private void updateChart() {
             List<Microcharts.Entry> entries = new List<Microcharts.Entry>();

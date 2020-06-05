@@ -35,19 +35,22 @@ namespace DoitDoit {
 
             Network.FirebaseServer server = Network.FirebaseServer.Server;
 
-            string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+            //string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
 
+            Models.Post[] posts = await server.GetPostData();
+
+            // UI 스레드에서 실행
             Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                Models.Post[] posts =
-                Newtonsoft.Json.JsonConvert.DeserializeObject<Models.Post[]>(result);
-
                 var ps = (from p in posts
                           where !UserModel.GetInstance.Posts.Any(post => post.Code == p.Code)
                           select p);
 
-                foreach (Models.Post p in ps) UserModel.GetInstance.Posts.Add(p);
+                foreach (Models.Post p in ps) {
+                    UserModel.GetInstance.Posts.Add(p);
+                }
 
                 UserModel.GetInstance.SortPosts();
+
                 button.IsEnabled = true;
             });
         }
