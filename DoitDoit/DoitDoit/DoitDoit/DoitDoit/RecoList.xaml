@@ -20,7 +20,9 @@
                 <Label Text="" BackgroundColor="#708098" HeightRequest="10" Margin="0,0,0,0" />
                 <Label Text="공유 식단 ʕ•ᴥ•ʔ" TextColor="Black" FontSize="23" FontAttributes="Bold"
                        Margin="0,10,0,0" HorizontalTextAlignment="Center" />
-                <Button Text="새로고침" Clicked="RefreshButton_Clicked" Margin="0,0,0,10"/>
+                <!--<Button Text="새로고침" Clicked="RefreshButton_Clicked" Margin="0,0,0,10"/>-->
+                <ImageButton Source="imageRefresh.png" Clicked="RefreshButton_Clicked" Aspect="AspectFill" Margin="0,0,15,0"
+                             HorizontalOptions="EndAndExpand" BackgroundColor="White"/>
                 <StackLayout x:Name="PostList" BindableLayout.ItemsSource="{Binding Source={x:Static local:UserModel.GetInstance}, Path=Posts}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>

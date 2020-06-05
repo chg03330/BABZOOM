@@ -99,7 +99,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\imageRefresh.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DoitDoit\DoitDoit.csproj">
       <Project>{977D3AAF-AAB1-4397-B9DE-137797699247}</Project>

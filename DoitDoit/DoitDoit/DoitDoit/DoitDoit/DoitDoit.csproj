@@ -21,6 +21,10 @@
     <EmbeddedResource Remove="Post.xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ImageRefresh.png" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microcharts.Forms" Version="0.7.1" />
@@ -38,6 +42,10 @@
     <Reference Include="Mono.Android">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="imageRefresh.png" />
   </ItemGroup>
 
   <ItemGroup>
