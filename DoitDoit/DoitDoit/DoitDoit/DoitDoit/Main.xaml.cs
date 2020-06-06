@@ -161,7 +161,7 @@ namespace DoitDoit
         /// <param name="e"></param>
         private void SideMenu_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new SideMenu());
+            //Navigation.PushModalAsync(new SideMenu());
         }
 
         /// <summary>
