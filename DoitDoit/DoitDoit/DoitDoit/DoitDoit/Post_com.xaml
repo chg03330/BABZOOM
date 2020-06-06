@@ -26,7 +26,7 @@
                     FontAttributes="Bold"
                     Clicked="Button_Clicked"/>
             <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
-            <StackLayout x:Name="CommentStackLayout">
+            <StackLayout x:Name="CommentStackLayout" ChildAdded="CommentStackLayout_ChildAdded">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="#e4eodd" Padding="2" Margin="15,20,15,0">
@@ -36,7 +36,7 @@
                                     <Label Text="글쓴이" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Start"/>
                                     <Label Text="{Binding ID}" TextColor="Black" FontAttributes="Bold" FontSize="15" />
                                     <!--댓글 삭제버튼 : NAME값은 자신의아이디와 같을때만 나오게-->
-                                    <ImageButton x:Name="DelBtn" IsVisible="False" Source="imageClear.png" Clicked="DelPost_Clicked" BackgroundColor="White" WidthRequest="25" HeightRequest="25" HorizontalOptions="EndAndExpand" Margin="0,0,5,0"/>
+                                        <ImageButton x:Name="DelPost" IsVisible="False" Source="imageClear.png" Clicked="DelPost_Clicked" BackgroundColor="White" WidthRequest="25" HeightRequest="25" HorizontalOptions="EndAndExpand" Margin="0,0,5,0"/>
                                     <!--<Button x:Name="DelPost" Clicked="DelPost_Clicked"  Text="X" TextColor="Black" FontSize="10" FontAttributes="Bold" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="100" WidthRequest="30" HeightRequest="30" HorizontalOptions="EndAndExpand"/>-->
                                 </StackLayout>
                                 <BoxView BackgroundColor="#e4eodd" HeightRequest="1"/>

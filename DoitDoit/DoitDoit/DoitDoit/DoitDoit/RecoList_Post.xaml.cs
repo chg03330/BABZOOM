@@ -64,6 +64,7 @@ namespace DoitDoit
             this.PostContextLabel.IsVisible = !this.ModifyMode;
             this.PostContextEditor.IsVisible = this.ModifyMode;
             this.BtnComment.IsVisible = !this.ModifyMode;
+            this.BtnDelete.IsVisible = !this.ModifyMode;
             #endregion
 
             updateChart();
@@ -77,12 +78,15 @@ namespace DoitDoit
 
             string day = "";
             if (this.PostData.Menus.Count > 0) {
-                string date = this.PostData.Menus.First().Code;
-                string year = date.Substring(0, 4);
-                string month = date.Substring(4, 2);
-                string tday = date.Substring(6, 2);
+                try {
+                    string date = this.PostData.Menus.First().Code;
+                    string year = date.Substring(0, 4);
+                    string month = date.Substring(4, 2);
+                    string tday = date.Substring(6, 2);
 
-                day = $"{year}년 {month}월 {tday}일 ";
+                    day = $"{year}년 {month}월 {tday}일 ";
+                }
+                catch (Exception) { }
             }
             string context = $"{this.PostData.UserID}님의 {day}식단";
 
@@ -120,6 +124,8 @@ namespace DoitDoit
                 if (packet.Result) {
                     this.PostData.Code = packet.Context;
                     Models.UserModel.GetInstance.Posts.Add(this.PostData);
+
+                    Models.UserModel.GetInstance.SortPosts();
                 }
 
                 this.OnBackButtonPressed();
@@ -142,6 +148,20 @@ namespace DoitDoit
         private void NutButton_Clicked(object sender, EventArgs e) {
 
         }
+
+        private async void Delete_Clicked(object sender, EventArgs e) {
+            bool result = await this.DisplayAlert("안내", "게시글을 삭제할까요?", "OK", "cancel");
+
+            if (result) {
+                FirebaseServer.Server.DeletePostData(this.PostData.Code);
+                Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                    Models.UserModel.GetInstance.Posts.Remove(this.PostData);
+                });
+                this.OnBackButtonPressed();
+            }
+        }
+
+
 
         private void updateChart() {
             List<Microcharts.Entry> entries = new List<Microcharts.Entry>();

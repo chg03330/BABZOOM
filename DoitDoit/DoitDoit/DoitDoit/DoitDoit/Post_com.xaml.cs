@@ -93,9 +93,32 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DelPost_Clicked(object sender, EventArgs e)
-        {
-            
+        private async void DelPost_Clicked(object sender, EventArgs e) {
+            if (sender is Button btn) {
+                if (btn.BindingContext is Models.Comment comment) {
+                    bool result = await DisplayAlert("안내", "댓글을 삭제하시겠습니까?", "OK", "Cancel");
+
+                    if (result) {
+                        bool qresult = await Network.FirebaseServer.Server.DeleteCommentData(comment.Code, this.PostData.Code);
+
+                        if (qresult) {
+                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                                this.PostData.Comments.Remove(comment);
+                            });
+                        }
+                    }
+                }
+            }
+        } //
+
+        private void CommentStackLayout_ChildAdded(object sender, ElementEventArgs e) {
+            Button btn = e.Element.FindByName<Button>("DelPost");
+
+            if (btn is null) return;
+
+            if (btn.BindingContext is DoitDoit.Models.Comment comment) {
+                btn.IsVisible = (Models.UserModel.GetInstance.Id == comment.ID);
+            }
         }
     }
 }

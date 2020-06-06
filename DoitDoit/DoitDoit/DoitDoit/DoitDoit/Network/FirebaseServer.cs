@@ -368,5 +368,44 @@ namespace DoitDoit.Network {
 
             return posts;
         }
+
+        public async Task<DoitDoit.Models.Post> IsPostExist(string userid, string mdate) {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic["UserID"] = userid;
+            dic["MDate"] = mdate;
+
+            Packet packet = new Packet() {
+                Command = "IsPostExist",
+                Context = JsonConvert.SerializeObject(dic)
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return JsonConvert.DeserializeObject<DoitDoit.Models.Post>(recvpacket.Context);
+        }
+
+        public async Task DeletePostData(string postcode) {
+            Packet packet = new Packet() {
+                Command = "DeletePostData",
+                Context = postcode
+            };
+
+            this.SendPacketData(packet, true);
+        }
+
+        public async Task<bool> DeleteCommentData(string comcode, string postcode) {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param["Post"] = postcode;
+            param["Code"] = comcode;
+
+            Packet packet = new Packet() {
+                Command = "DeleteCommentData",
+                Context = JsonConvert.SerializeObject(param)
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
     } // END OF FirebaseServer
 }
