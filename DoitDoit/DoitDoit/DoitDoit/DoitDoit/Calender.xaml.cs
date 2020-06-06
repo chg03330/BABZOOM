@@ -19,15 +19,17 @@ namespace DoitDoit
     public partial class Calender : ContentPage
     {
         public EventCollection Events { get; set; }
+        UserModel usermodel;
+        DateTime now;
 
         public Calender()
         {
             InitializeComponent();
-
+            now = DateTime.Now;
         }
 
         private void ContentPage_Appearing(object sender, EventArgs e) {
-            UserModel usermodel = UserModel.GetInstance;
+             usermodel = UserModel.GetInstance;
 
             this.UserCalender.Events = new EventCollection() {};
 
@@ -49,27 +51,33 @@ namespace DoitDoit
                 this.UserCalender.Events.Add(group.Key, group.ToList());
             }
 
-
-            ////////////////////////////////////
-            /// 현재 달을 가져와서 그 달에 포함된 식단 그룹화
-            /// 그 식단 그룹 내에 있는 모든 음식의 에너지 합
-            ///////////////////////////////////////
-            DateTime now = DateTime.Now;
-
-            var thismonthmenus = usermodel.GetMenuGroup(now, 1);
-            var mkcal = thismonthmenus.GetMenusSum("N00001");
-            this.MKcal.Text = mkcal.ToString();
-
-            //////////////////////////////////////
-            ///
-            //////////////////////////////////////
-            var thisdaymenus = usermodel.GetMenuGroup(now, 0);
-            var dkcal = thisdaymenus.GetMenusSum("N00001");
-            this.DKcal.Text = dkcal.ToString();
+            SetMKcal(now);
+            SetDKcal(now);
         }
 
         private void AddButton_Clicked(object sender, EventArgs e) {
 
+        }
+
+        /// <summary>
+        /// 현재 달을 가져와서 그 달에 포함된 식단 그룹화
+        /// 그 식단 그룹 내에 있는 모든 음식의 에너지 합
+        /// </summary>
+        /// <param name="now"></param>
+        private void SetMKcal(DateTime now) { 
+            var thismonthmenus = usermodel.GetMenuGroup(now, 1);
+            var mkcal = thismonthmenus.GetMenusSum("N00001");
+            this.MKcal.Text = mkcal.ToString();
+        }
+        /// <summary>
+        ///날짜에 대한 식단을 가져와 에너지합을 구함
+        /// </summary>
+        /// <param name="now"></param>
+        private void SetDKcal(DateTime now)
+        {
+            var thisdaymenus = usermodel.GetMenuGroup(now, 0);
+            var dkcal = thisdaymenus.GetMenusSum("N00001");
+            this.DKcal.Text = dkcal.ToString();
         }
 
         /// <summary>
@@ -87,11 +95,14 @@ namespace DoitDoit
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
                     UserCalenderDay dayform = new UserCalenderDay();
                     dayform.dateTime = cal.SelectedDate;
+                    now = cal.SelectedDate;
                     Navigation.PushModalAsync(dayform);
                 });
             }
             else if (e.PropertyName is "Month") {
-
+                //DisplayAlert("a", cal.Month.ToString(), "Close");
+                //DisplayAlert("b", cal.MonthYear.ToString(), "Close"); //캘린더의 설정된 year,month값을 가져옴.
+                SetMKcal(cal.MonthYear);
             }
         }
     } // END OF Calender CLASS

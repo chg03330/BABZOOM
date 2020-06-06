@@ -181,38 +181,10 @@ namespace DoitDoit
         }
         #endregion
 
-        /*
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            ButtonWithTag button = sender as ButtonWithTag;
-            Food a = button.BindingContext as Food;
-            FoodData foodData = a.Data;
-            FoodViewModel menu = button.Tag as FoodViewModel;
 
-            DisplayAlert("확인용", "값:" + menu.Code, foodData.식품코드) ;
-        }
-        */
         private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             this.dateTime = e.NewDate;
-            /*
-            var fvm = usermodel.FoodViewModels.Where(model => {
-                return model.Code.Contains(e.NewDate.ToString("yyyyMMdd"));
-            });
-
-            list.Clear();
-            if (fvm.Count() == 0) {
-                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.2", "확인");
-                nutSL.IsVisible = false;
-            }
-            else {
-                foreach (FoodViewModel f in fvm) {
-                    //f.Code = f.Code.Substring(0, 8);
-                    list.Add(f);
-                }
-                nutSL.IsVisible = true;
-            }
-            */
             this.ContentPage_Appearing(sender,(EventArgs)e);
         }
 
