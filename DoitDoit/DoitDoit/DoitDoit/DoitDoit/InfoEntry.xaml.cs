@@ -17,11 +17,21 @@ namespace DoitDoit
 	public partial class InfoEntry : ContentPage
 	{
 		private readonly UserModel usermodel;
+		public Layout.MasterDetailLayout MasterDetail { get; set; } = null;
+
 		public bool Mode { get; set; } = false;
 
-		public InfoEntry()
+		public InfoEntry(Layout.MasterDetailLayout md)
 		{
 			InitializeComponent ();
+			usermodel = UserModel.GetInstance;
+			/// 회원가입 화면에서 왔을 경우 Cancel 버튼 비활성화
+			this.CanelButton.IsVisible = !this.Mode;
+			this.MasterDetail = md;
+		}
+
+		public InfoEntry() {
+			InitializeComponent();
 			usermodel = UserModel.GetInstance;
 			/// 회원가입 화면에서 왔을 경우 Cancel 버튼 비활성화
 			this.CanelButton.IsVisible = !this.Mode;
@@ -32,9 +42,9 @@ namespace DoitDoit
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-        private async void OK_Clicked(object sender, EventArgs e)
+		private async void OK_Clicked(object sender, EventArgs e)
         {
-            bool accept = await DisplayAlert("결과", "ㅇㅋ", "OK", "Cancel");
+            bool accept = await DisplayAlert("안내", "정보를 수정할까요?", "OK", "Cancel");
 
 			if (accept) {
 				#region SET USERMODEL & POST DATA
@@ -60,10 +70,15 @@ namespace DoitDoit
 				/// 회원가입에서 왔을 경우 -> Main 화면
 				/// 사이드 메뉴에서 왔을 경우 -> Back
 				if (this.Mode) {
-					await Navigation.PushModalAsync(new Main());
+					await Navigation.PushModalAsync(new Layout.MasterDetailLayout(new Main()));
 				}
 				else {
-					this.OnBackButtonPressed();
+					if (this.MasterDetail is null) {
+						this.OnBackButtonPressed();
+					}
+					else {
+						this.MasterDetail.ToMain();
+					}
 				}
 			}
 		}
@@ -82,7 +97,12 @@ namespace DoitDoit
 
 		private void Cancel_Clicked(object sender, EventArgs e)
 		{
-			this.OnBackButtonPressed();
+			if (this.MasterDetail is null) {
+				this.OnBackButtonPressed();
+			}
+			else {
+				this.MasterDetail.ToMain();
+			}
 		}
 	}
 }
