@@ -231,9 +231,23 @@ namespace DoitDoit
             Navigation.PushModalAsync(nut);
         }
 
-        private void DelBtn_Clicked(object sender, EventArgs e)
-        {
+        private async void DelBtn_Clicked(object sender, EventArgs e) {
+            if (sender is ImageButton btn) {
+                if (btn.BindingContext is Models.FoodViewModel menu) {
+                    bool result = await this.DisplayAlert("안내", "식단을 삭제할까요?", "OK", "Cancel");
 
+                    if (result) {
+                        result = await Network.FirebaseServer.Server.DeleteMenuData(menu.Code);
+
+                        if (result) {
+                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                                this.list?.Remove(menu);
+                                usermodel.FoodViewModels?.Remove(menu);
+                            });
+                        }
+                    }
+                }
+            }
         }
     } // END OF UserCalenderDay CLASS
 
