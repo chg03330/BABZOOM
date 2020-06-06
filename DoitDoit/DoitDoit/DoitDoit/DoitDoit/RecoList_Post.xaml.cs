@@ -145,8 +145,18 @@ namespace DoitDoit
             Navigation.PushModalAsync(comment);
         } // END OF CommentButton_Clicked EVENT LISTENER
 
+        /// <summary>
+        /// 공유식단 내 영양소 상세버튼 클릭
+        /// </summary>
+        /// <param name="sender">상세버튼</param>
+        /// <param name="e">클릭</param>
         private void NutButton_Clicked(object sender, EventArgs e) {
-
+            UserCalenderDay_Nut nut = new UserCalenderDay_Nut();
+            if (!(this.postdata is null))
+            {
+                nut.Menus = this.PostData.Menus.ToArray();
+            }
+            Navigation.PushModalAsync(nut);
         }
 
         private async void Delete_Clicked(object sender, EventArgs e) {
