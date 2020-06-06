@@ -112,7 +112,7 @@ namespace DoitDoit
         } //
 
         private void CommentStackLayout_ChildAdded(object sender, ElementEventArgs e) {
-            Button btn = e.Element.FindByName<Button>("DelPost");
+            ImageButton btn = e.Element.FindByName<ImageButton>("DelPost");
 
             if (btn is null) return;
 

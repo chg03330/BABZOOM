@@ -27,8 +27,6 @@ namespace DoitDoit
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void Login_Clicked(object sender, EventArgs e) {
-            Button a = sender as Button;
-            a.IsEnabled = false;
             String id = this.Entry_ID.Text;
             String pw = this.PASSWORD.Text;
 
@@ -36,6 +34,7 @@ namespace DoitDoit
 
             UserModel model = UserModel.GetInstance;
 
+            this.LoginBtn.IsEnabled = this.SignUpBtn.IsEnabled = false;
             bool result = await server.SignIn(id, pw);
 
             if (result) {
@@ -44,23 +43,15 @@ namespace DoitDoit
 
                 await server.GetMenuData();
 
-                //string result1 = await server.FirebaseRequest("GetMenuData", req);
-
-                //ObservableCollection<FoodViewModel> list = new ObservableCollection<FoodViewModel>();
-
-                //list = Newtonsoft.Json.JsonConvert.DeserializeObject<ObservableCollection<FoodViewModel>>(result1);
-
-                //model.FoodViewModels = list;
-
-                //OnBackButtonPressed();
-                await Navigation.PushModalAsync(new Main());
+                
+                await Navigation.PushModalAsync(new Layout.MasterDetailLayout(new Main()));
             }
             else
             {
                 await DisplayAlert("안내", "아이디 또는 비밀번호를 다시 확인해주세요.", "Cancel") ;
-                a.IsEnabled = true;
             }
-                
+
+            this.LoginBtn.IsEnabled = this.SignUpBtn.IsEnabled = true;
         }
 
         private void SignUp_Clicked(object sender, EventArgs e)

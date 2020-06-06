@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="DoitDoit.SideMenu"
-             BackgroundColor="White">
+             BackgroundColor="Transparent">
     <ContentPage.Content>
         <StackLayout>
             <Button Text="메인" Clicked="Main_Clicked" BackgroundColor="#afc5db"/>

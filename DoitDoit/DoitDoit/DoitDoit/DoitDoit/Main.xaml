@@ -7,7 +7,8 @@
              xmlns:template="clr-namespace:DoitDoit.Layout"
              x:Class="DoitDoit.Main"
              BackgroundColor="White"
-             Appearing="ContentPage_Appearing">
+             Appearing="ContentPage_Appearing"
+             Title="Detail">
 
     <ContentPage.Resources>
         <ResourceDictionary>
