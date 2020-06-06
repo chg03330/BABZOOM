@@ -103,6 +103,10 @@
                             TextColor="Black" BackgroundColor="#DCE3EF" 
                         Margin="30,0,0,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
                         BorderColor="#9AB4D4" BorderWidth="3" HorizontalOptions="StartAndExpand"/>
+                    <Button x:Name="BtnDelete" Text="삭제" Clicked="Delete_Clicked"
+                            TextColor="Black" BackgroundColor="#DCE3EF" 
+                        Margin="30,0,0,0" CornerRadius="18" WidthRequest="60" HeightRequest="50" 
+                        BorderColor="#9AB4D4" BorderWidth="3" HorizontalOptions="StartAndExpand"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

@@ -56,19 +56,51 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ShareButton_Clicked(object sender, EventArgs e) {
+        private async void ShareButton_Clicked(object sender, EventArgs e) {
+            if (this.list.Count is 0) {
+                DisplayAlert("안내", "식단을 입력해 주세요", "Cancel");
+
+                return;
+            }
+
             RecoList_Post post = new RecoList_Post();
 
-            Models.Post postdata = new Models.Post();
+            FoodViewModel menu = this.list.FirstOrDefault();
 
-            foreach (FoodViewModel menu in this.list) {
-                postdata.Menus.Add(menu);
+            var posts = (from p in UserModel.GetInstance.Posts
+                           where p.Menus.Where(m => m.Code == menu.Code).Any()
+                           select p);
+
+            Models.Post postdata;
+
+            if (posts.Any()) {
+                postdata = posts.FirstOrDefault();
+                post.ModifyMode = false;
+            }
+            else {
+                Post npost =
+                    await Network.FirebaseServer.Server.IsPostExist(UserModel.GetInstance.Id, menu.Code);
+
+                if (npost is null) {
+                    postdata = new Models.Post();
+
+                    foreach (FoodViewModel m in this.list) {
+                        postdata.Menus.Add(m);
+                    }
+
+                    post.ModifyMode = true;
+                }
+                else {
+                    postdata = npost;
+
+                    post.ModifyMode = false;
+                }
             }
 
             post.PostData = postdata;
-            post.ModifyMode = true;
             post.PostData.UserID = Models.UserModel.GetInstance.Id;
-            Navigation.PushModalAsync(post);
+
+            await Navigation.PushModalAsync(post);
         }
 
         private void addUserMenu_Clicked(object sender, EventArgs e)
