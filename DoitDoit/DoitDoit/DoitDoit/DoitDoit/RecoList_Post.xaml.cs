@@ -64,7 +64,7 @@ namespace DoitDoit
             this.PostContextLabel.IsVisible = !this.ModifyMode;
             this.PostContextEditor.IsVisible = this.ModifyMode;
             this.BtnComment.IsVisible = !this.ModifyMode;
-            this.BtnDelete.IsVisible = !this.ModifyMode;
+            this.BtnDelete.IsVisible = (!this.ModifyMode && (usermodel.Id == this.PostData.UserID));
             #endregion
 
             updateChart();

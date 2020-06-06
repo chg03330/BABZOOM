@@ -4,6 +4,7 @@
              xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              xmlns:doit="clr-namespace:DoitDoit"
              xmlns:converter="clr-namespace:DoitDoit.Converter"
+             xmlns:template="clr-namespace:DoitDoit.Layout"
              x:Class="DoitDoit.Main"
              BackgroundColor="White"
              Appearing="ContentPage_Appearing">

@@ -50,10 +50,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="imageAdd.png"/>
+    <EmbeddedResource Include="imageAdd.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Layout\NutChartTemplate.xaml.cs">
+      <DependentUpon>NutChartTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Update="SearchFood.xaml.cs">
       <DependentUpon>SearchFood.xaml</DependentUpon>
     </Compile>
@@ -64,6 +67,12 @@
 
   <ItemGroup>
     <EmbeddedResource Update="AddUserMenu.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Layout\NutChartTemplate.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Layout\RecoItemTemplate.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="RecoList.xaml">
