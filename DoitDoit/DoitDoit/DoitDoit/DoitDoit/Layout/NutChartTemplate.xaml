@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:DoitDoit.Models"
+    xmlns:doitdoit="clr-namespace:DoitDoit"
+    xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+    xmlns:converter="clr-namespace:DoitDoit.Converter"
+    
+    x:Class="DoitDoit.Layout.NutChartTemplate"
+    
+    mc:Ignorable="d"
+    
+    Padding="2" BorderColor="#EAECF4" CornerRadius="10" HasShadow="True" Margin="15,0,15,20">
+    <StackLayout x:Name="nutSL" BackgroundColor="White" Orientation="Vertical">
+        <!--BackgroundColor="#EAECF4"  Margin="20,10,80,10"-->
+        <StackLayout Orientation="Horizontal">
+            <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+            <Label x:Name="laCal" TextColor="Black" Margin="10,10,0,0" HorizontalOptions="Start"  FontAttributes="Bold"/>
+        </StackLayout>
+        <forms:ChartView x:Name="Chart1" HeightRequest="150" VerticalOptions="Center"/>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="탄수화물" TextColor="Black" Margin="10,10,0,0" FontAttributes="Bold" />
+            <Label x:Name="laTan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="지방" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+            <Label x:Name="laJi" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="단백질" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+            <Label x:Name="laDan" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
+        </StackLayout>
+
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
+                                    HorizontalOptions="EndAndExpand" Margin="0,15,10,15" 
+                                    BorderColor="#EAECF4" BorderWidth="1" FontAttributes="Bold"
+                            Clicked="NutButton_Clicked"/>
+            <!--WidthRequest="60" HeightRequest="40" BorderColor="#B0C4DE"-->
+        </StackLayout>
+    </StackLayout>
+</Frame>
