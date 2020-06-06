@@ -81,7 +81,7 @@ namespace DoitDoit
 
             nC.nutChart = new DonutChart() {
                 Entries = new List<Entry>() {
-                    new Entry(getHopIntake(a)-(float)nC.nutQ) { Label = "일일권장량", Color = SkiaSharp.SKColor.Parse("#F2F2F2") },
+                    new Entry(getHopIntake(a)-(float)nC.nutQ) { Label = "권장량", Color = SkiaSharp.SKColor.Parse("#feeeed") }, //Color = SkiaSharp.SKColor.Parse("#F2F2F2")
                     nC.entry
                 },
                 LabelTextSize = 35f,

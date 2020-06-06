@@ -15,17 +15,18 @@
             <ScrollView >
                 <microcharts:ChartView x:Name="CharView" HeightRequest="150" VerticalOptions="Center"/>
             </ScrollView>
-            <StackLayout x:Name="nutSL" BackgroundColor="#DCE3EF" Orientation="Vertical">
+            <StackLayout x:Name="nutSL" BackgroundColor="White" Orientation="Vertical">
+                <!--BackgroundColor="#DCE3EF"-->
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Orientation="Horizontal">
+                        <StackLayout Orientation="Vertical" Margin="5,0,5,5">
                             <StackLayout Orientation="Horizontal">
                                 <Label Text="{Binding nutName}" TextColor="Black" FontSize="15" Margin="10,10,0,0" FontAttributes="Bold" />
                                 <Label Text="{Binding nutQ}" TextColor="Black" FontSize="13" Margin="10,10,0,0" FontAttributes="Bold" />
                                 <Label Text="{Binding nutUnit}" TextColor="Black" FontSize="13" Margin="0,10,0,0" FontAttributes="Bold" />
                             </StackLayout>
-                            <StackLayout HorizontalOptions="EndAndExpand">
-                                <microcharts:ChartView Chart="{Binding nutChart}" WidthRequest="250" HeightRequest="100" />
+                            <StackLayout HorizontalOptions="Center">
+                                <microcharts:ChartView Chart="{Binding nutChart}" WidthRequest="280" HeightRequest="100" />
                             </StackLayout>
                         </StackLayout>
                         

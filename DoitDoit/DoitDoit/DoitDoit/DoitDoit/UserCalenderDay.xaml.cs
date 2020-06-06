@@ -87,7 +87,7 @@ namespace DoitDoit
             list.Clear();
             if (fvm.Count() == 0)
             {
-                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.1", "확인"); 
+                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인"); 
                 nutSL.IsVisible = false;
             }
             else
@@ -197,6 +197,11 @@ namespace DoitDoit
                 nut.Menus = this.list.ToArray();
             }
             Navigation.PushModalAsync(nut);
+        }
+
+        private void DelBtn_Clicked(object sender, EventArgs e)
+        {
+
         }
     } // END OF UserCalenderDay CLASS
 

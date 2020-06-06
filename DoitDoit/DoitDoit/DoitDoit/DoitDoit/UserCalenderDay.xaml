@@ -54,15 +54,17 @@
             </StackLayout>
             <Label Text="" BackgroundColor="#708098" HeightRequest="3" Margin="0,5,0,20" />
         <ScrollView>
-            <StackLayout>
+            <StackLayout x:Name="nutSL">
             <!-- 신 : 식단 Stack Layout -->
-            <StackLayout x:Name="liststack">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+                <StackLayout x:Name="liststack">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
                             <Frame Padding="2" BorderColor="#dbelfo" HasShadow="True" CornerRadius="10" Margin="15,0,15,20">
                                 <StackLayout Orientation="Vertical">
-                                    <StackLayout BackgroundColor="#FFFFFF">
-                                        <Label Text="{Binding Path=Code, Converter={StaticResource postmenutimeconverter}}" BackgroundColor="White" FontAttributes="Bold" TextColor="Black" FontSize="16" Margin="0,0,20,0" HorizontalOptions="EndAndExpand"/>
+                                    <StackLayout BackgroundColor="#FFFFFF" Orientation="Horizontal">
+                                        <Label Text="{Binding Path=Code, Converter={StaticResource postmenutimeconverter}}" BackgroundColor="White" FontAttributes="Bold" TextColor="Black" FontSize="16" Margin="15,0,0,0" HorizontalOptions="Start"/>
+                                        <!-- 식단 삭제 버튼-->
+                                        <ImageButton Source="imageClear.png" Clicked="DelBtn_Clicked"  BackgroundColor="White" WidthRequest="25" HeightRequest="25" HorizontalOptions="EndAndExpand" Margin="0,0,5,0"/>
                                     </StackLayout>
                                     <BoxView BackgroundColor="#dbelfo" HeightRequest="1" HorizontalOptions="FillAndExpand" Margin="0,0,0,5"/>
                                     <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
@@ -88,14 +90,14 @@
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
 
 
-            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
+                <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
 
                 <Frame Padding="2" BorderColor="#EAECF4" CornerRadius="10" HasShadow="True" Margin="15,0,15,20">
-                    <StackLayout x:Name="nutSL" BackgroundColor="White" Orientation="Vertical">
+                    <StackLayout BackgroundColor="White" Orientation="Vertical">
                         <!--BackgroundColor="#EAECF4"  Margin="20,10,80,10"-->
                         <StackLayout Orientation="Horizontal">
                             <Label Text="칼로리" TextColor="Black" Margin="10,10,0,0"  FontAttributes="Bold" />
@@ -119,9 +121,9 @@
                         <StackLayout Orientation="Horizontal">
                             <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
                                     HorizontalOptions="EndAndExpand" Margin="0,15,10,15" 
-                                    BorderColor="#EAECF4" BorderWidth="1" FontAttributes="Bold"
+                                    BorderColor="#B0C4DE" BorderWidth="1" FontAttributes="Bold"
                             Clicked="NutButton_Clicked"/>
-                            <!--WidthRequest="60" HeightRequest="40" BorderColor="#B0C4DE"-->
+                            <!--WidthRequest="60" HeightRequest="40" BorderColor="#EAECF4"-->
                         </StackLayout>
                     </StackLayout>
                 </Frame>

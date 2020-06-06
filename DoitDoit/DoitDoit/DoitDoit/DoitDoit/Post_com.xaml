@@ -9,11 +9,13 @@
         <StackLayout Orientation="Vertical">
             <!-- Place new controls here -->
             <Label Text="" BackgroundColor="#708098" HeightRequest="10" Margin="0,0,0,0" />
-            <Label Text="밥줌님의 2020년 5월 2일 식단" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,10,0,0"
-               FontSize="21" FontAttributes="Bold" />
+            <Label x:Name="PostMenuDay" TextColor="Black" FontSize="21" FontAttributes="Bold"
+                       Margin="0,15,0,15" HorizontalTextAlignment="Center" />
+            <!--<Label Text="밥줌님의 2020년 5월 2일 식단" TextColor="Black" HorizontalTextAlignment="Center" Margin="0,10,0,0"
+               FontSize="21" FontAttributes="Bold" />-->
             <StackLayout BackgroundColor="#dbelfo" Margin="15,30,15,0">
                 <Label Text="댓글 내용" FontAttributes="Bold" TextColor="Black" Margin="10,10,0,40" />
-                <Entry x:Name="CommentWrite" />
+                <Entry x:Name="CommentWrite" FontSize="17" />
             </StackLayout>
             <Button Text="작성"
                     TextColor="Black"
@@ -23,16 +25,24 @@
                     CornerRadius="15" WidthRequest="60" HeightRequest="40"  BorderColor="#9AB4D4" BorderWidth="3"
                     FontAttributes="Bold"
                     Clicked="Button_Clicked"/>
+            <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
             <StackLayout x:Name="CommentStackLayout">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout BackgroundColor="#e4eodd" Margin="15,20,15,0" Padding="10,10,0,40" Orientation="Vertical">
-                            <StackLayout Orientation="Horizontal" VerticalOptions="Start">
-                                <Label Text="{Binding ID}" TextColor="Black" FontAttributes="Bold" HorizontalOptions="Start"/>
-                                <Button x:Name="DelPost" Clicked="DelPost_Clicked"  Text="X" TextColor="Black" FontSize="10" FontAttributes="Bold" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="100" WidthRequest="30" HeightRequest="30" HorizontalOptions="EndAndExpand"/>
+                        <Frame BorderColor="#e4eodd" Padding="2" Margin="15,20,15,0">
+                            <StackLayout BackgroundColor="White" Padding="10,10,0,40" Orientation="Vertical">
+                                <!-- BackgroundColor="#e4eodd" Margin="15,20,15,0"-->
+                                <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                                    <Label Text="글쓴이" FontAttributes="Bold" TextColor="Gray" HorizontalOptions="Start"/>
+                                    <Label Text="{Binding ID}" TextColor="Black" FontAttributes="Bold" FontSize="15" />
+                                    <!--댓글 삭제버튼 : NAME값은 자신의아이디와 같을때만 나오게-->
+                                    <ImageButton x:Name="DelBtn" IsVisible="False" Source="imageClear.png" Clicked="DelPost_Clicked" BackgroundColor="White" WidthRequest="25" HeightRequest="25" HorizontalOptions="EndAndExpand" Margin="0,0,5,0"/>
+                                    <!--<Button x:Name="DelPost" Clicked="DelPost_Clicked"  Text="X" TextColor="Black" FontSize="10" FontAttributes="Bold" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="100" WidthRequest="30" HeightRequest="30" HorizontalOptions="EndAndExpand"/>-->
+                                </StackLayout>
+                                <BoxView BackgroundColor="#e4eodd" HeightRequest="1"/>
+                                <Label Text="{Binding Context}" FontAttributes="Bold" FontSize="17"/>
                             </StackLayout>
-                            <Label Text="{Binding Context}" FontAttributes="Bold"/>
-                        </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>

@@ -20,7 +20,7 @@
             <StackLayout Orientation="Vertical">
                 <!-- Place new controls here -->
                 <Label x:Name="PostMenuDay" TextColor="Black" FontSize="23" FontAttributes="Bold"
-                       Margin="0,15,0,0" HorizontalTextAlignment="Center" />
+                       Margin="0,15,0,15" HorizontalTextAlignment="Center" />
                 <!-- 공유 식단 전체 리스트 -->
                 <layout:WrapLayout HorizontalOptions="Center" x:Name="PostMenuList">
                     <BindableLayout.ItemTemplate>
@@ -74,9 +74,10 @@
 
 
                         <StackLayout Orientation="Horizontal">
-                            <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="10"
+                            <Button Text="상세" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
+                                    Margin="10,10,10,10" BorderColor="#F2E3EA" BorderWidth="1" FontAttributes="Bold"
                             Clicked="NutButton_Clicked"
-                        WidthRequest="60" HeightRequest="40" Margin="10,10,10,10" HorizontalOptions="EndAndExpand" />
+                        WidthRequest="60" HeightRequest="40" HorizontalOptions="EndAndExpand" />
                         </StackLayout>
                     </StackLayout>
                 </Frame>
