@@ -181,7 +181,6 @@ namespace DoitDoit
         }
         #endregion
 
-
         private void CalenderDayTime_DateSelected(object sender, DateChangedEventArgs e)
         {
             this.dateTime = e.NewDate;
