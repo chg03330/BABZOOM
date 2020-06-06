@@ -78,12 +78,15 @@ namespace DoitDoit
 
             string day = "";
             if (this.PostData.Menus.Count > 0) {
-                string date = this.PostData.Menus.First().Code;
-                string year = date.Substring(0, 4);
-                string month = date.Substring(4, 2);
-                string tday = date.Substring(6, 2);
+                try {
+                    string date = this.PostData.Menus.First().Code;
+                    string year = date.Substring(0, 4);
+                    string month = date.Substring(4, 2);
+                    string tday = date.Substring(6, 2);
 
-                day = $"{year}년 {month}월 {tday}일 ";
+                    day = $"{year}년 {month}월 {tday}일 ";
+                }
+                catch (Exception) { }
             }
             string context = $"{this.PostData.UserID}님의 {day}식단";
 
