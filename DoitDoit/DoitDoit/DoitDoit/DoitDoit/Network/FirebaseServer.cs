@@ -407,5 +407,16 @@ namespace DoitDoit.Network {
 
             return recvpacket.Result;
         }
+
+        public async Task<bool> DeleteMenuData(string menucode) {
+            Packet packet = new Packet() {
+                Command = "DeleteMenuData",
+                Context = menucode
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
     } // END OF FirebaseServer
 }

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:doit="clr-namespace:DoitDoit"
+             
+             mc:Ignorable="d"
+             x:Class="DoitDoit.Layout.RecoItemTemplate">
+  <ContentView.Content>
+        <Frame BorderColor="#B0C4DE" CornerRadius="10" HasShadow="True" Padding="0" Margin="15,0,15,5" >
+            <StackLayout>
+                <!--BackgroundColor="#EAECF4"-->
+                <!--#dbelfo-->
+                <!--Margin="15,10,15,0"-->
+                <DatePicker Date="{Binding Date}"  IsEnabled="False" FontAttributes="Bold" >
+                </DatePicker>
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Horizontal">
+                        <!--날짜-->
+                        <Label Text="{Binding Converter={StaticResource Key=postnameconverter}}" TextColor="Black" FontSize="15" FontAttributes="Bold" Margin="10,10,0,0" />
+                    </StackLayout>
+                    <!--댓글 수-->
+                    <Label Text="{Binding Converter={StaticResource Key=commentconverter}, Path=Comments.Count, Mode=OneWay}" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White"
+                           FontSize="12" WidthRequest="50" HorizontalOptions="EndAndExpand" Margin="0,10,10,0" />
+                </StackLayout>
+                <StackLayout BindableLayout.ItemsSource="{Binding Menus}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Path=Code, Converter={StaticResource Key=postmenutimeconverter}}" TextColor="Black" FontSize="12" Margin="10,10,0,0" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <doit:ButtonWithTag Tag="{Binding Path=Code}" Text="자세히 보기" Clicked="PostButton_Clicked" TextColor="Black" BackgroundColor="White" CornerRadius="15" 
+                                                    HorizontalOptions="EndAndExpand" Margin="0,15,10,15" BorderColor="#B0C4DE" BorderWidth="1" FontAttributes="Bold" />
+                    <!--WidthRequest="100" HeightRequest="40" TextColor="White" BackgroundColor="#B0C4DE" BorderColor="#A5A3B7"-->
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </ContentView.Content>
+</ContentView>
