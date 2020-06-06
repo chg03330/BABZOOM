@@ -44,6 +44,9 @@ namespace DoitDoit
 
         private void Logout_Clicked(object sender, EventArgs e)
         {
+            while (!(Navigation.ModalStack.Count() == 0)) {
+                Navigation.PopModalAsync();
+            }
             Navigation.PushModalAsync(new MainPage());
         }
     }
