@@ -14,11 +14,13 @@
     <Compile Remove="Models\Class1.cs" />
     <Compile Remove="Page1.xaml.cs" />
     <Compile Remove="Post.xaml.cs" />
+    <Compile Remove="SideMenu.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Remove="Page1.xaml" />
     <EmbeddedResource Remove="Post.xaml" />
+    <EmbeddedResource Remove="SideMenu.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -91,9 +93,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="SearchFood.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="SideMenu.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UserCalenderDay.xaml">
