@@ -179,6 +179,20 @@ namespace DoitDoit.Models
             });
         }
 
+        public void Reset() {
+            //Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                this.FoodViewModels?.Clear();
+                this.Posts?.Clear();
+            this.Age = 0;
+            this.Gender = false;
+            this.Id = "";
+            this.Name = "";
+            this.Password = "";
+            this.Height = 0;
+            this.Weight = 0;
+            //});
+        }
+
         /************************** 생성자**********************************/
         private UserModel() {}
         /*******************************************************************/

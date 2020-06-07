@@ -27,7 +27,7 @@ namespace DoitDoit
         public AddUserMenu()
         {
             InitializeComponent();
-            SearchText.Completed += searchText_Completed;
+            SearchText.SearchButtonPressed += searchText_Completed;
             addMenu_ClockTime.Time = DateTime.Now.TimeOfDay;
             Foods = new ObservableCollection<FoodData>();
 
@@ -113,12 +113,12 @@ namespace DoitDoit
 
         private void Del_Clicked(object sender, EventArgs e)
         {
-            ButtonWithTag button = sender as ButtonWithTag;
-            FoodData foodData = button.BindingContext as FoodData;
-            FoodViewModel menu = button.Tag as FoodViewModel;
+            if (!(sender is ImageButton button)) return;
+            if (!(button.BindingContext is FoodData foodData)) return;
 
-            Foods.Remove(foodData);
-
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                this.Foods.Remove(foodData);
+            });
         }
 
         //private void updateChart() {

@@ -51,7 +51,8 @@
                 </layout:WrapLayout>
                 <!-- END OF WrapLayout -->
                 <Label Text="" BackgroundColor="#7986CB" HeightRequest="1" Margin="10,10,10,0" />
-                <Frame BackgroundColor="#F2E3EA" Padding="2" CornerRadius="10" Margin="15,10,70,10" HasShadow="True">
+                
+                <Frame Padding="2" BorderColor="#EAECF4" CornerRadius="10" HasShadow="True" Margin="15,10,15,20">
                     <StackLayout x:Name="nutSL" BackgroundColor="White" Orientation="Vertical">
                         <!--BackgroundColor="#EACAD5" Margin="15,10,80,10"-->
                         <StackLayout Orientation="Horizontal">

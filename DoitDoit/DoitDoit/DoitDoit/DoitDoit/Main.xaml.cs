@@ -34,9 +34,11 @@ namespace DoitDoit
         /// 서버에 있는 공유 식단 게시글 리스트를 가져옵니다.
         /// </summary>
         private async void GetPostData() {
-            Network.FirebaseServer server = Network.FirebaseServer.Server;
+            if (UserModel.GetInstance.Posts != null && UserModel.GetInstance.Posts.Any()) {
+                return;
+            }
 
-            //string result = await server.FirebaseRequest("GetPostData", new Dictionary<string, string>());
+            Network.FirebaseServer server = Network.FirebaseServer.Server;
 
             Models.Post[] posts = await server.GetPostData();
 
@@ -169,8 +171,9 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ContentPage_Appearing(object sender, EventArgs e)
-        {
+        public void ContentPage_Appearing(object sender, EventArgs e) {
+            this.RefreshPosts();
+
             this.ChartView.Chart = this.CreateChart(5, 1);
             this.ChartView.HeightRequest = 300;
 
@@ -213,6 +216,8 @@ namespace DoitDoit
         }
 
         private void RefreshPosts() {
+            if (UserModel.GetInstance.Posts is null || !UserModel.GetInstance.Posts.Any()) return;
+
             var list = (from post in UserModel.GetInstance.Posts
                         orderby post.Date descending
                         select post).Take(4);

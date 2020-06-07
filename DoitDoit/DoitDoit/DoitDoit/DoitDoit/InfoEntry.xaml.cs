@@ -73,36 +73,36 @@ namespace DoitDoit
 					await Navigation.PushModalAsync(new Layout.MasterDetailLayout(new Main()));
 				}
 				else {
-					if (this.MasterDetail is null) {
+					//if (this.MasterDetail is null) {
 						this.OnBackButtonPressed();
-					}
-					else {
-						this.MasterDetail.ToMain();
-					}
+					//}
+					//else {
+						//this.MasterDetail.ToMain();
+					//}
 				}
 			}
 		}
 
 		private void Switch_Toggled(object sender, ToggledEventArgs e)
 		{
-			//if (e.Value == true) {
-			//	labelGender.Text = "남자";
+			if (e.Value == true) {
+				labelGender.Text = "남자";
 			//	gender = "true";
-			//}
-			//else {
-			//	labelGender.Text = "여자";
+			}
+			else {
+				labelGender.Text = "여자";
 			//	gender = "false";
-			//}
+			}
 		}
 
 		private void Cancel_Clicked(object sender, EventArgs e)
 		{
-			if (this.MasterDetail is null) {
+			//if (this.MasterDetail is null) {
 				this.OnBackButtonPressed();
-			}
-			else {
-				this.MasterDetail.ToMain();
-			}
+			//}
+			//else {
+				//this.MasterDetail.ToMain();
+			//}
 		}
 	}
 }

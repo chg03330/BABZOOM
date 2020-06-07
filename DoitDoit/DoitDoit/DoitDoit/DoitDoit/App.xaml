@@ -6,6 +6,25 @@
              mc:Ignorable="d"
              x:Class="DoitDoit.App">
     <Application.Resources>
-
+        <!--<ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Medium.ttf#Medium" />
+            </Style>
+        </ResourceDictionary>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Bold.ttf#Bold" />
+            </Style>
+        </ResourceDictionary>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="FontFamily" Value="Medium.ttf#Medium" />
+            </Style>
+        </ResourceDictionary>
+        <ResourceDictionary>
+            --><!--<Style TargetType="ListView">
+                <Setter Property="FontFamily" Value="Medium.ttf#Medium" />
+            </Style>--><!--
+        </ResourceDictionary>-->
     </Application.Resources>
 </Application>

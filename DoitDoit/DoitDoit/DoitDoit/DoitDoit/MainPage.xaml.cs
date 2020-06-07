@@ -33,7 +33,7 @@ namespace DoitDoit
             FirebaseServer server = FirebaseServer.Server;
 
             UserModel model = UserModel.GetInstance;
-
+            
             this.LoginBtn.IsEnabled = this.SignUpBtn.IsEnabled = false;
             bool result = await server.SignIn(id, pw);
 
@@ -64,6 +64,10 @@ namespace DoitDoit
             // 해당 화면에서 취소버튼을 누를 경우
             // 어플 종료를 한다
             System.Diagnostics.Process.GetCurrentProcess().CloseMainWindow();
+        }
+
+        private void ContentPage_Appearing(object sender, EventArgs e) {
+            UserModel.GetInstance.Reset();
         }
     }
 }

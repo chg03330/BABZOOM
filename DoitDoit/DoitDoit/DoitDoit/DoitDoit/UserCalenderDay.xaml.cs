@@ -58,7 +58,7 @@ namespace DoitDoit
         /// <param name="e"></param>
         private async void ShareButton_Clicked(object sender, EventArgs e) {
             if (this.list.Count is 0) {
-                DisplayAlert("안내", "식단을 입력해 주세요", "Cancel");
+                await DisplayAlert("안내", "식단을 입력해 주세요", "Cancel");
 
                 return;
             }
@@ -120,7 +120,7 @@ namespace DoitDoit
             if (fvm.Count() == 0)
             {
                 DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.", "확인"); 
-                nutSL.IsVisible = false;
+                this.nutSL.IsVisible = false;
             }
             else
             {
@@ -129,29 +129,9 @@ namespace DoitDoit
                 {
                     list.Add(f);
                 }
-                nutSL.IsVisible = true;
+                this.nutSL.IsVisible = true;
                 updateChart();
             }
-            
-            /*
-            var fvm = usermodel.FoodViewModels.Where(model => {
-                return model.Code.Contains(e.NewDate.ToString("yyyyMMdd"));
-            });
-
-            list.Clear();
-            if (fvm.Count() == 0)
-            {
-                DisplayAlert("알림", "해당 날짜의 식단이 존재하지 않습니다.2", "확인");
-                nutSL.IsVisible = false;
-            }
-            else
-            {
-                foreach (FoodViewModel f in fvm)
-                {
-                    list.Add(f);
-                }
-                nutSL.IsVisible = true;
-            }*/
 
             BindableLayout.SetItemsSource(this.liststack, list);
 
@@ -204,20 +184,21 @@ namespace DoitDoit
         }
 
         private async void DelBtn_Clicked(object sender, EventArgs e) {
-            if (sender is ImageButton btn) {
-                if (btn.BindingContext is Models.FoodViewModel menu) {
-                    bool result = await this.DisplayAlert("안내", "식단을 삭제할까요?", "OK", "Cancel");
+            if (!(sender is ImageButton btn)) return;
+            if (!(btn.BindingContext is Models.FoodViewModel menu)) return;
 
-                    if (result) {
-                        result = await Network.FirebaseServer.Server.DeleteMenuData(menu.Code);
+            bool result = await this.DisplayAlert("안내", "식단을 삭제할까요?", "OK", "Cancel");
 
-                        if (result) {
-                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                                this.list?.Remove(menu);
-                                usermodel.FoodViewModels?.Remove(menu);
-                            });
-                        }
-                    }
+            if (result) {
+                result = await Network.FirebaseServer.Server.DeleteMenuData(menu.Code);
+
+                if (result) {
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                        this.list?.Remove(menu);
+                        usermodel.FoodViewModels?.Remove(menu);
+
+                        this.ContentPage_Appearing(sender, (EventArgs)e);
+                    });
                 }
             }
         }

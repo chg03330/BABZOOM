@@ -94,19 +94,18 @@ namespace DoitDoit
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private async void DelPost_Clicked(object sender, EventArgs e) {
-            if (sender is Button btn) {
-                if (btn.BindingContext is Models.Comment comment) {
-                    bool result = await DisplayAlert("안내", "댓글을 삭제하시겠습니까?", "OK", "Cancel");
+            if (!(sender is ImageButton btn)) return;
+            if (!(btn.BindingContext is Models.Comment comment)) return;
 
-                    if (result) {
-                        bool qresult = await Network.FirebaseServer.Server.DeleteCommentData(comment.Code, this.PostData.Code);
+            bool result = await DisplayAlert("안내", "댓글을 삭제하시겠습니까?", "OK", "Cancel");
 
-                        if (qresult) {
-                            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
-                                this.PostData.Comments.Remove(comment);
-                            });
-                        }
-                    }
+            if (result) {
+                result = await Network.FirebaseServer.Server.DeleteCommentData(comment.Code, this.PostData.Code);
+
+                if (result) {
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                        this.PostData.Comments.Remove(comment);
+                    });
                 }
             }
         } //

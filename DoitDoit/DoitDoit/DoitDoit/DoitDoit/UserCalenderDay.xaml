@@ -74,15 +74,6 @@
                                             <DataTemplate>
                                                 <StackLayout Orientation="Horizontal" Padding="0,0,0,10">
                                                     <Label Text="{Binding Data.식품명}" TextColor="Black" FontAttributes="Bold"/>
-                                                    <!--<Label Text="{Binding Data.DB군}" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Data.식품코드}" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Quantity}" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Unit}" FontAttributes="Bold"/>
-                                            <Label Text="{Binding Code}" FontAttributes="Bold"/>-->
-                                                    <!--<doitdoit:ButtonWithTag Tag="{Binding BindingContext, 
-                                            Source={RelativeSource AncestorLevel=2, AncestorType={x:Type StackLayout},
-                                            Mode=FindAncestor}}" Text="ㅡ" ScaleX="0.5" FontSize="20"  HorizontalOptions="EndAndExpand" 
-                                            Clicked="Button_Clicked"/>-->
                                                 </StackLayout>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
@@ -96,7 +87,7 @@
 
                 <Label Text="" BackgroundColor="Black" HeightRequest="1" Margin="10,10,10,0" />
 
-                <Frame Padding="2" BorderColor="#EAECF4" CornerRadius="10" HasShadow="True" Margin="15,0,15,20">
+                <Frame Padding="2" BorderColor="#EAECF4" CornerRadius="10" HasShadow="True" Margin="15,10,15,20">
                     <StackLayout BackgroundColor="White" Orientation="Vertical">
                         <!--BackgroundColor="#EAECF4"  Margin="20,10,80,10"-->
                         <StackLayout Orientation="Horizontal">

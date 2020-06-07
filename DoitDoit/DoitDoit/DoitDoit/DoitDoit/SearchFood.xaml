@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:DoitDoit"
              xmlns:model="clr-namespace:DoitDoit.Models"
              x:Class="DoitDoit.SearchFood"
-             BackgroundColor="AliceBlue"
              Appearing="ContentPage_Appearing">
 
     <ContentPage.BindingContext>
@@ -12,16 +11,25 @@
     </ContentPage.BindingContext>
 
     <StackLayout>
-        <SearchBar Placeholder="Food Name" x:Name="s_bar" SearchButtonPressed="s_bar_SearchButtonPressed" />
+        <Frame CornerRadius="15"  Margin="15,15,15,15" BorderColor="#708098" Padding="1">
+            <SearchBar Placeholder="검색할 요리 or 식자재 이름" FontSize="15" PlaceholderColor="Black" 
+                       Margin="0,5,0,10" 
+                       x:Name="s_bar"
+                       SearchButtonPressed="s_bar_SearchButtonPressed"
+                       />
+        </Frame>
 
-        <ListView x:Name="lvFood" ItemSelected="lvFood_ItemSelected">
-        </ListView>
+        <!--<SearchBar Placeholder="Food Name" x:Name="s_bar" SearchButtonPressed="s_bar_SearchButtonPressed" />-->
+
+
+        <Frame CornerRadius="15"  Margin="15,10,15,15" BorderColor="#DCE3EF" Padding="1">
+            <ListView x:Name="lvFood" ItemSelected="lvFood_ItemSelected" />
+        </Frame>
 
         <StackLayout  HorizontalOptions="Center">
-            <Button Text="등록" Clicked="Register_Clicked" BackgroundColor="#A0BAED"
-                    WidthRequest="300" CornerRadius="30" TextColor="white" />
+            <Button Text="등록" Clicked="Register_Clicked" TextColor="Black" BackgroundColor="White" CornerRadius="10"
+                    WidthRequest="80" BorderColor="#9AB4D4" BorderWidth="3" />
         </StackLayout>
-
     </StackLayout>
 
 </ContentPage>

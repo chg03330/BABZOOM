@@ -29,18 +29,24 @@ namespace DoitDoit.Layout {
             this.Detail = mainpage;
         }
 
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
+        private async void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e) {
             var item = e.SelectedItem as MasterDetailLayoutMasterMenuItem;
             if (item == null)
                 return;
 
             Page page = null;
 
+            if (item.TargetType is null) {
+                return;
+            }
+
             if (item.TargetType == typeof(DoitDoit.Main)) {
-                page = this.mainpage;
+                page = new DoitDoit.Main();
             }
             else if (item.TargetType == typeof(DoitDoit.InfoEntry)) {
                 page = (Page)Activator.CreateInstance(item.TargetType, this);
+                await this.Navigation.PushModalAsync(page);
+                return;
             }
             else {
                 page = (Page)Activator.CreateInstance(item.TargetType);

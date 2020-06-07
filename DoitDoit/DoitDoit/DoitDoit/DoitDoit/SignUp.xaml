@@ -8,16 +8,16 @@
             <Image Source="logo.png"
                     WidthRequest="130" HeightRequest="130" Margin="0,0,0,10" />
             <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
-                <Label Text="      아이디             " TextColor="Black" FontSize="20" />
+                <Label Text="      아이디        " TextColor="Black" FontSize="20" />
                 <Entry WidthRequest="150" x:Name="ID" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="비밀번호          " TextColor="Black" FontSize="20" />
-                <Entry WidthRequest="200" x:Name="PASSWORD" />
+                <Entry WidthRequest="200" IsPassword="True" x:Name="PASSWORD" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="비밀번호 확인 " TextColor="Black" FontSize="20" />
-                <Entry WidthRequest="200" x:Name="PWCHECK" />
+                <Entry WidthRequest="200" IsPassword="True" x:Name="PWCHECK" />
             </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">

@@ -42,11 +42,11 @@
         </controls:Calendar>
 
         <StackLayout BackgroundColor="#dbelfo" Grid.Column="0" Grid.Row="3">
-            <Label Text="일간 통계" TextColor="Black" FontSize="20" />
+            <Label Text="📆일간 통계" TextColor="Black" FontSize="20" />
             <Label x:Name="DKcal" />
         </StackLayout>
         <StackLayout BackgroundColor="#e4eodd" Grid.Column="1" Grid.Row="3">
-            <Label Text="월간 통계" TextColor="Black" FontSize="20" />
+            <Label Text="📅월간 통계" TextColor="Black" FontSize="20" />
             <Label x:Name="MKcal" />
         </StackLayout>
             

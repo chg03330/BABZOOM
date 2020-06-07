@@ -293,11 +293,16 @@ namespace DoitDoit.Network {
                     usermodel.Id = id;
                     usermodel.Password = pw;
 
-                    usermodel.Name = resultdic["name"];
-                    usermodel.Age = int.Parse(resultdic["age"]);
-                    usermodel.Height = float.Parse(resultdic["height"]);
-                    usermodel.Weight = float.Parse(resultdic["weight"]);
-                    usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
+                    if (resultdic.ContainsKey("name"))
+                        usermodel.Name = resultdic["name"];
+                    if (resultdic.ContainsKey("age"))
+                        usermodel.Age = int.Parse(resultdic["age"]);
+                    if (resultdic.ContainsKey("height"))
+                        usermodel.Height = float.Parse(resultdic["height"]);
+                    if (resultdic.ContainsKey("weight"))
+                        usermodel.Weight = float.Parse(resultdic["weight"]);
+                    if (resultdic.ContainsKey("gender"))
+                        usermodel.Gender = Convert.ToBoolean(resultdic["gender"]);
 
                     usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
                 });
