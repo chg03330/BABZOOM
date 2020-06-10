@@ -201,6 +201,16 @@ namespace DoitDoit
                 }
             }
         }
+
+        /// <summary>
+        /// 수정버튼 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EditBtn_Clicked(object sender, EventArgs e)
+        {
+
+        }
     } // END OF UserCalenderDay CLASS
 
 }

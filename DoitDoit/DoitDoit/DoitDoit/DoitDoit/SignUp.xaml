@@ -10,6 +10,8 @@
             <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                 <Label Text="      아이디        " TextColor="Black" FontSize="20" />
                 <Entry WidthRequest="150" x:Name="ID" />
+                <CheckBox x:Name="checkId" IsEnabled="false" Margin="0,0,-13,0"/>
+                <Button Text="아이디체크" BackgroundColor="White" Clicked="checkId_Clicked" />
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                 <Label Text="비밀번호          " TextColor="Black" FontSize="20" />

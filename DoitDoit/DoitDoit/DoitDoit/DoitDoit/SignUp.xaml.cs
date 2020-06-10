@@ -66,5 +66,22 @@ namespace DoitDoit
         {
             OnBackButtonPressed();
         }
-	}
+
+        /// <summary>
+        /// 아이디 체크 버튼클릭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkId_Clicked(object sender, EventArgs e)
+        {
+            if (checkId.IsChecked == false)
+            {
+                checkId.IsChecked = true;
+            }
+            else
+            {
+                checkId.IsChecked = false;
+            }
+        }
+    }
 }

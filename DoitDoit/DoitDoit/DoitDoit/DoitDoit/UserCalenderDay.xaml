@@ -61,8 +61,10 @@
                         <DataTemplate>
                             <Frame Padding="2" BorderColor="#dbelfo" HasShadow="True" CornerRadius="10" Margin="15,0,15,20">
                                 <StackLayout Orientation="Vertical">
-                                    <StackLayout BackgroundColor="#FFFFFF" Orientation="Horizontal">
+                                    <StackLayout BackgroundColor="#FFFFFF" Orientation="Horizontal" Margin="0,5,0,0">
                                         <Label Text="{Binding Path=Code, Converter={StaticResource postmenutimeconverter}}" BackgroundColor="White" FontAttributes="Bold" TextColor="Black" FontSize="16" Margin="15,0,0,0" HorizontalOptions="Start"/>
+                                        <!--식단수정버튼-->
+                                        <ImageButton Source="imageClear.png" Clicked="EditBtn_Clicked"  BackgroundColor="Red" WidthRequest="25" HeightRequest="25" HorizontalOptions="CenterAndExpand" Margin="0,0,5,0"/>
                                         <!-- 식단 삭제 버튼-->
                                         <ImageButton Source="imageClear.png" Clicked="DelBtn_Clicked"  BackgroundColor="White" WidthRequest="25" HeightRequest="25" HorizontalOptions="EndAndExpand" Margin="0,0,5,0"/>
                                     </StackLayout>
