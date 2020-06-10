@@ -423,5 +423,16 @@ namespace DoitDoit.Network {
 
             return recvpacket.Result;
         }
+
+        public async Task<bool> SetMenuData(FoodViewModel menu) {
+            Packet packet = new Packet() {
+                Command = "SetMenuData",
+                Context = JsonConvert.SerializeObject(menu)
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
     } // END OF FirebaseServer
 }

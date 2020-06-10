@@ -95,10 +95,10 @@ namespace DoitDoit
                 });
 
                 FirebaseServer server = FirebaseServer.Server;
-                server.FirebaseRequest("SetMenuData", menu);
+                //server.FirebaseRequest("SetMenuData", menu);
+                Task<bool> isok = server.SetMenuData(menu);
 
                 this.OnBackButtonPressed();
-            
             }
             else {
                 DisplayAlert("안내", "등록한 식단이 없습니다.", "확인");
