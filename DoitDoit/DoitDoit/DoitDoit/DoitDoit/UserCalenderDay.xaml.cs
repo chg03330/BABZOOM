@@ -10,6 +10,7 @@ using System.ComponentModel;
 using Entry = Microcharts.Entry;
 using Microcharts;
 using DoitDoit.ExMethod;
+using System.Globalization;
 
 namespace DoitDoit
 {
@@ -207,9 +208,16 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditBtn_Clicked(object sender, EventArgs e)
-        {
+        private void EditBtn_Clicked(object sender, EventArgs e) {
+            if (!(sender is ImageButton btn)) return;
+            if (!(btn.BindingContext is Models.FoodViewModel menu)) return;
 
+            DateTime time = DateTime.ParseExact(menu.Code.Substring(0, 14), "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            AddUserMenu ad = new AddUserMenu(menu);
+            ad.dateTime = time;
+
+            Navigation.PushModalAsync(ad);
         }
     } // END OF UserCalenderDay CLASS
 

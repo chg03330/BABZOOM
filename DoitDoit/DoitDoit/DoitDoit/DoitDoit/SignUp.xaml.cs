@@ -22,14 +22,24 @@ namespace DoitDoit
 		{
 			InitializeComponent ();
             this.usermodel = UserModel.GetInstance;
+            this.ID.TextChanged += this.IDFieldChanged;
 		}
 
         private bool checkPw() {
             return this.PASSWORD.Text.Equals(this.PWCHECK.Text);
         }
 
+        private void IDFieldChanged(object sender, TextChangedEventArgs e) {
+            this.checkId.IsChecked = false;
+        }
+
         private async void SignedUp_Clicked(object sender, EventArgs e)
         {
+            if (this.checkId.IsChecked is false) {
+                await DisplayAlert("안내", "아이디 중복 체크를 해주세요.", "OK");
+                return;
+            }
+
             if (checkPw())
             {
                 Dictionary<string, string> post = new Dictionary<string, string>();
@@ -72,16 +82,17 @@ namespace DoitDoit
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkId_Clicked(object sender, EventArgs e)
+        private async void checkId_Clicked(object sender, EventArgs e)
         {
-            if (checkId.IsChecked == false)
-            {
-                checkId.IsChecked = true;
+            if (this.checkId.IsChecked is true) return;
+
+            bool result = await FirebaseServer.Server.IsUserExist(this.ID.Text);
+
+            if (result is true) {
+                await this.DisplayAlert("안내", "아이디가 이미 존재합니다.", "OK");
             }
-            else
-            {
-                checkId.IsChecked = false;
-            }
+
+            this.checkId.IsChecked = !result;
         }
     }
 }
