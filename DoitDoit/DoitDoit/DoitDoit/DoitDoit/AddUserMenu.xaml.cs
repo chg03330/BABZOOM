@@ -24,19 +24,46 @@ namespace DoitDoit
         public FoodData food;
         public String selectItem { get; set; }
         String selectTime;
+        
+        public FoodViewModel ModifyMenu { get; set; }
+        
         public AddUserMenu()
         {
             InitializeComponent();
+            this.Initialize();
+        }
+
+        public AddUserMenu(FoodViewModel menu) {
+            InitializeComponent();
+            this.Initialize();
+
+            if (menu is null) return;
+
+            this.ModifyMenu = menu;
+            this.addMenu_DayTime.IsEnabled = false;
+            this.addMenu_ClockTime.IsEnabled = false;
+            Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                if (this.Foods is null) return;
+
+                this.Foods.Clear();
+                foreach (Food food in this.ModifyMenu.Foods) {
+                    this.Foods.Add(food.Data);
+                }
+            });
+        }
+
+        public void Initialize() {
             SearchText.SearchButtonPressed += searchText_Completed;
             addMenu_ClockTime.Time = DateTime.Now.TimeOfDay;
             Foods = new ObservableCollection<FoodData>();
 
             BindableLayout.SetItemsSource(this.addList, Foods);
-
         }
+
         private void ContentPage_Appearing(object sender, EventArgs e) {
             selectTime = dateTime.ToString("yyyyMMdd");
             this.addMenu_DayTime.Date = dateTime;
+            this.addMenu_ClockTime.Time = dateTime.TimeOfDay;
             SearchText.Text = "";
         }
 
@@ -82,18 +109,25 @@ namespace DoitDoit
                                 Unit = fooddata.내용량_단위
                             };
 
-                FoodViewModel menu = new FoodViewModel
-                {
-                    UserID = UserModel.GetInstance.Id,
-                    Foods = foods.ToArray(),
-                    Code = date.ToString("yyyyMMddHHmmss") + UserModel.GetInstance.Id
-                };
+                FoodViewModel menu = null;
+                
+                if (this.ModifyMenu is null) {
+                    menu = new FoodViewModel {
+                        UserID = UserModel.GetInstance.Id,
+                        Foods = foods.ToArray(),
+                        Code = date.ToString("yyyyMMddHHmmss") + UserModel.GetInstance.Id
+                    };
 
-                Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-                {
-                    UserModel.GetInstance.FoodViewModels.Add(menu);
-                });
-
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+                    {
+                        UserModel.GetInstance.FoodViewModels.Add(menu);
+                    });
+                }
+                else {
+                    this.ModifyMenu.Foods = foods.ToArray();
+                    menu = this.ModifyMenu;
+                }
+                
                 FirebaseServer server = FirebaseServer.Server;
                 //server.FirebaseRequest("SetMenuData", menu);
                 Task<bool> isok = server.SetMenuData(menu);
