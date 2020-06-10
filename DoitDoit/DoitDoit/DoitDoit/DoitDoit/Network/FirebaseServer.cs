@@ -434,5 +434,16 @@ namespace DoitDoit.Network {
 
             return recvpacket.Result;
         }
+
+        public async Task<bool> IsUserExist(string id) {
+            Packet packet = new Packet() {
+                Command = "IsUserExist",
+                Context = id
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
     } // END OF FirebaseServer
 }
