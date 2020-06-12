@@ -10,18 +10,21 @@
 
             <StackLayout Margin="25,0,25,0">
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="ID" TextColor="Black" FontSize="20" />
-                    <Entry WidthRequest="150" x:Name="ID" HorizontalOptions="CenterAndExpand"/>
-                    <CheckBox x:Name="checkId" IsEnabled="false" Margin="-100,0,-13,0"/>
-                    <Button Text="중복확인" BackgroundColor="White" Clicked="checkId_Clicked" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" >
-                    <Label Text="PW" TextColor="Black" FontSize="20" HorizontalOptions="Start"/>
-                    <Entry WidthRequest="150" IsPassword="True" x:Name="PASSWORD" HorizontalOptions="Center"/>
+                    <Label Text="ID" TextColor="Black" FontSize="20" Margin="0,0,11,0"/>
+                    <Entry  x:Name="ID" HorizontalOptions="FillAndExpand" Placeholder="영문/숫자 4~8자" FontSize="15"/>
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox x:Name="checkId" IsEnabled="false" Margin="0,0,-13,0"/>
+                        <Button Text="중복확인" BackgroundColor="White" Clicked="checkId_Clicked"
+                            Padding="0,0,0,0" Margin="0,0,0,0"/>
+                    </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
-                    <Label Text="PW Check" TextColor="Black" FontSize="20" HorizontalOptions="Start"/>
-                    <Entry WidthRequest="150" IsPassword="True" x:Name="PWCHECK" HorizontalOptions="Center"/>
+                    <Label Text="PW" TextColor="Black" FontSize="20" />
+                    <Entry IsPassword="True" x:Name="PASSWORD" HorizontalOptions="FillAndExpand" Placeholder="영문/숫자+특수문자1개이상 8~12자" FontSize="15"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="PW" TextColor="White" FontSize="20" />
+                    <Entry IsPassword="True" x:Name="PWCHECK" HorizontalOptions="FillAndExpand" Placeholder="비밀번호 재입력" FontSize="15" />
                 </StackLayout>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
