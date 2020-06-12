@@ -20,7 +20,7 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="PW" TextColor="Black" FontSize="20" />
-                    <Entry IsPassword="True" x:Name="PASSWORD" HorizontalOptions="FillAndExpand" Placeholder="영문/숫자+특수문자1개이상 8~12자" FontSize="15"/>
+                    <Entry IsPassword="True" x:Name="PASSWORD" HorizontalOptions="FillAndExpand" Placeholder="영문+숫자+특수문자(1개이상) 8~12자" FontSize="15"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="PW" TextColor="White" FontSize="20" />

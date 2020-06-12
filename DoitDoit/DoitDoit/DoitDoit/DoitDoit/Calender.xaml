@@ -23,7 +23,7 @@
 
         <controls:Calendar
              Grid.Column="0" Grid.Row="0" 
-               Grid.ColumnSpan="2" Grid.RowSpan="3" BackgroundColor="AliceBlue" x:Name="UserCalender"
+               Grid.ColumnSpan="2" Grid.RowSpan="3" BackgroundColor="White" x:Name="UserCalender" ArrowsColor="Blue"
              PropertyChanged="UserCalender_PropertyChanged">
             <controls:Calendar.EventTemplate>
                 <DataTemplate>
