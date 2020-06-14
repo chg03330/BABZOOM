@@ -25,6 +25,7 @@
                         x:Name="SearchText"/>
                 </StackLayout>
             </Frame>
+            <Button Clicked="RecoButton_Clicked" Text="추천식단" HorizontalOptions="EndAndExpand" />
             <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
             <ScrollView>
                 <StackLayout>

@@ -23,12 +23,11 @@ namespace DoitDoit
 	{
         UserModel usermodel;
 
-		public SignUp ()
-		{
-			InitializeComponent ();
+        public SignUp() {
+            InitializeComponent();
             this.usermodel = UserModel.GetInstance;
             this.ID.TextChanged += this.IDFieldChanged;
-		}
+        }
 
        
 

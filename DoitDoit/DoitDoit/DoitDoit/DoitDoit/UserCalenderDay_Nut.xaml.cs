@@ -46,6 +46,7 @@ namespace DoitDoit
             public String nutName { set; get; }
             public double nutQ { set; get; }
             public String nutUnit { set; get; }
+            public String Require { get; set; }
             public Entry entry { set; get; }
             public SKColor Color { set; get; }
             public Chart nutChart { set; get; }
@@ -59,6 +60,7 @@ namespace DoitDoit
             else
                 return "N000" + a.ToString();
         }
+
         public nutClass GetNutName(nutClass nC,int a) {
             nutClass rnC = nC;
             String name="";
@@ -78,7 +80,6 @@ namespace DoitDoit
             int a 는 참조값..
              */
         public nutClass SetNutChart(nutClass nC,int a) {
-
             nC.nutChart = new DonutChart() {
                 Entries = new List<Entry>() {
                     new Entry(getHopIntake(a)-(float)nC.nutQ) { Label = "권장량", Color = SkiaSharp.SKColor.Parse("#feeeed") }, //Color = SkiaSharp.SKColor.Parse("#F2F2F2")
@@ -185,6 +186,7 @@ namespace DoitDoit
             nac.nutQ = Menus.GetMenusSum(str);
             nac = addMainChartEntry(nac);
             nac = SetNutChart(nac,a);
+            nac.Require = $"/ {getHopIntake(a)}";
 
 
 

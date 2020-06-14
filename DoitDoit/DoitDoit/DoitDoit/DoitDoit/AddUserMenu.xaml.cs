@@ -155,6 +155,30 @@ namespace DoitDoit
             });
         }
 
+        private async void RecoButton_Clicked(object sender, EventArgs e) {
+            if (!(sender is Button btn)) return;
+
+            btn.IsEnabled = false;
+
+            FoodData[] foods = await FirebaseServer.Server.GetRecommendMenuData();
+
+            if (this.Foods != null) {
+                if (foods.Length > 0) {
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(() => {
+                        this.Foods.Clear();
+                        for (int i = 0; i < foods.Length; i++) {
+                            this.Foods.Add(foods[i]);
+                        }
+                    });
+                }
+                else {
+                    await DisplayAlert("안내", "추천식단을 가져오는 데에 실패하였습니다.", "OK");
+                }
+            }
+
+            btn.IsEnabled = true;
+        }
+
         //private void updateChart() {
         //    List<Microcharts.Entry> entries = new List<Microcharts.Entry>();
         //    calNut(entries);                                                                //칼로리계산

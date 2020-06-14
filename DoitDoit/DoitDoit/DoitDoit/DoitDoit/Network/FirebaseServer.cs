@@ -445,5 +445,17 @@ namespace DoitDoit.Network {
 
             return recvpacket.Result;
         }
+
+        public async Task<FoodData[]> GetRecommendMenuData() {
+            Packet packet = new Packet() {
+                Command = "GetRecommendMenuData"
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            FoodData[] result = JsonConvert.DeserializeObject<FoodData[]>(recvpacket.Context);
+
+            return result;
+        }
     } // END OF FirebaseServer
 }
