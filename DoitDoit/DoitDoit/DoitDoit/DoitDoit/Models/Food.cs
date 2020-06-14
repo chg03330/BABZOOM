@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Microcharts;
@@ -25,6 +26,13 @@ namespace DoitDoit.Models
         public string 식품코드 { get; set; } = "";
 
         public List<Nut> 영양소 { get; set; } = new List<Nut>();
+
+        public double GetNutQuantity(string nutcode) {
+            Nut nut = this.영양소.Where(n => n.Code == nutcode).FirstOrDefault();
+            if (nut is null) return 0;
+
+            return nut.Quantity;
+        }
     }
 
     public class Nut {

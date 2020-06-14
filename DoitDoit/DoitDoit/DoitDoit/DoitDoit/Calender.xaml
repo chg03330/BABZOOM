@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar" xmlns:globalization="clr-namespace:System.Globalization;assembly=netstandard"
+             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=netstandard"
              x:Class="DoitDoit.Calender"
              Appearing="ContentPage_Appearing"
              BackgroundColor="White">
@@ -24,7 +25,9 @@
         <controls:Calendar
              Grid.Column="0" Grid.Row="0" 
                Grid.ColumnSpan="2" Grid.RowSpan="3" BackgroundColor="AliceBlue" x:Name="UserCalender"
-             PropertyChanged="UserCalender_PropertyChanged">
+             PropertyChanged="UserCalender_PropertyChanged"
+            Culture="{x:Static globalization:CultureInfo.CurrentCulture}"
+            >
             <controls:Calendar.EventTemplate>
                 <DataTemplate>
                     <StackLayout Padding="15,0,0,0">
