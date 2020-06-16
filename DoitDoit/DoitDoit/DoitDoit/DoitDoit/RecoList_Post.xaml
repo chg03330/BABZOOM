@@ -86,10 +86,17 @@
                 <Frame BackgroundColor="#DCE3EF" Padding="2" CornerRadius="10" Margin="15,10,15,10" HasShadow="True">
                     <StackLayout BackgroundColor="White" Padding="4,3,4,3">
                         <!--BackgroundColor="#DCE3EF" Margin="15,10,15,10"-->
-                        <Label Text="게시글 내용" TextColor="Black" FontSize="15" FontAttributes="Bold"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="게시글 내용" TextColor="Black" FontSize="15" FontAttributes="Bold" HorizontalOptions="Start"/>
+                            <StackLayout x:Name="PostContextLengthView" Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                                <Label x:Name="PostContextLabelLength" Text="0" TextColor="LightGray"/>
+                                <Label Text="/" TextColor="Blue" BackgroundColor="White"/>
+                                <Label Text="200" TextColor="Black" BackgroundColor="White"/>
+                            </StackLayout>
+                        </StackLayout>
                         <BoxView BackgroundColor="#DCE3EF" HeightRequest="1" HorizontalOptions="FillAndExpand" Margin="0,0,0,5"/>
-                        <Label Text="{Binding Context}" x:Name="PostContextLabel" IsVisible="True" Margin="0,0,0,5" FontAttributes="Bold"/>
-                        <Editor x:Name="PostContextEditor" IsVisible="False" />
+                        <Label Text="{Binding Context}" x:Name="PostContextLabel" IsVisible="True" Margin="0,0,0,5" FontAttributes="Bold" />
+                        <Editor x:Name="PostContextEditor" IsVisible="False" TextChanged="PostContextEditor_TextChanged" MaxLength="200" AutoSize="TextChanges"/>
                     </StackLayout>
                 </Frame>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

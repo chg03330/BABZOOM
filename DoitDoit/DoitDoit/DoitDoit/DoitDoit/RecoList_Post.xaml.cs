@@ -1,5 +1,6 @@
 ﻿using DoitDoit.ExMethod;
 using DoitDoit.Network;
+using Java.Lang;
 using Microcharts;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,7 @@ namespace DoitDoit
             this.BtnOk.IsVisible = this.ModifyMode;
             this.PostContextLabel.IsVisible = !this.ModifyMode;
             this.PostContextEditor.IsVisible = this.ModifyMode;
+            this.PostContextLengthView.IsVisible = this.ModifyMode;
             this.BtnComment.IsVisible = !this.ModifyMode;
             this.BtnDelete.IsVisible = (!this.ModifyMode && (usermodel.Id == this.PostData.UserID));
             #endregion
@@ -86,7 +88,7 @@ namespace DoitDoit
 
                     day = $"{year}년 {month}월 {tday}일 ";
                 }
-                catch (Exception) { }
+                catch (System.Exception) { }
             }
             string context = $"{this.PostData.UserID}님의 {day}식단";
 
@@ -196,5 +198,20 @@ namespace DoitDoit
             laDan.Text = nutentries[3].Value.ToString();
         }
         #endregion
+
+
+        private void PostContextEditor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PostContextLabelLength.Text = PostContextEditor.Text.Length.ToString();
+            if (PostContextEditor.Text.Length < 200)
+            {
+                PostContextLabelLength.TextColor = Color.LightGray;
+            }
+            else
+            {
+                PostContextLabelLength.TextColor = Color.Red;
+            }
+
+        }
     }
 }

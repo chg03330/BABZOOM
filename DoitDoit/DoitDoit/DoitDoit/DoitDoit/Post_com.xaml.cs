@@ -119,5 +119,19 @@ namespace DoitDoit
                 btn.IsVisible = (Models.UserModel.GetInstance.Id == comment.ID);
             }
         }
+
+        
+        private void CommentWrite_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CommentWriteLength.Text = CommentWrite.Text.Length.ToString();
+            if (CommentWrite.Text.Length < 80)
+            {
+                CommentWriteLength.TextColor = Color.LightGray;
+            }
+            else
+            {
+                CommentWriteLength.TextColor = Color.Red;
+            }
+        }
     }
 }
