@@ -27,12 +27,12 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="체중" TextColor="Black" FontSize="20" HorizontalOptions="Start" Margin="0,10,10,0"/>
-                    <Entry WidthRequest="55" Keyboard="Numeric" x:Name="HEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Height, Mode=OneWay}" />
+                    <Entry WidthRequest="55" Keyboard="Numeric" x:Name="WEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Weight, Mode=OneWay}" />
                     <Label Text="kg" TextColor="Black" FontSize="15" VerticalTextAlignment="Center" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="키" TextColor="Black" FontSize="20" Margin="0,10,10,0" />
-                    <Entry WidthRequest="70" Keyboard="Numeric" x:Name="WEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Weight, Mode=OneWay}"/>
+                    <Entry WidthRequest="70" Keyboard="Numeric" x:Name="HEIGHT" Text="{Binding Source={x:Static model:UserModel.GetInstance}, Path=Height, Mode=OneWay}"/>
                     <Label Text="cm" TextColor="Black" FontSize="15" VerticalTextAlignment="Center" />
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">

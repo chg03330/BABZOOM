@@ -46,6 +46,7 @@ namespace DoitDoit.Models
         private bool gender;
         private String name;
         private Nutrition.nutBases bases;
+        private float avgHeight;
         private ObservableCollection<FoodViewModel> foodViewModels = new ObservableCollection<FoodViewModel>();
         private ObservableCollection<Post> posts = new ObservableCollection<Post>();
         #endregion
@@ -76,6 +77,14 @@ namespace DoitDoit.Models
             set {
                 this.weight = value;
                 this.OnPropertyChanged(nameof(this.Weight));
+            }
+        }        
+        public float AvgHeight // 표중체준구하기 / 남자 : true / 여자:false
+        {
+            get
+            {
+                if (this.Gender) return float.Parse(String.Format("{0:0.#}", this.avgHeight = this.Height * this.Height / 10000 * 22));
+                else return float.Parse(String.Format("{0:0.#}", this.avgHeight = this.Height * this.Height / 10000 * 21));
             }
         }
         public int Age {
