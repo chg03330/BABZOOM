@@ -99,13 +99,14 @@ namespace DoitDoit
                     nutQ = baseNut.calorie.HOP_INTAKE;
                     break;
                 case 2:
-                    nutQ = baseNut.calorie.HOP_INTAKE / 3;
+                    nutQ = baseNut.calorie.HOP_INTAKE * (float)0.55 / (float)4;
                     break;
                 case 3:
-                    nutQ = 50;
+                    nutQ = baseNut.calorie.HOP_INTAKE * (float)0.20 / (float)9;
                     break;
                 case 4:
-                    nutQ = baseNut.protein.HOP_INTAKE;
+                    //nutQ = baseNut.protein.HOP_INTAKE;
+                    nutQ = baseNut.calorie.HOP_INTAKE * (float)0.25 / (float)4;
                     break;
                 case 5:
                     nutQ = baseNut.bitamin_c.HOP_INTAKE;

@@ -1,6 +1,5 @@
 ﻿using DoitDoit.ExMethod;
 using DoitDoit.Network;
-using Java.Lang;
 using Microcharts;
 using System;
 using System.Collections.Generic;

@@ -63,7 +63,8 @@ namespace DoitDoit
 				/// 서버에 유저 정보를 보낸다.
 				Task.Run(async () => {
 					FirebaseServer server = FirebaseServer.Server;
-					string result = await server.FirebaseRequest("SetUserData", post);
+					//string result = await server.FirebaseRequest("SetUserData", post);
+					bool result = await server.SetUserData(post);
 				});
 #pragma warning restore 4014
 

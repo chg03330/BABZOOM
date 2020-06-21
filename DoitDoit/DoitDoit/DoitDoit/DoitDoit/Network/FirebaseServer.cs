@@ -457,5 +457,27 @@ namespace DoitDoit.Network {
 
             return result;
         }
+
+        public async Task<bool> SignUp(Dictionary<string, string> data) {
+            Packet packet = new Packet() {
+                Command = "SignUp",
+                Context = JsonConvert.SerializeObject(data)
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
+
+        public async Task<bool> SetUserData(Dictionary<string, string> data) {
+            Packet packet = new Packet() {
+                Command = "SetUserData",
+                Context = JsonConvert.SerializeObject(data)
+            };
+
+            Packet recvpacket = await this.SendPacketData(packet, true);
+
+            return recvpacket.Result;
+        }
     } // END OF FirebaseServer
 }
