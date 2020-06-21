@@ -21,12 +21,13 @@
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="25">
-            <Button Text="로그인" x:Name="LoginBtn" Clicked="Login_Clicked" TextColor="Black" WidthRequest="70" 
-                        BackgroundColor="#DCE3EF" CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3"/>
-            <Button Text="회원가입" x:Name="SignUpBtn" Clicked="SignUp_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
-                        CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3" />
-            <Button Text="취소" Clicked="Cancel_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
-                        WidthRequest="60" CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3" />
+            <Button Text="로그인" x:Name="LoginBtn" Clicked="Login_Clicked" TextColor="Black" WidthRequest="70"  BackgroundColor="White" CornerRadius="10" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold" />
+            <Button Text="회원가입" x:Name="SignUpBtn" Clicked="SignUp_Clicked" TextColor="Black"  BackgroundColor="White" CornerRadius="10" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold" />
+            <Button Text="취소" Clicked="Cancel_Clicked" TextColor="Black" 
+                        WidthRequest="60" BackgroundColor="White" CornerRadius="10" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold" />
         </StackLayout>
         <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="25">
             <Button Text="로그인" Clicked="Login_Clicked" BackgroundColor="#A0BAED" WidthRequest="70" />

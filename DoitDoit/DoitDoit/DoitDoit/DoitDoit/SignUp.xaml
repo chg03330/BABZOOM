@@ -28,10 +28,12 @@
                 </StackLayout>
             </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
-                <Button Text="회원가입" Clicked="SignedUp_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
-                        CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3"/>
-                <Button Text="취소" Clicked="Cancel2_Clicked" TextColor="Black" BackgroundColor="#DCE3EF"
-                        WidthRequest="60" CornerRadius="10" BorderColor="#9AB4D4" BorderWidth="3"/>
+                <Button Text="회원가입" Clicked="SignedUp_Clicked" TextColor="Black" 
+                        BackgroundColor="White" CornerRadius="10" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold"/>
+                <Button Text="취소" Clicked="Cancel2_Clicked" TextColor="Black" 
+                        WidthRequest="60" BackgroundColor="White" CornerRadius="10" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold"/>
             </StackLayout>
             <!--<StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="30">
                 <Button Text="회원가입" Clicked="SignedUp_Clicked" BackgroundColor="#A0BAED" />

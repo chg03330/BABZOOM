@@ -35,7 +35,7 @@
             </StackLayout>
             <microcharts:ChartView x:Name="WeekChartView" />
             <microcharts:ChartView x:Name="ChartView" IsVisible="False" />
-            <Button Text="사이드버튼" Clicked="SideMenu_Clicked"/>
+            <!--<Button Text="사이드버튼" Clicked="SideMenu_Clicked"/>-->
             <StackLayout Orientation="Horizontal">
                 <Label Text="공유 식단" TextColor="Black" FontSize="20" FontAttributes="Bold" Margin="15,15,0,0" />
                 <Button Text="공유 식단 목록" Clicked="ToRecoListButton_Clicked" FontAttributes="Bold" TextColor="Black" BackgroundColor="#EFF5FB" HorizontalOptions="EndAndExpand" 

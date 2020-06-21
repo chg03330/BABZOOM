@@ -65,7 +65,7 @@ namespace DoitDoit
 
             UserModel.GetInstance.PropertyChanged += this.PostsChanged;
             /*예시로 추가한 코드입니다.*/
-            DisplayAlert("하이", UserModel.GetInstance.AvgHeight.ToString(),"ㅁㅁ");
+            //DisplayAlert("하이", UserModel.GetInstance.AvgHeight.ToString(),"ㅁㅁ");
         }
 
         ~Main() {

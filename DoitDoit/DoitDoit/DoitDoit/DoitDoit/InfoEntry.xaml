@@ -43,8 +43,10 @@
 
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,30,0,0" Spacing="20">
-                    <Button Text="확인" Clicked="OK_Clicked" TextColor="Black" BackgroundColor="#DCE3EF" WidthRequest="60" CornerRadius="15" BorderColor="#9AB4D4" BorderWidth="3"/>
-                    <Button x:Name="CanelButton" Text="취소" Clicked="Cancel_Clicked" TextColor="Black" BackgroundColor="#DCE3EF" WidthRequest="60" CornerRadius="15" BorderColor="#9AB4D4" BorderWidth="3"/>
+                    <Button Text="확인" Clicked="OK_Clicked" TextColor="Black" WidthRequest="60" BackgroundColor="White" CornerRadius="15" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold"/>
+                    <Button x:Name="CanelButton" Text="취소" Clicked="Cancel_Clicked" TextColor="Black" WidthRequest="60" BackgroundColor="White" CornerRadius="15" 
+                                                    HorizontalOptions="EndAndExpand"  BorderColor="#B0C4DE" BorderWidth="3" FontAttributes="Bold"/>
                 </StackLayout>
             </StackLayout>
         </Frame>
