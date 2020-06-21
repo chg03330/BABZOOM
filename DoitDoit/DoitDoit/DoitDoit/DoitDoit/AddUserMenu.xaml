@@ -25,11 +25,12 @@
                         x:Name="SearchText"/>
                 </StackLayout>
             </Frame>
-            <Button Clicked="RecoButton_Clicked" Text="추천식단" HorizontalOptions="EndAndExpand" />
+
+            <Button Clicked="RecoButton_Clicked" HorizontalOptions="EndAndExpand" Text="추천식단" CornerRadius="50" BackgroundColor="#708098" FontSize="13" TextColor="White" Padding="0" Margin="0,0,15,0"/>
             <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
             <ScrollView>
                 <StackLayout>
-                    <Frame CornerRadius="10"  Margin="10,10,10,10" BorderColor="#9AB4D4" Padding="1">
+                    <Frame CornerRadius="10"  Margin="10,2,10,10" BorderColor="#9AB4D4" Padding="1">
                         <StackLayout x:Name="addList"
                              BackgroundColor="white"
                              Margin="20,15,20,15"
