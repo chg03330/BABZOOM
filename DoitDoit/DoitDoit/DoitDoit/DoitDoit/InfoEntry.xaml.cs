@@ -67,6 +67,8 @@ namespace DoitDoit
 				});
 #pragma warning restore 4014
 
+				usermodel.Bases = new Nutrition.nutBases(usermodel.Gender, usermodel.Age);
+
 				/// 회원가입에서 왔을 경우 -> Main 화면
 				/// 사이드 메뉴에서 왔을 경우 -> Back
 				if (this.Mode) {

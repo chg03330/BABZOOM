@@ -11,10 +11,6 @@ using Newtonsoft.Json;
 using DoitDoit.Network;
 using DoitDoit.Models;
 using System.Text.RegularExpressions;
-using Org.Apache.Http.Impl.Client;
-using Android.OS;
-using Android.Provider;
-using Android.Views;
 
 namespace DoitDoit
 {
