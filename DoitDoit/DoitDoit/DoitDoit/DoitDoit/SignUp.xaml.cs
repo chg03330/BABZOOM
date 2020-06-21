@@ -48,10 +48,13 @@ namespace DoitDoit
                     post["ID"] = this.ID.Text;
                     post["Password"] = this.PASSWORD.Text;
                     FirebaseServer server = FirebaseServer.Server;
-                    string result = await server.FirebaseRequest("SignUp", post);
 
-                    Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
-                    if ("true".Equals(resultdic["Result"]))
+                    bool result = await server.SignUp(post);
+                    //string result = await server.FirebaseRequest("SignUp", post);
+
+                    //Dictionary<string, string> resultdic = JsonConvert.DeserializeObject<Dictionary<string, string>>(result);
+                    //if ("true".Equals(resultdic["Result"]))
+                    if (result)
                     {
                         this.usermodel.Id = this.ID.Text;
                         this.usermodel.Password = this.PASSWORD.Text;

@@ -18,14 +18,15 @@
                             FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
                 <TimePicker x:Name="addMenu_ClockTime"  Format="hh시 mm분" FontSize="16" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
             </StackLayout>
-            <Frame CornerRadius="15" Margin="15,15,15,15" BorderColor="#708098" Padding="1">
+            <Frame CornerRadius="15" Margin="15,15,15,0" BorderColor="#708098" Padding="1">
                 <StackLayout>
                     <SearchBar Placeholder="검색할 요리 or 식자재 이름" Margin="0,5,0,10" 
                         VerticalTextAlignment="Center" TextColor="Black" HeightRequest="30"
                         x:Name="SearchText"/>
                 </StackLayout>
             </Frame>
-            <Button Clicked="RecoButton_Clicked" Text="추천식단" HorizontalOptions="EndAndExpand" />
+            <Button Clicked="RecoButton_Clicked" Text="추천식단" HorizontalOptions="EndAndExpand" TextColor="Black" BackgroundColor="White" CornerRadius="10"
+                    WidthRequest="80" BorderColor="#9AB4D4" BorderWidth="3" Margin="0, 0, 10, 0" />
             <!-- Food StackLayout ItemSource -> 내 자식들 BindingContext -> 나 자신 -->
             <ScrollView>
                 <StackLayout>
