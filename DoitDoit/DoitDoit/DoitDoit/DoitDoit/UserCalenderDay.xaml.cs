@@ -104,10 +104,18 @@ namespace DoitDoit
             await Navigation.PushModalAsync(post);
         }
 
-        private void addUserMenu_Clicked(object sender, EventArgs e)
-        {
+        private void addUserMenu_Clicked(object sender, EventArgs e) {
             AddUserMenu ad = new AddUserMenu();
-            ad.dateTime = this.dateTime;
+
+            DateTime time = new DateTime(
+                this.dateTime.Year,
+                this.dateTime.Month,
+                this.dateTime.Day,
+                DateTime.Now.Hour,
+                DateTime.Now.Minute,
+                DateTime.Now.Second);
+
+            ad.dateTime = time;
             Navigation.PushModalAsync(ad);
         }
 
